@@ -25,12 +25,18 @@ function Header() {
       <p className="text-2xl font-bold self-center ml-20">{currentBoard}</p>
       <Button
         style={"py-2 px-4 text-white "}
-        handleClick={() => setIsShown(true)}
+        handleClick={() =>
+          setIsShown((prevState) => {
+            return {
+              "new-form": !prevState["new-form"],
+            };
+          })
+        }
       >
         + Add New Task
       </Button>
       <BoardSettings />
-      {isShown && <AddTaskForm />}
+      {isShown["new-form"] && <AddTaskForm />}
     </header>
   );
 }

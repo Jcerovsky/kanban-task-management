@@ -19,7 +19,7 @@ function AddTaskForm() {
 
   return (
     <div
-      className="add-new-board absolute top-[120%] right-[20%] flex flex-col gap-6 text-black bg-white p-3 py-6
+      className="new-form absolute top-[120%] right-[20%] flex flex-col gap-6 text-black bg-white p-3 py-6
     rounded-md w-[450px] font-bold text-sm"
     >
       <h1 className=" text-xl">Add New Task</h1>
