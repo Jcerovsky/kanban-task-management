@@ -2,13 +2,14 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { Context, DataProps } from "@/app/context/Context";
+import AddNewBoard from "@/app/components/AddNewBoard";
 
 function Sidebar() {
   const { theme, setTheme } = useContext(Context)!;
   const [isToggled, setIsToggled] = useState<boolean>(theme === "light");
   const [selectedBoardIndex, setSelectedBoardIndex] = useState<number>(0);
   const [boardList, setBoardList] = useState<string[]>([]);
-  const { data, setCurrentBoard } = useContext(Context)!;
+  const { data, setCurrentBoard, isShown, setIsShown } = useContext(Context)!;
 
   useEffect(() => {
     if (data.length > 0) {
@@ -46,6 +47,7 @@ function Sidebar() {
         <div
           className="flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
              text-violet-500 delay-100 transition-transform"
+          onClick={() => setIsShown(true)}
         >
           <img src="../../../assets/icon-board.svg" alt="" />
           <p>+ Create New Board</p>
@@ -76,6 +78,7 @@ function Sidebar() {
           alt="moon in a crescent icon"
         />
       </div>
+      {isShown && <AddNewBoard />}
     </div>
   );
 }

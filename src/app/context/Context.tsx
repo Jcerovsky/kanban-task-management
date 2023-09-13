@@ -11,6 +11,8 @@ interface ContextProps {
   setData: React.Dispatch<React.SetStateAction<DataProps[]>>;
   currentBoard: string;
   setCurrentBoard: React.Dispatch<React.SetStateAction<string>>;
+  isShown: boolean;
+  setIsShown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface DataProps {
@@ -38,6 +40,7 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   );
   const [data, setData] = useState<DataProps[]>([]);
   const [currentBoard, setCurrentBoard] = useState<string>("");
+  const [isShown, setIsShown] = useState<boolean>(false);
 
   useEffect(() => {
     if (theme === "light") {
@@ -56,7 +59,16 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <Context.Provider
-      value={{ theme, setTheme, data, setData, currentBoard, setCurrentBoard }}
+      value={{
+        theme,
+        setTheme,
+        data,
+        setData,
+        currentBoard,
+        setCurrentBoard,
+        isShown,
+        setIsShown,
+      }}
     >
       {children}
     </Context.Provider>

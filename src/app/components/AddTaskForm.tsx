@@ -10,7 +10,7 @@ function AddTaskForm() {
   };
 
   const addSubtaskClick = () => {
-    setSubtasks((prevState) => prevState + 1);
+    return;
   };
 
   const inputStyle = "border rounded-md p-2 px-3 mb-5";
@@ -36,11 +36,7 @@ function AddTaskForm() {
         <label htmlFor="subtask" className={labelStyle}>
           Subtasks
         </label>
-        {}
-        <Button
-          style={"w-full py-[10px] text-white "}
-          handleClick={addSubtaskClick}
-        >
+        <Button style={"w-full py-[10px] text-white "}>
           + Add New Subtask
         </Button>
         <label htmlFor="currentStatus" className={`${labelStyle} mt-5`}>
