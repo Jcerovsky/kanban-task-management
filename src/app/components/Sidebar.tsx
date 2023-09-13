@@ -39,9 +39,9 @@ function Sidebar() {
             <div
               key={board}
               className={`flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer 
-              hover:bg-violet-100 hover:text-violet-500 transition-all delay-100 ease-in-out ${
+              hover:bg-violet-100 hover:text-violet-500 transition-all duration-300 ease-in-out ${
                 selectedBoardIndex === index
-                  ? "text-white bg-violet-500 hover:text-violet-500 delay-100"
+                  ? "text-white bg-violet-500 hover:text-violet-500 duration-300"
                   : ""
               }`}
               onClick={() => handleBoardClick(index)}
@@ -52,7 +52,7 @@ function Sidebar() {
           ))}
           <div
             className="flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer
-              hover:bg-violet-100 text-violet-500 transition-all delay-100 ease-in-out"
+              hover:bg-violet-100 text-violet-500 transition-all duration-300 ease-in-out"
             onClick={() =>
               setIsShown((prevState) => {
                 return {
@@ -68,7 +68,7 @@ function Sidebar() {
 
         <div
           className="flex mt-auto items-center gap-2 justify-around bg-neutral-200 dark:bg-black py-3 px-4 m-5
-        rounded-md transition-all delay-100 ease-in-out"
+        rounded-md transition-all duration-300 ease-in-out"
         >
           <img src="../../../assets/icon-light-theme.svg" alt="sun icon" />
 
@@ -82,7 +82,7 @@ function Sidebar() {
             <div
               className="w-11 h-6 rounded-full hover:bg-violet-500 peer-checked:after:translate-x-full
           peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white
-          after:border after:rounded-full after:h-5 after:w-5 after:transition-all delay-100 ease-in-out bg-violet-600 outline-none"
+          after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-all duration-300 ease-in-out bg-violet-600 outline-none"
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             ></div>
             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300" />
@@ -95,7 +95,7 @@ function Sidebar() {
         </div>
         <div
           className="flex gap-2 justify-center items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
-              hover:bg-violet-100 hover:text-violet-500 transition-all delay-100 ease-in-out"
+              hover:bg-violet-100 hover:text-violet-500 transition-all duration-300 ease-in-out"
         >
           <img src="../../../assets/icon-hide-sidebar.svg" alt="crossed eye" />
           <p onClick={() => setIsSideBarHidden(true)}>Hide Sidebar</p>
@@ -105,7 +105,7 @@ function Sidebar() {
       {isSidebarHidden && (
         <div
           className="absolute flex justify-center bottom-10 items-center p-5  rounded-r-full cursor-pointer
-          hover:bg-violet-400 bg-violet-500 w-14 hover:w-24 transition-all delay-100 ease-in-out shadow-lg"
+          hover:bg-violet-400 bg-violet-500 w-14 hover:w-24 transition-all duration-300	 ease-in-out shadow-lg"
           onClick={() => setIsSideBarHidden(false)}
         >
           <img

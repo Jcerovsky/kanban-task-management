@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Button from "@/app/components/Button";
-import { deleteColumn, updateColumn } from "@/app/utils/columnUtils";
+import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 
 function AddTaskForm() {
   const [subtasks, setSubtasks] = useState<string[]>(["", ""]);
@@ -43,7 +43,9 @@ function AddTaskForm() {
                 type="text"
                 value={subtask}
                 className="border rounded-md p-2 px-3 w-[95%]"
-                onChange={(e) => updateColumn(subtasks, e.target.value, index)}
+                onChange={(e) =>
+                  setSubtasks(updateColumn(subtasks, e.target.value, index))
+                }
               />
               <span
                 className="ml-auto self-center text-slate-600 text-xl font-bold"
@@ -55,7 +57,10 @@ function AddTaskForm() {
           ))}
         </div>
 
-        <Button style={"w-full py-[10px] text-white "}>
+        <Button
+          style={"w-full py-[10px] text-white "}
+          handleClick={() => setSubtasks(addColumn(subtasks))}
+        >
           + Add New Subtask
         </Button>
         <label htmlFor="currentStatus" className={`${labelStyle} mt-5`}>

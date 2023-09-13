@@ -38,7 +38,9 @@ function AddNewBoard() {
                 type="text"
                 value={column}
                 className="border rounded-md p-2 px-3 w-[95%]"
-                onChange={(e) => updateColumn(columns, e.target.value, index)}
+                onChange={(e) =>
+                  setColumns(updateColumn(columns, e.target.value, index))
+                }
               />
               <span
                 className="ml-auto self-center text-slate-600 text-xl font-bold"
@@ -52,7 +54,7 @@ function AddNewBoard() {
 
         <Button
           style={"w-full py-[10px] text-white "}
-          handleClick={() => addColumn(columns)}
+          handleClick={() => setColumns(addColumn(columns))}
         >
           + Add New Column
         </Button>
