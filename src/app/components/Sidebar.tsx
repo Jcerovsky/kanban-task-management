@@ -47,7 +47,9 @@ function Sidebar() {
         <div
           className="flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
              text-violet-500 delay-100 transition-transform"
-          onClick={() => setIsShown(true)}
+          onClick={() => {
+            setIsShown(true);
+          }}
         >
           <img src="../../../assets/icon-board.svg" alt="" />
           <p>+ Create New Board</p>

@@ -10,7 +10,10 @@ function AddNewBoard() {
   };
 
   return (
-    <div className="add-new-board absolute left-[150%] top-[25%] flex flex-col gap-6 text-black bg-white p-3 py-6 rounded-md w-[450px] font-bold text-sm">
+    <div
+      className="add-new-board absolute left-[150%] top-[25%] flex flex-col gap-6 text-black bg-white p-3 py-6
+    rounded-md w-[450px] font-bold text-sm"
+    >
       <h1 className=" text-xl">Add new board</h1>
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2 ">
         <label htmlFor="taskName" className={labelStyle}>

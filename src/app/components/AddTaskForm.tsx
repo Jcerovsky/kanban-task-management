@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Button from "@/app/components/Button";
+import { handleClickOutside } from "@/app/utils/handleClickOutside";
 
 function AddTaskForm() {
   const [subtasks, setSubtasks] = useState<number[]>([1, 1]);
@@ -17,7 +18,10 @@ function AddTaskForm() {
   const labelStyle = "text-xs text-slate-400";
 
   return (
-    <div className="flex flex-col gap-6 text-black bg-white p-3 py-6 rounded-md w-[450px] font-bold text-sm">
+    <div
+      className="add-new-board absolute top-[120%] right-[20%] flex flex-col gap-6 text-black bg-white p-3 py-6
+    rounded-md w-[450px] font-bold text-sm"
+    >
       <h1 className=" text-xl">Add New Task</h1>
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2 ">
         <label htmlFor="taskName" className={labelStyle}>

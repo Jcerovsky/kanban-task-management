@@ -6,7 +6,9 @@ export const handleClickOutside = (
   setState: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const target = e.target as HTMLElement;
-  if (!target.closest(toBeHiddenClass)) {
+  const elementToHide = document.querySelector(toBeHiddenClass) as HTMLElement;
+
+  if (elementToHide && !elementToHide.contains(target)) {
     setState(false);
   }
 };
