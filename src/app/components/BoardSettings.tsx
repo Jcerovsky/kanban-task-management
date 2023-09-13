@@ -14,7 +14,7 @@ function BoardSettings() {
       <div
         className={`${
           isMenuShown ? "block" : "hidden"
-        } absolute shadow-xl right-[4%] top-[90%] w-[150px] bg-white rounded-md p-3`}
+        } absolute shadow-xl right-[4%] bottom-0 w-[150px] bg-white rounded-md p-3`}
       >
         <p className="opacity-50 text-black mb-5">Edit board</p>
         <p className="text-red-500">Delete board</p>

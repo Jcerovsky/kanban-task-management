@@ -7,7 +7,7 @@ import { Context } from "@/app/context/Context";
 function Header() {
   const [isBtnClicked, setIsBtnClicked] = useState<boolean>(false);
 
-  const { currentBoard, setCurrentBoard, data } = useContext(Context);
+  const { currentBoard, setCurrentBoard, data, theme } = useContext(Context)!;
 
   useEffect(() => {
     if (data.length > 0) {
@@ -22,7 +22,7 @@ function Header() {
   return (
     <header className="flex items-center p-5 py-6 bg-white dark:bg-gray-800	gap-4 relative">
       <img
-        src={`../../../assets/logo-dark.svg`}
+        src={`../../../assets/logo-${theme === "dark" ? "dark" : "light"}.svg`}
         alt="kanban logo"
         className=""
       />

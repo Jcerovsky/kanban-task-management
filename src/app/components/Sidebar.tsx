@@ -6,7 +6,7 @@ import { Context, DataProps } from "@/app/context/Context";
 function Sidebar() {
   const { theme, setTheme } = useContext(Context)!;
   const [isToggled, setIsToggled] = useState<boolean>(theme === "light");
-  const [selectedBoard, setSelectedBoard] = useState();
+  const [selectedBoard, setSelectedBoard] = useState<boolean[]>([]);
   const [boardList, setBoardList] = useState<string[]>([]);
 
   const { data } = useContext(Context)!;
@@ -14,8 +14,15 @@ function Sidebar() {
   useEffect(() => {
     if (data.length > 0) {
       setBoardList(data.map((board: DataProps) => board.name));
+      setSelectedBoard(Array(data.length).fill(false));
     }
   }, [data]);
+
+  const handleBoardClick = (index: number) => {
+    const updatedSelectedBoards = [...selectedBoard];
+    updatedSelectedBoards[index] = !updatedSelectedBoards[index];
+    setSelectedBoard(updatedSelectedBoards);
+  };
 
   return (
     <div className="flex flex-col bg-white dark:bg-slate-800 fixed top-[85px] bottom-0 left-0 text-slate-400 w-3/12">
@@ -24,10 +31,16 @@ function Sidebar() {
       </p>
 
       <div className="flex flex-col ">
-        {boardList?.map((board) => (
+        {boardList?.map((board, index) => (
           <div
-            key={crypto.randomUUID()}
-            className="flex gap-2 items-center p-4 mr-4 rounded-r-full cursor-pointer hover:text-violet-500 hover:bg-violet-100 "
+            key={board}
+            className={`flex gap-2 items-center p-4 mr-4 rounded-r-full cursor-pointer hover:text-violet-500 
+              hover:bg-violet-100 hover:text-violet-500 delay-100 transition-transform ${
+                selectedBoard[index]
+                  ? "text-white bg-violet-500 hover:text-violet-500 delay-100"
+                  : ""
+              }`}
+            onClick={() => handleBoardClick(index)}
           >
             <img src="../../../assets/icon-board.svg" alt="" />
             <p>{board}</p>
