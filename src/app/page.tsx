@@ -9,9 +9,9 @@ import { Context } from "@/app/context/Context";
 export default function Home() {
   const { isShown, setIsShown } = useContext(Context)!;
 
-  const hideShownDiv = (e: MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const hideShownDiv = (e: MouseEvent<Element, MouseEvent>) => {
     if (isShown) {
-      handleClickOutside(e, "add-new-form", setIsShown);
+      handleClickOutside(e, ".add-new-board", setIsShown);
     }
   };
 
@@ -19,7 +19,6 @@ export default function Home() {
     <div onClick={(e) => hideShownDiv(e)}>
       <Header />
       <Sidebar />
-      {/*<AddTaskForm />*/}
     </div>
   );
 }
