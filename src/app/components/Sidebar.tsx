@@ -15,18 +15,16 @@ function Sidebar() {
     if (data.length > 0) {
       setBoardList(data.map((board: DataProps) => board.name));
     }
-  }, [boardList]);
-
-  console.log(boardList);
+  }, [data]);
 
   return (
     <div className="flex flex-col bg-white dark:bg-slate-800 fixed top-[85px] bottom-0 left-0 text-slate-400 w-3/12">
       <p className="mt-5 p-4 text-sm tracking-widest">
-        ALL BOARDS ({boardList.length})
+        ALL BOARDS ({boardList?.length})
       </p>
 
       <div className="flex flex-col ">
-        {boardList.map((board) => (
+        {boardList?.map((board) => (
           <div
             key={crypto.randomUUID()}
             className="flex gap-2 items-center p-4 mr-4 rounded-r-full cursor-pointer hover:text-violet-500 hover:bg-violet-100 "
