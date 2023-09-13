@@ -26,8 +26,8 @@ function Sidebar() {
   return (
     <>
       <div
-        className={`flex flex-col bg-white dark:bg-slate-800 fixed top-[85px] bottom-0 left-0 text-slate-400 w-3/12 ${
-          isSidebarHidden ? "hidden" : ""
+        className={`flex flex-col bg-white dark:bg-slate-800 fixed top-[85px] bottom-0 left-0 text-slate-400 w-3/12 transform-gpu transition-all duration-300 ease-in-out ${
+          isSidebarHidden ? "-translate-x-full" : "translate-x-0"
         }`}
       >
         <p className="mt-5 p-4 text-sm tracking-widest">
