@@ -80,9 +80,9 @@ function Sidebar() {
               onChange={() => setIsToggled((prevState) => !prevState)}
             />
             <div
-              className="w-11 h-6 rounded-full peer-checked:after:translate-x-full
+              className="w-11 h-6 rounded-full hover:bg-violet-500 peer-checked:after:translate-x-full
           peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white
-          after:border after:rounded-full after:h-5 after:w-5 after:transition-all delay-300 ease-in-out bg-violet-600 outline-none"
+          after:border after:rounded-full after:h-5 after:w-5 after:transition-all delay-100 ease-in-out bg-violet-600 outline-none"
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             ></div>
             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300" />
@@ -105,7 +105,7 @@ function Sidebar() {
       {isSidebarHidden && (
         <div
           className="absolute flex justify-center bottom-10 items-center p-5  rounded-r-full cursor-pointer
-          hover:bg-violet-400 bg-violet-500 w-14 hover:w-24 transition-all delay-100 ease-in-out"
+          hover:bg-violet-400 bg-violet-500 w-14 hover:w-24 transition-all delay-100 ease-in-out shadow-lg"
           onClick={() => setIsSideBarHidden(false)}
         >
           <img
