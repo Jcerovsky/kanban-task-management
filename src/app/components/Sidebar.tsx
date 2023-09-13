@@ -6,22 +6,19 @@ import { Context, DataProps } from "@/app/context/Context";
 function Sidebar() {
   const { theme, setTheme } = useContext(Context)!;
   const [isToggled, setIsToggled] = useState<boolean>(theme === "light");
-  const [selectedBoard, setSelectedBoard] = useState<boolean[]>([]);
+  const [selectedBoardIndex, setSelectedBoardIndex] = useState<number>(0);
   const [boardList, setBoardList] = useState<string[]>([]);
-
-  const { data } = useContext(Context)!;
+  const { data, setCurrentBoard } = useContext(Context)!;
 
   useEffect(() => {
     if (data.length > 0) {
       setBoardList(data.map((board: DataProps) => board.name));
-      setSelectedBoard(Array(data.length).fill(false));
     }
   }, [data]);
 
   const handleBoardClick = (index: number) => {
-    const updatedSelectedBoards = [...selectedBoard];
-    updatedSelectedBoards[index] = !updatedSelectedBoards[index];
-    setSelectedBoard(updatedSelectedBoards);
+    setSelectedBoardIndex(index);
+    setCurrentBoard(boardList[index]);
   };
 
   return (
@@ -36,7 +33,7 @@ function Sidebar() {
             key={board}
             className={`flex gap-2 items-center p-4 mr-4 rounded-r-full cursor-pointer hover:text-violet-500 
               hover:bg-violet-100 hover:text-violet-500 delay-100 transition-transform ${
-                selectedBoard[index]
+                selectedBoardIndex === index
                   ? "text-white bg-violet-500 hover:text-violet-500 delay-100"
                   : ""
               }`}
