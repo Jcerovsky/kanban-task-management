@@ -31,7 +31,7 @@ function Sidebar() {
         {boardList?.map((board, index) => (
           <div
             key={board}
-            className={`flex gap-2 items-center p-4 mr-4 rounded-r-full cursor-pointer hover:text-violet-500 
+            className={`flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500 
               hover:bg-violet-100 hover:text-violet-500 delay-100 transition-transform ${
                 selectedBoardIndex === index
                   ? "text-white bg-violet-500 hover:text-violet-500 delay-100"
@@ -43,7 +43,10 @@ function Sidebar() {
             <p>{board}</p>
           </div>
         ))}
-        <div className="flex gap-2 items-center p-4 text-violet-500">
+        <div
+          className="flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
+             text-violet-500 delay-100 transition-transform"
+        >
           <img src="../../../assets/icon-board.svg" alt="" />
           <p>+ Create New Board</p>
         </div>
