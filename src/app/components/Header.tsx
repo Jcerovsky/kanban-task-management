@@ -6,7 +6,7 @@ import { Context } from "@/app/context/Context";
 import AddTaskForm from "@/app/components/AddTaskForm";
 
 function Header() {
-  const { currentBoard, setCurrentBoard, data, theme, isShown, setIsShown } =
+  const { currentBoard, setCurrentBoard, data, theme, $isShown, $setIsShown } =
     useContext(Context)!;
 
   useEffect(() => {
@@ -25,12 +25,12 @@ function Header() {
       <p className="text-2xl font-bold self-center ml-20">{currentBoard}</p>
       <Button
         style={"py-2 px-4 text-white "}
-        handleClick={() => setIsShown(true)}
+        handleClick={() => $setIsShown($ => ({ ['task-form']: !$['task-form'], }))}
       >
         + Add New Task
       </Button>
       <BoardSettings />
-      {isShown && <AddTaskForm />}
+      {$isShown['task-form'] && <AddTaskForm />}
     </header>
   );
 }

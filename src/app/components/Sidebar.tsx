@@ -9,7 +9,7 @@ function Sidebar() {
   const [isToggled, setIsToggled] = useState<boolean>(theme === "light");
   const [selectedBoardIndex, setSelectedBoardIndex] = useState<number>(0);
   const [boardList, setBoardList] = useState<string[]>([]);
-  const { data, setCurrentBoard, isShown, setIsShown } = useContext(Context)!;
+  const { data, setCurrentBoard, $isShown, $setIsShown } = useContext(Context)!;
 
   useEffect(() => {
     if (data.length > 0) {
@@ -48,7 +48,8 @@ function Sidebar() {
           className="flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
              text-violet-500 delay-100 transition-transform"
           onClick={() => {
-            setIsShown(true);
+            //                                       | toggle
+            $setIsShown($ => ({ ['new-board']: !$['new-board'], }));
           }}
         >
           <img src="../../../assets/icon-board.svg" alt="" />
@@ -80,7 +81,7 @@ function Sidebar() {
           alt="moon in a crescent icon"
         />
       </div>
-      {isShown && <AddNewBoard />}
+      {$isShown['new-board'] && <AddNewBoard />}
     </div>
   );
 }
