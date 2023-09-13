@@ -1,17 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import Button from "@/app/components/Button";
-import { handleClickOutside } from "@/app/utils/handleClickOutside";
+import { deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 
 function AddTaskForm() {
-  const [subtasks, setSubtasks] = useState<number[]>([1, 1]);
+  const [subtasks, setSubtasks] = useState<string[]>(["", ""]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  };
-
-  const addSubtaskClick = () => {
-    return;
   };
 
   const inputStyle = "border rounded-md p-2 px-3 mb-5";
@@ -40,6 +36,25 @@ function AddTaskForm() {
         <label htmlFor="subtask" className={labelStyle}>
           Subtasks
         </label>
+        <div>
+          {subtasks.map((subtask, index) => (
+            <div key={index} className="flex mb-2">
+              <input
+                type="text"
+                value={subtask}
+                className="border rounded-md p-2 px-3 w-[95%]"
+                onChange={(e) => updateColumn(subtasks, e.target.value, index)}
+              />
+              <span
+                className="ml-auto self-center text-slate-600 text-xl font-bold"
+                onClick={() => setSubtasks(deleteColumn(subtasks, index))}
+              >
+                ✕
+              </span>
+            </div>
+          ))}
+        </div>
+
         <Button style={"w-full py-[10px] text-white "}>
           + Add New Subtask
         </Button>

@@ -1,30 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Button from "@/app/components/Button";
+import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 
 function AddNewBoard() {
-  const [columns, setColumns] = useState<string[]>(["", ""]);
+  const [columns, setColumns] = useState<string[]>(["Todo", "Doing"]);
 
   const inputStyle = "border rounded-md p-2 px-3 mb-5";
   const labelStyle = "text-xs text-slate-400";
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  };
-
-  const addColumn = () => {
-    setColumns((prevState) => [...prevState, ""]);
-  };
-
-  const updateColumn = (value: string, index: number) => {
-    const updatedColumns = [...columns];
-    updatedColumns[index] = value;
-    setColumns(updatedColumns);
-  };
-
-  const deleteColumn = (indexToDelete: number) => {
-    setColumns((prevColumns) =>
-      prevColumns.filter((_, index) => index !== indexToDelete),
-    );
   };
 
   return (
@@ -53,11 +38,11 @@ function AddNewBoard() {
                 type="text"
                 value={column}
                 className="border rounded-md p-2 px-3 w-[95%]"
-                onChange={(e) => updateColumn(e.target.value, index)}
+                onChange={(e) => updateColumn(columns, e.target.value, index)}
               />
               <span
                 className="ml-auto self-center text-slate-600 text-xl font-bold"
-                onClick={() => deleteColumn(index)}
+                onClick={() => setColumns(deleteColumn(columns, index))}
               >
                 ✕
               </span>
@@ -65,7 +50,10 @@ function AddNewBoard() {
           ))}
         </div>
 
-        <Button style={"w-full py-[10px] text-white "} handleClick={addColumn}>
+        <Button
+          style={"w-full py-[10px] text-white "}
+          handleClick={() => addColumn(columns)}
+        >
           + Add New Column
         </Button>
         <Button style={"w-full py-[10px] text-white mt-5 "}>
