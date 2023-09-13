@@ -7,9 +7,13 @@ export const Context = createContext<ContextProps | null>(null);
 interface ContextProps {
   theme: "light" | "dark";
   setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
+  data: DataProps[];
+  setData: React.Dispatch<React.SetStateAction<DataProps[]>>;
+  currentBoard: string;
+  setCurrentBoard: React.Dispatch<React.SetStateAction<string>>;
 }
 
-interface DataProps {
+export interface DataProps {
   name: string;
   isActive: boolean;
   columns: {
@@ -32,7 +36,8 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
       ? "dark"
       : "light",
   );
-  const [data, setData] = useState<DataProps[] | undefined>([]);
+  const [data, setData] = useState<DataProps[]>([]);
+  const [currentBoard, setCurrentBoard] = useState<string>("");
 
   useEffect(() => {
     if (theme === "light") {
@@ -47,10 +52,14 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
       .then((res) => res.json())
       .then(setData)
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   return (
-    <Context.Provider value={{ theme, setTheme }}>{children}</Context.Provider>
+    <Context.Provider
+      value={{ theme, setTheme, data, setData, currentBoard, setCurrentBoard }}
+    >
+      {children}
+    </Context.Provider>
   );
 }
 
