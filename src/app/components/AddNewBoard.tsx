@@ -15,7 +15,7 @@ function AddNewBoard() {
   return (
     <div
       className="new-board absolute left-[150%] top-[10%] flex flex-col gap-6 text-black bg-white p-3 py-6
-    rounded-md w-[450px] font-bold text-sm"
+    rounded-md w-[450px] font-bold text-sm overflow-y-scroll max-h-[75%]"
     >
       <h1 className=" text-xl">Add new board</h1>
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2 ">

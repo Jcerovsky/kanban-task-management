@@ -16,7 +16,7 @@ function AddTaskForm() {
   return (
     <div
       className="new-form absolute top-[120%] right-[20%] flex flex-col gap-6 text-black bg-white p-3 py-6
-    rounded-md w-[450px] font-bold text-sm"
+    rounded-md w-[450px] font-bold text-sm overflow-y-scroll max-h-[35em]"
     >
       <h1 className=" text-xl">Add New Task</h1>
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2 ">
