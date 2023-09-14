@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Button from "@/app/components/Button";
 import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
+import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
 
 function AddTaskForm() {
   const [subtasks, setSubtasks] = useState<string[]>(["", ""]);
@@ -9,9 +10,6 @@ function AddTaskForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
-
-  const inputStyle = "border rounded-md p-2 px-3 mb-5";
-  const labelStyle = "text-xs text-slate-400";
 
   return (
     <div

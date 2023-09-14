@@ -24,10 +24,12 @@ function Sidebar() {
   };
 
   return (
-    <>
+    <div className={` md:block ${isShown["sidebar"] ? "block" : "hidden"} `}>
       <div
-        className={`flex flex-col bg-white dark:bg-slate-800 fixed top-[85px] bottom-0 left-0 text-slate-400 w-3/12 transform-gpu transition-all duration-300 ease-in-out ${
-          isSidebarHidden ? "-translate-x-full" : "translate-x-0"
+        className={` sidebar flex flex-col right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[250px] bg-white dark:bg-slate-800 fixed 
+        md:top-[70px] md:bottom-0 top-[100px] left-0 text-slate-400  
+        transform-gpu transition-all duration-300 ease-in-out ${
+          isSidebarHidden ? "md:-translate-x-full" : "translate-x-0"
         }`}
       >
         <p className="mt-5 p-4 text-sm tracking-widest">
@@ -82,7 +84,7 @@ function Sidebar() {
             <div
               className="w-11 h-6 rounded-full hover:bg-violet-500 peer-checked:after:translate-x-full
           peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white
-          after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-all duration-300 ease-in-out bg-violet-600 outline-none"
+          after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-all duration-700 ease-in-out bg-violet-600 outline-none"
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             ></div>
             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300" />
@@ -93,13 +95,18 @@ function Sidebar() {
             alt="moon in a crescent icon"
           />
         </div>
-        <div
-          className="flex gap-2 justify-center items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
+        {!isShown["sidebar"] && (
+          <div
+            className="flex gap-2 justify-center items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
               hover:bg-violet-100 hover:text-violet-500 transition-all duration-300 ease-in-out"
-        >
-          <img src="../../../assets/icon-hide-sidebar.svg" alt="crossed eye" />
-          <p onClick={() => setIsSideBarHidden(true)}>Hide Sidebar</p>
-        </div>
+          >
+            <img
+              src="../../../assets/icon-hide-sidebar.svg"
+              alt="crossed eye"
+            />
+            <p onClick={() => setIsSideBarHidden(true)}>Hide Sidebar</p>
+          </div>
+        )}
         {isShown["new-board"] && <AddNewBoard />}
       </div>
       {isSidebarHidden && (
@@ -115,7 +122,7 @@ function Sidebar() {
           />
         </div>
       )}
-    </>
+    </div>
   );
 }
 

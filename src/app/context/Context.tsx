@@ -27,9 +27,9 @@ export interface DataProps {
       subtasks: {
         title: string;
         isCompleted: boolean;
-      };
-    };
-  };
+      }[];
+    }[];
+  }[];
 }
 
 function ContextProvider({ children }: { children: React.ReactNode }) {
@@ -41,6 +41,8 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = useState<DataProps[]>([]);
   const [currentBoard, setCurrentBoard] = useState<string>("");
   const [isShown, setIsShown] = useState<ContextProps["isShown"]>({});
+
+  data.map((item) => item.columns.map((item) => console.log(item.name)));
 
   useEffect(() => {
     if (theme === "light") {
@@ -56,6 +58,7 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
       .then(setData)
       .catch((err) => console.log(err));
   }, []);
+  data.map((item) => console.log(item));
 
   return (
     <Context.Provider
