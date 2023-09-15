@@ -9,6 +9,7 @@ import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
 function EditBoard() {
   const { currentBoard, setCurrentBoard, data } = useContext(Context)!;
   const [columns, setColumns] = useState<string[]>([]);
+  const [editedBoardName, setEditedBoardName] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,12 +24,13 @@ function EditBoard() {
 
   useEffect(() => {
     setColumns(getColumns);
+    setEditedBoardName(currentBoard);
   }, []);
 
   return (
     <div
       className="edit-board bg-white dark:bg-slate-800 rounded-md absolute top-40 right-40 flex flex-col gap-6 w-1/2 p-6
-      shadow-xl"
+      shadow-xl text-black"
     >
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2 ">
         <label htmlFor="taskName" className={labelStyle}>
@@ -36,10 +38,10 @@ function EditBoard() {
         </label>
         <input
           type="text"
-          value={currentBoard}
-          onChange={(e) => setCurrentBoard(e.target.value)}
+          value={editedBoardName}
+          onChange={(e) => setEditedBoardName(e.target.value)}
           id="taskName"
-          className={` ${inputStyle}`}
+          className={` ${inputStyle} `}
         />
         <label htmlFor="subtask" className={labelStyle}>
           Board Columns

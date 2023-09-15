@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "@/app/components/Button";
 import BoardSettings from "@/app/components/BoardSettings";
 import { Context } from "@/app/context/Context";
@@ -10,13 +10,23 @@ function Header() {
   const { currentBoard, setCurrentBoard, data, theme, isShown, setIsShown } =
     useContext(Context)!;
 
+  const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSmallerScreen(window.innerWidth <= 767);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  });
+
   useEffect(() => {
     if (data.length > 0) {
       setCurrentBoard(data[0].name);
     }
   }, [data]);
-
-  console.log(isShown);
 
   return (
     <header className="flex items-center p-4 bg-white dark:bg-gray-800	gap-4 relative">
@@ -26,7 +36,7 @@ function Header() {
         className="hidden md:block"
       />
       <img
-        src={`../../../assets/logo-mobile.svg`}
+        src="../../../assets/logo-mobile.svg"
         alt="kanban logo three stripes"
         className="md:hidden"
       />
@@ -55,7 +65,11 @@ function Header() {
           })
         }
       >
-        + Add New Task
+        {smallerScreen ? (
+          <img src="../../../assets/icon-add-task-mobile.svg" />
+        ) : (
+          "+ Add New Task"
+        )}
       </Button>
       <BoardSettings />
       {isShown["new-form"] && <AddTaskForm />}
