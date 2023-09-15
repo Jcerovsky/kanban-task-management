@@ -7,8 +7,7 @@ import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
 
 function EditBoard() {
-  const { currentBoard, setCurrentBoard, data } = useContext(Context)!;
-  const [columns, setColumns] = useState<string[]>([]);
+  const { currentBoard, columns, setColumns, data } = useContext(Context)!;
   const [editedBoardName, setEditedBoardName] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -16,15 +15,16 @@ function EditBoard() {
   };
 
   const getColumns = () => {
-    const currentBoardData = data.filter(
-      (board) => board.name.toLowerCase() === currentBoard.toLowerCase(),
-    );
-    return currentBoardData[0].columns.map((item) => item.name);
+    return data
+      .filter(
+        (board) => board.name.toLowerCase() === currentBoard.toLowerCase(),
+      )[0]
+      ?.columns.map((item) => item.name);
   };
 
   useEffect(() => {
-    setColumns(getColumns);
     setEditedBoardName(currentBoard);
+    setColumns(getColumns);
   }, []);
 
   return (
@@ -47,7 +47,7 @@ function EditBoard() {
           Board Columns
         </label>
         <div>
-          {columns.map((subtask, index) => (
+          {columns?.map((subtask, index) => (
             <div key={index} className="flex mb-2">
               <input
                 type="text"

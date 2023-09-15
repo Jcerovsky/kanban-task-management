@@ -29,7 +29,7 @@ function Header() {
   }, [data]);
 
   return (
-    <header className="flex items-center p-4 bg-white dark:bg-gray-800	gap-4 relative">
+    <header className="sticky top-0 flex items-center p-4 bg-white dark:bg-gray-800	gap-4 relative">
       <img
         src={`../../../assets/logo-${theme === "dark" ? "dark" : "light"}.svg`}
         alt="kanban logo"
