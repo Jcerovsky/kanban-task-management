@@ -17,21 +17,23 @@ interface ContextProps {
   setColumns: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
+export interface ColumnProps {
+  name: string;
+  tasks: {
+    title: string;
+    description: string;
+    status: string;
+    subtasks: {
+      title: string;
+      isCompleted: boolean;
+    }[];
+  }[];
+}
+
 export interface DataProps {
   name: string;
   isActive: boolean;
-  columns: {
-    name: string;
-    tasks: {
-      title: string;
-      description: string;
-      status: string;
-      subtasks: {
-        title: string;
-        isCompleted: boolean;
-      }[];
-    }[];
-  }[];
+  columns: ColumnProps[];
 }
 
 function ContextProvider({ children }: { children: React.ReactNode }) {
@@ -61,6 +63,12 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
       .then(setData)
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      setCurrentBoard(data[0].name);
+    }
+  }, [data]);
 
   return (
     <Context.Provider

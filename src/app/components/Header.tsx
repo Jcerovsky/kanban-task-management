@@ -7,8 +7,7 @@ import AddTaskForm from "@/app/components/AddTaskForm";
 import Sidebar from "@/app/components/Sidebar";
 
 function Header() {
-  const { currentBoard, setCurrentBoard, data, theme, isShown, setIsShown } =
-    useContext(Context)!;
+  const { currentBoard, theme, isShown, setIsShown } = useContext(Context)!;
 
   const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
 
@@ -21,12 +20,6 @@ function Header() {
 
     return () => window.removeEventListener("resize", handleResize);
   });
-
-  useEffect(() => {
-    if (data.length > 0) {
-      setCurrentBoard(data[0].name);
-    }
-  }, [data]);
 
   return (
     <header className="sticky top-0 flex items-center p-4 bg-white dark:bg-gray-800	gap-4 relative">

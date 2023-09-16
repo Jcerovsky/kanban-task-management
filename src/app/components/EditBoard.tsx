@@ -14,17 +14,18 @@ function EditBoard() {
     e.preventDefault();
   };
 
-  const getColumns = () => {
-    return data
-      .filter(
+  useEffect(() => {
+    if (currentBoard) {
+      const currentBoardData = data.filter(
         (board) => board.name.toLowerCase() === currentBoard.toLowerCase(),
-      )[0]
-      ?.columns.map((item) => item.name);
-  };
+      );
+      const columns = currentBoardData[0].columns.map((column) => column.name);
+      setColumns(columns);
+    }
+  }, [currentBoard]);
 
   useEffect(() => {
     setEditedBoardName(currentBoard);
-    setColumns(getColumns);
   }, []);
 
   return (

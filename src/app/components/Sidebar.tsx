@@ -24,7 +24,9 @@ function Sidebar() {
   };
 
   return (
-    <div className={` md:block ${isShown["sidebar"] ? "block" : "hidden"} `}>
+    <div
+      className={` md:flex ${isShown["sidebar"] ? "block" : "hidden"} sticky] `}
+    >
       <div
         className={` sidebar flex flex-col right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[250px] bg-white dark:bg-slate-800 fixed 
         md:top-[70px] md:bottom-0 top-[100px] left-0 text-slate-400  
