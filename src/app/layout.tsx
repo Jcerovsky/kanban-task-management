@@ -5,7 +5,7 @@ import React from "react";
 import ContextProvider from "@/app/context/Context";
 
 const jakartaSans = Plus_Jakarta_Sans({
-  weight: ["400", "500", "700"],
+  weight: ["400"gti, "600"],
   subsets: ["latin"],
 });
 

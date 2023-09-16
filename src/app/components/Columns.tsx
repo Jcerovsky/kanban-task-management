@@ -26,7 +26,7 @@ function Columns() {
   }, [currentBoard]);
 
   return (
-    <div className="flex h-screen bg-neutral-200 md:ml-[250px] overflow-x-scroll 	 ">
+    <div className="flex h-screen bg-neutral-200 md:ml-[250px] overflow-x-scroll dark:bg-slate-800	 ">
       <div className="flex ">
         {columnData.map((column) => (
           <div key={crypto.randomUUID()} className="min-w-[280px] p-5  ">
