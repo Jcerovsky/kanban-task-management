@@ -9,8 +9,14 @@ function Sidebar() {
   const [isToggled, setIsToggled] = useState<boolean>(theme === "light");
   const [selectedBoardIndex, setSelectedBoardIndex] = useState<number>(0);
   const [boardList, setBoardList] = useState<string[]>([]);
-  const [isSidebarHidden, setIsSideBarHidden] = useState<boolean>(false);
-  const { data, setCurrentBoard, isShown, setIsShown } = useContext(Context)!;
+  const {
+    data,
+    setCurrentBoard,
+    isShown,
+    setIsShown,
+    isSidebarHidden,
+    setIsSidebarHidden,
+  } = useContext(Context)!;
 
   useEffect(() => {
     if (data.length > 0) {
@@ -106,7 +112,7 @@ function Sidebar() {
               src="../../../assets/icon-hide-sidebar.svg"
               alt="crossed eye"
             />
-            <p onClick={() => setIsSideBarHidden(true)}>Hide Sidebar</p>
+            <p onClick={() => setIsSidebarHidden(true)}>Hide Sidebar</p>
           </div>
         )}
         {isShown["new-board"] && <AddNewBoard />}
@@ -115,7 +121,7 @@ function Sidebar() {
         <div
           className="absolute flex justify-center bottom-10 items-center p-5  rounded-r-full cursor-pointer
           hover:bg-violet-400 bg-violet-500 w-14 hover:w-24 transition-all duration-300	 ease-in-out shadow-lg"
-          onClick={() => setIsSideBarHidden(false)}
+          onClick={() => setIsSidebarHidden(false)}
         >
           <img
             src="../../../assets/icon-show-sidebar.svg"

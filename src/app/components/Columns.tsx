@@ -5,15 +5,8 @@ import { ColumnProps, Context } from "@/app/context/Context";
 import Task from "@/app/components/Task";
 
 function Columns() {
-  const { data, currentBoard } = useContext(Context)!;
+  const { data, currentBoard, isSidebarHidden } = useContext(Context)!;
   const [columnData, setColumnData] = useState<ColumnProps[]>([]);
-
-  // useEffect(() => {
-  //   if (currentBoard) {
-  //     const cols = data.flatMap((item) => item.columns);
-  //     setColumnData(cols);
-  //   }
-  // }, [currentBoard]);
 
   useEffect(() => {
     if (currentBoard) {
@@ -26,7 +19,11 @@ function Columns() {
   }, [currentBoard]);
 
   return (
-    <div className="flex h-screen bg-neutral-200 md:ml-[250px] overflow-x-scroll dark:bg-slate-800	 ">
+    <div
+      className={`flex h-screen bg-neutral-200 ${
+        !isSidebarHidden ? "md:ml-[250px]" : ""
+      }  overflow-x-scroll dark:bg-slate-800`}
+    >
       <div className="flex ">
         {columnData.map((column) => (
           <div key={crypto.randomUUID()} className="min-w-[280px] p-5  ">
@@ -38,12 +35,15 @@ function Columns() {
             ))}
           </div>
         ))}
-        <div className="min-w-[250px] self-center">Add new column</div>
+        <div
+          className="flex min-w-[250px] self-center justify-center text-2xl font-bold hover:text-violet-500 bg-neutral-200
+        dark:bg-slate-700 cursor-pointer py-[20%] rounded-md "
+        >
+          <p className="self-center">+ New Column</p>
+        </div>
       </div>
     </div>
   );
 }
-
-///adjust columns width based on sidebar width - correct approach to allow sticky sidebar
 
 export default Columns;

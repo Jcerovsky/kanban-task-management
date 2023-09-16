@@ -15,6 +15,8 @@ interface ContextProps {
   setIsShown: React.Dispatch<React.SetStateAction<ContextProps["isShown"]>>;
   columns: string[];
   setColumns: React.Dispatch<React.SetStateAction<string[]>>;
+  isSidebarHidden: boolean;
+  setIsSidebarHidden: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ColumnProps {
@@ -46,6 +48,7 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   const [currentBoard, setCurrentBoard] = useState<string>("");
   const [isShown, setIsShown] = useState<ContextProps["isShown"]>({});
   const [columns, setColumns] = useState<string[]>([]);
+  const [isSidebarHidden, setIsSidebarHidden] = useState<boolean>(false);
 
   console.log(data);
 
@@ -83,6 +86,8 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
         setIsShown,
         columns,
         setColumns,
+        isSidebarHidden,
+        setIsSidebarHidden,
       }}
     >
       {children}
