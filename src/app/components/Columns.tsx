@@ -3,9 +3,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ColumnProps, Context } from "@/app/context/Context";
 import Task from "@/app/components/Task";
+import EditBoard from "@/app/components/EditBoard";
 
 function Columns() {
-  const { data, currentBoard, isSidebarHidden } = useContext(Context)!;
+  const { data, currentBoard, isSidebarHidden, isShown, setIsShown } =
+    useContext(Context)!;
   const [columnData, setColumnData] = useState<ColumnProps[]>([]);
 
   useEffect(() => {
@@ -26,7 +28,7 @@ function Columns() {
     >
       <div className="flex ">
         {columnData.map((column) => (
-          <div key={crypto.randomUUID()} className="min-w-[280px] p-5  ">
+          <div key={crypto.randomUUID()} className="min-w-[280px] p-3  ">
             <p className="text-slate-500 text-sm mb-5">
               {column.name} ({column.tasks.length})
             </p>
@@ -36,12 +38,20 @@ function Columns() {
           </div>
         ))}
         <div
-          className="flex min-w-[250px] self-center justify-center text-2xl font-bold hover:text-violet-500 bg-neutral-200
-        dark:bg-slate-700 cursor-pointer py-[20%] rounded-md "
+          className="flex min-w-[250px] self-center justify-center text-2xl font-bold hover:text-violet-500 bg-white
+        dark:bg-slate-700 cursor-pointer py-[20%] rounded-md mr-8 ml-3 "
+          onClick={() =>
+            setIsShown((prevState) => {
+              return { "edit-board": !prevState["edit-board"] };
+            })
+          }
         >
-          <p className="self-center">+ New Column</p>
+          <p className="self-center text-slate-500 hover:text-violet-500">
+            + New Column
+          </p>
         </div>
       </div>
+      {isShown["edit-board"] && <EditBoard />}
     </div>
   );
 }

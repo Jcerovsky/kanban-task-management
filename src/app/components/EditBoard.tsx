@@ -31,8 +31,9 @@ function EditBoard() {
   return (
     <div
       className="edit-board bg-white dark:bg-slate-800 rounded-md absolute top-40 right-40 flex flex-col gap-6 w-1/2 p-6
-      shadow-xl text-black"
+      shadow-xl text-black overflow-y-scroll max-h-[75%]"
     >
+      <h1 className=" text-xl">Edit board</h1>
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2 ">
         <label htmlFor="taskName" className={labelStyle}>
           Board Name
