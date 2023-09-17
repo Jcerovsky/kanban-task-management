@@ -16,6 +16,8 @@ function Sidebar() {
     setIsShown,
     isSidebarHidden,
     setIsSidebarHidden,
+    isModalOpen,
+    setIsModalOpen,
   } = useContext(Context)!;
 
   useEffect(() => {
@@ -63,13 +65,7 @@ function Sidebar() {
           <div
             className="flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer
               hover:bg-violet-100 text-violet-500 transition-all duration-300 ease-in-out"
-            onClick={() =>
-              setIsShown((prevState) => {
-                return {
-                  "new-board": !prevState["new-board"],
-                };
-              })
-            }
+            onClick={() => setIsModalOpen(true)}
           >
             <img src="../../../assets/icon-board.svg" alt="" />
             <p>+ Create New Board</p>
@@ -115,7 +111,10 @@ function Sidebar() {
             <p onClick={() => setIsSidebarHidden(true)}>Hide Sidebar</p>
           </div>
         )}
-        {isShown["new-board"] && <AddNewBoard />}
+        <AddNewBoard
+          onClose={() => setIsModalOpen(false)}
+          isOpen={isModalOpen}
+        />
       </div>
       {isSidebarHidden && (
         <div

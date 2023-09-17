@@ -8,7 +8,8 @@ import EditBoard from "@/app/Modals/EditBoard";
 function BoardSettings() {
   const [isMenuShown, setIsMenuShown] = useState<boolean>(false);
 
-  const { setIsShown, isShown } = useContext(Context)!;
+  const { setIsShown, isShown, isModalOpen, setIsModalOpen } =
+    useContext(Context)!;
 
   return (
     <>

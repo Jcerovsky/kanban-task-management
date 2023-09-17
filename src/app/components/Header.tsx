@@ -7,11 +7,16 @@ import AddTaskForm from "@/app/Modals/AddTaskForm";
 import Sidebar from "@/app/components/Sidebar";
 
 function Header() {
-  const { currentBoard, theme, isShown, setIsShown } = useContext(Context)!;
+  const {
+    currentBoard,
+    theme,
+    isShown,
+    setIsShown,
+    isModalOpen,
+    setIsModalOpen,
+  } = useContext(Context)!;
 
   const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
-  const [isTaskFormModalOpen, setIsTaskFormModalOpen] =
-    useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -58,7 +63,7 @@ function Header() {
               "new-form": !prevState["new-form"],
             };
           });
-          setIsTaskFormModalOpen(true);
+          setIsModalOpen(true);
         }}
       >
         {smallerScreen ? (
@@ -68,11 +73,7 @@ function Header() {
         )}
       </Button>
       <BoardSettings />
-      <AddTaskForm
-        isOpen={isTaskFormModalOpen}
-        onClose={() => setIsTaskFormModalOpen(false)}
-      />
-      {/*{isShown["new-form"] && <AddTaskForm />}*/}
+      <AddTaskForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       {isShown["sidebar"] && <Sidebar />}
     </header>
   );
