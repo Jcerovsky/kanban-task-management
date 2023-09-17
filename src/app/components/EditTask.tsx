@@ -1,9 +1,8 @@
-import React, { FormEvent, useContext, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
 import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 import Button from "@/app/components/Button";
-import { ColumnProps, Context } from "@/app/context/Context";
-import columns from "@/app/components/Columns";
+import { ColumnProps } from "@/app/context/Context";
 
 interface SubtaskProps {
   title: string;

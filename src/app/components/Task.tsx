@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ColumnProps, Context } from "@/app/context/Context";
 import ViewTask from "@/app/components/ViewTask";
 import EditTask from "@/app/components/EditTask";
+import DeleteTask from "@/app/components/DeleteTask";
 
 interface SubtaskProps {
   title: string;
@@ -20,6 +21,8 @@ interface TaskProps {
 
 function Task({ taskProp, columnData }: TaskProps) {
   const { isShown, setIsShown } = useContext(Context)!;
+  const [deleteTaskModalVisible, setDeleteTaskModalVisible] = useState(false);
+  const [editTaskModalVisible, setEditTaskModalVisible] = useState(false);
 
   return (
     <>
@@ -41,11 +44,16 @@ function Task({ taskProp, columnData }: TaskProps) {
         </p>
       </div>
       {isShown[taskProp.title] && (
-        <ViewTask taskProp={taskProp} columnData={columnData} />
+        <ViewTask
+          taskProp={taskProp}
+          columnData={columnData}
+          setDeleteTaskModalVisible={setDeleteTaskModalVisible}
+        />
       )}
       {isShown["edit-task"] && (
         <EditTask taskProp={taskProp} columnData={columnData} />
       )}
+      {deleteTaskModalVisible && <DeleteTask currentTask={taskProp.title} />}
     </>
   );
 }

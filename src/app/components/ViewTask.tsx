@@ -18,9 +18,14 @@ interface TaskProps {
     subtasks: SubtaskProps[];
   };
   columnData: ColumnProps[];
+  setDeleteTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function ViewTask({ taskProp, columnData }: TaskProps) {
+function ViewTask({
+  taskProp,
+  columnData,
+  setDeleteTaskModalVisible,
+}: TaskProps) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<SubtaskProps[]>(taskProp.subtasks);
 
@@ -83,10 +88,13 @@ function ViewTask({ taskProp, columnData }: TaskProps) {
             </option>
           ))}
         </select>
-        {<TaskSettings isVisible={isVisible} setIsVisible={setIsVisible} />}
-        {isShown["edit-task"] && (
-          <EditTask taskProp={taskProp} columnData={columnData} />
-        )}
+        {
+          <TaskSettings
+            isVisible={isVisible}
+            setIsVisible={setIsVisible}
+            setDeleteTaskModalVisible={setDeleteTaskModalVisible}
+          />
+        }
       </div>
     </>
   );

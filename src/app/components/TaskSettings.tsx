@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "@/app/context/Context";
-import DeleteBoard from "@/app/components/DeleteBoard";
-import EditTask from "@/app/components/EditTask";
 
 interface Props {
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function TaskSettings({ isVisible, setIsVisible }: Props) {
-  const { isShown, setIsShown } = useContext(Context)!;
+function TaskSettings({
+  isVisible,
+  setIsVisible,
+  setDeleteTaskModalVisible,
+}: Props) {
+  const { setIsShown } = useContext(Context)!;
 
   return (
     <>
@@ -42,12 +45,12 @@ function TaskSettings({ isVisible, setIsVisible }: Props) {
               };
             });
             setIsVisible(false);
+            setDeleteTaskModalVisible(true);
           }}
         >
           Delete task
         </p>
       </div>
-      {isShown["delete-task"] && <DeleteBoard />}
     </>
   );
 }
