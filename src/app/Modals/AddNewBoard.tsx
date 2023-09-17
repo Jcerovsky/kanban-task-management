@@ -14,8 +14,8 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div
-        className=" absolute  flex flex-col gap-6 text-black bg-white p-3 py-6
-    rounded-md w-[450px] font-bold text-sm "
+        className=" absolute flex flex-col gap-6 text-black bg-white p-3 py-6
+    rounded-md w-[450px] font-bold text-sm"
       >
         <h1 className=" text-xl">Add new board</h1>
         <form

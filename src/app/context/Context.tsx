@@ -17,6 +17,8 @@ interface ContextProps {
   setColumns: React.Dispatch<React.SetStateAction<string[]>>;
   isSidebarHidden: boolean;
   setIsSidebarHidden: React.Dispatch<React.SetStateAction<boolean>>;
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ColumnProps {
@@ -49,6 +51,7 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   const [isShown, setIsShown] = useState<ContextProps["isShown"]>({});
   const [columns, setColumns] = useState<string[]>([]);
   const [isSidebarHidden, setIsSidebarHidden] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (theme === "light") {
@@ -86,6 +89,8 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
         setColumns,
         isSidebarHidden,
         setIsSidebarHidden,
+        isModalOpen,
+        setIsModalOpen,
       }}
     >
       {children}

@@ -14,16 +14,10 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
       } transition-opacity duration-300 ease-in-out`}
     >
       <div
-        className="fixed inset-0 bg-black opacity-50"
+        className="fixed inset-0 bg-black opacity-50 bg-white z-10"
         onClick={onClose}
       ></div>
-      <div
-        className="bg-white w-1/2 p-4 rounded-lg shadow-lg z-10 h-[500px] w-[500px] overflow-y-scroll
-        py-8"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {children}
-      </div>
+      <div onClick={(e) => e.stopPropagation()}>{children}</div>
     </div>
   );
 };

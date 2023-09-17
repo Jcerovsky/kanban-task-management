@@ -18,6 +18,7 @@ function Sidebar() {
     isShown,
     isSidebarHidden,
     setIsSidebarHidden,
+    isModalOpen,
   } = useContext(Context)!;
 
   useEffect(() => {
@@ -38,8 +39,8 @@ function Sidebar() {
           className={` sidebar flex flex-col gap-2 md:gap-0 right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[250px] bg-white dark:bg-slate-800 fixed 
         md:top-[70px] md:bottom-0 top-[100px] left-0 text-slate-400  
         transform-gpu transition-all duration-300 ease-in-out ${
-          isSidebarHidden ? "md:-translate-x-full" : "translate-x-0"
-        }`}
+          isModalOpen ? "-z-10" : ""
+        } ${isSidebarHidden ? "md:-translate-x-full" : "translate-x-0"}`}
         >
           <p className="mt-5 p-4 text-sm tracking-widest">
             ALL BOARDS ({boardList?.length})

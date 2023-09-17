@@ -3,13 +3,15 @@
 import React, { useState } from "react";
 import { ColumnProps } from "@/app/context/Context";
 import TaskSettings from "@/app/components/TaskSettings";
+import { ModalProps } from "@/app/Modals/Modal";
+import Modal from "@/app/Modals/Modal";
 
 interface SubtaskProps {
   title: string;
   isCompleted: boolean;
 }
 
-interface TaskProps {
+interface TaskProps extends ModalProps {
   taskProp: {
     title: string;
     description: string;
@@ -26,6 +28,8 @@ function ViewTask({
   columnData,
   setDeleteTaskModalVisible,
   setEditTaskModalVisible,
+  isOpen,
+  onClose,
 }: TaskProps) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<SubtaskProps[]>(taskProp.subtasks);
@@ -37,8 +41,8 @@ function ViewTask({
   };
 
   return (
-    <>
-      <div className="view-task absolute top-[20%] bg-blue-200 rounded-md p-5 w-[75%]">
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <div className="bg-white w-[500px] rounded-md p-5 ">
         <div className="flex justify-between items-center">
           <h1 className="mb-5">{taskProp.title}</h1>
           <img
@@ -96,7 +100,7 @@ function ViewTask({
           />
         }
       </div>
-    </>
+    </Modal>
   );
 }
 

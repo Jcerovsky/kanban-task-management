@@ -2,14 +2,17 @@
 
 import React, { useContext, useState } from "react";
 import { Context } from "@/app/context/Context";
-import DeleteBoard from "@/app/components/DeleteBoard";
+import DeleteBoard from "@/app/Modals/DeleteBoard";
 import EditBoard from "@/app/Modals/EditBoard";
 
 function BoardSettings() {
   const [isMenuShown, setIsMenuShown] = useState<boolean>(false);
+  const [isEditBoardModalOpen, setIsEditBoardModalOpen] =
+    useState<boolean>(false);
+  const [isDeleteBoardModalOpen, setIsDeleteBoardModalOpen] =
+    useState<boolean>(false);
 
-  const { setIsShown, isShown, isModalOpen, setIsModalOpen } =
-    useContext(Context)!;
+  const { setIsModalOpen } = useContext(Context)!;
 
   return (
     <>
@@ -29,12 +32,9 @@ function BoardSettings() {
           <p
             className="opacity-50 text-black mb-5"
             onClick={() => {
-              setIsShown((prevState) => {
-                return {
-                  "edit-board": !prevState["edit-board"],
-                };
-              });
+              setIsEditBoardModalOpen(true);
               setIsMenuShown(false);
+              setIsModalOpen(true);
             }}
           >
             Edit board
@@ -42,11 +42,8 @@ function BoardSettings() {
           <p
             className="text-red-500"
             onClick={() => {
-              setIsShown((prevState) => {
-                return {
-                  "delete-board": !prevState["delete-board"],
-                };
-              });
+              setIsDeleteBoardModalOpen(true);
+              setIsModalOpen(true);
               setIsMenuShown(false);
             }}
           >
@@ -54,8 +51,20 @@ function BoardSettings() {
           </p>
         </div>
       </div>
-      {isShown["delete-board"] && <DeleteBoard />}
-      {isShown["edit-board"] && <EditBoard />}
+      <DeleteBoard
+        isOpen={isDeleteBoardModalOpen}
+        onClose={() => {
+          setIsDeleteBoardModalOpen(false);
+          setIsModalOpen(false);
+        }}
+      />
+      <EditBoard
+        isOpen={isEditBoardModalOpen}
+        onClose={() => {
+          setIsEditBoardModalOpen(false);
+          setIsModalOpen(false);
+        }}
+      />
     </>
   );
 }
