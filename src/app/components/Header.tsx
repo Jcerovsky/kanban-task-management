@@ -7,16 +7,10 @@ import AddTaskForm from "@/app/Modals/AddTaskForm";
 import Sidebar from "@/app/components/Sidebar";
 
 function Header() {
-  const {
-    currentBoard,
-    theme,
-    isShown,
-    setIsShown,
-    isModalOpen,
-    setIsModalOpen,
-  } = useContext(Context)!;
+  const { currentBoard, theme, isShown, setIsShown } = useContext(Context)!;
 
   const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
+  const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,53 +23,63 @@ function Header() {
   });
 
   return (
-    <header className="sticky top-0 flex items-center p-4 bg-white dark:bg-gray-800	gap-4 relative">
-      <img
-        src={`../../../assets/logo-${theme === "dark" ? "dark" : "light"}.svg`}
-        alt="kanban logo"
-        className="hidden md:block"
+    <>
+      <header className="sticky top-0 flex items-center p-4 bg-white dark:bg-gray-800	gap-4 relative">
+        <img
+          src={`../../../assets/logo-${
+            theme === "dark" ? "dark" : "light"
+          }.svg`}
+          alt="kanban logo"
+          className="hidden md:block"
+        />
+        <img
+          src="../../../assets/logo-mobile.svg"
+          alt="kanban logo three stripes"
+          className="md:hidden"
+        />
+        <p className="text-2xl font-bold self-center md:ml-20 ">
+          {currentBoard}
+        </p>
+        <img
+          src={`../../../assets/icon-chevron-${
+            isShown["sidebar"] ? "up" : "down"
+          }.svg`}
+          alt="arrow down"
+          className="md:hidden mr-auto cursor-pointer"
+          onClick={() =>
+            setIsShown((prevState) => {
+              return {
+                sidebar: !prevState["sidebar"],
+              };
+            })
+          }
+        />
+        <Button
+          style={"py-2 px-4 text-white "}
+          handleClick={() => {
+            setIsShown((prevState) => {
+              return {
+                "new-form": !prevState["new-form"],
+              };
+            });
+            setIsAddTaskModalOpen(true);
+          }}
+        >
+          {smallerScreen ? (
+            <img src="../../../assets/icon-add-task-mobile.svg" />
+          ) : (
+            "+ Add New Task"
+          )}
+        </Button>
+        <BoardSettings />
+
+        {isShown["sidebar"] && <Sidebar />}
+      </header>
+      <AddTaskForm
+        isOpen={isAddTaskModalOpen}
+        onClose={() => setIsAddTaskModalOpen(false)}
       />
-      <img
-        src="../../../assets/logo-mobile.svg"
-        alt="kanban logo three stripes"
-        className="md:hidden"
-      />
-      <p className="text-2xl font-bold self-center md:ml-20 ">{currentBoard}</p>
-      <img
-        src={`../../../assets/icon-chevron-${
-          isShown["sidebar"] ? "up" : "down"
-        }.svg`}
-        alt="arrow down"
-        className="md:hidden mr-auto cursor-pointer"
-        onClick={() =>
-          setIsShown((prevState) => {
-            return {
-              sidebar: !prevState["sidebar"],
-            };
-          })
-        }
-      />
-      <Button
-        style={"py-2 px-4 text-white "}
-        handleClick={() => {
-          setIsShown((prevState) => {
-            return {
-              "new-form": !prevState["new-form"],
-            };
-          });
-          setIsModalOpen(true);
-        }}
-      >
-        {smallerScreen ? (
-          <img src="../../../assets/icon-add-task-mobile.svg" />
-        ) : (
-          "+ Add New Task"
-        )}
-      </Button>
-      <BoardSettings />
-      <AddTaskForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      {isShown["sidebar"] && <Sidebar />}
-    </header>
+    </>
   );
 }
 
