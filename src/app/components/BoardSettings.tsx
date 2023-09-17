@@ -3,7 +3,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "@/app/context/Context";
 import DeleteBoard from "@/app/components/DeleteBoard";
-import EditBoard from "@/app/components/EditBoard";
+import EditBoard from "@/app/Modals/EditBoard";
 
 function BoardSettings() {
   const [isMenuShown, setIsMenuShown] = useState<boolean>(false);

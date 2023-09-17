@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ColumnProps, Context } from "@/app/context/Context";
-import ViewTask from "@/app/components/ViewTask";
-import EditTask from "@/app/components/EditTask";
+import ViewTask from "@/app/Modals/ViewTask";
+import EditTask from "@/app/Modals/EditTask";
 import DeleteTask from "@/app/components/DeleteTask";
 
 interface SubtaskProps {

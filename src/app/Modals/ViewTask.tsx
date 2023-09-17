@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useContext, useState } from "react";
-import { ColumnProps, Context } from "@/app/context/Context";
+import React, { useState } from "react";
+import { ColumnProps } from "@/app/context/Context";
 import TaskSettings from "@/app/components/TaskSettings";
-import EditTask from "@/app/components/EditTask";
 
 interface SubtaskProps {
   title: string;

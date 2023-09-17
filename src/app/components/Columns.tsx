@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ColumnProps, Context } from "@/app/context/Context";
 import Task from "@/app/components/Task";
-import EditBoard from "@/app/components/EditBoard";
+import EditBoard from "@/app/Modals/EditBoard";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function Columns() {

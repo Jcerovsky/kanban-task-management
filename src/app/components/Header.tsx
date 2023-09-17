@@ -3,13 +3,15 @@ import React, { useContext, useEffect, useState } from "react";
 import Button from "@/app/components/Button";
 import BoardSettings from "@/app/components/BoardSettings";
 import { Context } from "@/app/context/Context";
-import AddTaskForm from "@/app/components/AddTaskForm";
+import AddTaskForm from "@/app/Modals/AddTaskForm";
 import Sidebar from "@/app/components/Sidebar";
 
 function Header() {
   const { currentBoard, theme, isShown, setIsShown } = useContext(Context)!;
 
   const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
+  const [isTaskFormModalOpen, setIsTaskFormModalOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,13 +52,14 @@ function Header() {
       />
       <Button
         style={"py-2 px-4 text-white "}
-        handleClick={() =>
+        handleClick={() => {
           setIsShown((prevState) => {
             return {
               "new-form": !prevState["new-form"],
             };
-          })
-        }
+          });
+          setIsTaskFormModalOpen(true);
+        }}
       >
         {smallerScreen ? (
           <img src="../../../assets/icon-add-task-mobile.svg" />
@@ -65,7 +68,11 @@ function Header() {
         )}
       </Button>
       <BoardSettings />
-      {isShown["new-form"] && <AddTaskForm />}
+      <AddTaskForm
+        isOpen={isTaskFormModalOpen}
+        onClose={() => setIsTaskFormModalOpen(false)}
+      />
+      {/*{isShown["new-form"] && <AddTaskForm />}*/}
       {isShown["sidebar"] && <Sidebar />}
     </header>
   );

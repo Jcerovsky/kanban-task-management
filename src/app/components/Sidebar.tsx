@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { Context, DataProps } from "@/app/context/Context";
-import AddNewBoard from "@/app/components/AddNewBoard";
+import AddNewBoard from "@/app/Modals/AddNewBoard";
 
 function Sidebar() {
   const { theme, setTheme } = useContext(Context)!;
