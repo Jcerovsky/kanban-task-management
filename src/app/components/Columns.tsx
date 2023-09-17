@@ -5,8 +5,7 @@ import EditBoard from "@/app/Modals/EditBoard";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function Columns() {
-  const { data, currentBoard, isSidebarHidden, isShown, setIsShown } =
-    useContext(Context)!;
+  const { data, currentBoard, isSidebarHidden } = useContext(Context)!;
   const [columnData, setColumnData] = useState<ColumnProps[]>([]);
   const [isEditBoardModalOpen, setIsEditBoardModalOpen] =
     useState<boolean>(false);

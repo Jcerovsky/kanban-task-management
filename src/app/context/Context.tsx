@@ -11,8 +11,6 @@ interface ContextProps {
   setData: React.Dispatch<React.SetStateAction<DataProps[]>>;
   currentBoard: string;
   setCurrentBoard: React.Dispatch<React.SetStateAction<string>>;
-  isShown: { [elementClass: string]: boolean };
-  setIsShown: React.Dispatch<React.SetStateAction<ContextProps["isShown"]>>;
   columns: string[];
   setColumns: React.Dispatch<React.SetStateAction<string[]>>;
   isSidebarHidden: boolean;
@@ -48,7 +46,6 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   );
   const [data, setData] = useState<DataProps[]>([]);
   const [currentBoard, setCurrentBoard] = useState<string>("");
-  const [isShown, setIsShown] = useState<ContextProps["isShown"]>({});
   const [columns, setColumns] = useState<string[]>([]);
   const [isSidebarHidden, setIsSidebarHidden] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -83,8 +80,6 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
         setData,
         currentBoard,
         setCurrentBoard,
-        isShown,
-        setIsShown,
         columns,
         setColumns,
         isSidebarHidden,

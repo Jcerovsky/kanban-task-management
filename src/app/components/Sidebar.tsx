@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context, DataProps } from "@/app/context/Context";
 import AddNewBoard from "@/app/Modals/AddNewBoard";
 
-function Sidebar() {
+function Sidebar({ isSidebarVisible }: { isSidebarVisible: boolean }) {
   const { theme, setTheme } = useContext(Context)!;
   const [isToggled, setIsToggled] = useState<boolean>(theme === "light");
   const [selectedBoardIndex, setSelectedBoardIndex] = useState<number>(0);
@@ -15,7 +15,6 @@ function Sidebar() {
   const {
     data,
     setCurrentBoard,
-    isShown,
     isSidebarHidden,
     setIsSidebarHidden,
     isModalOpen,
@@ -34,7 +33,7 @@ function Sidebar() {
 
   return (
     <>
-      <div className={` md:flex ${isShown["sidebar"] ? "block" : "hidden"} `}>
+      <div className={` md:flex ${isSidebarVisible ? "block" : "hidden"} `}>
         <div
           className={` sidebar flex flex-col gap-2 md:gap-0 right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[250px] bg-white dark:bg-slate-800 fixed 
         md:top-[70px] md:bottom-0 top-[100px] left-0 text-slate-400  
@@ -99,7 +98,7 @@ function Sidebar() {
               alt="moon in a crescent icon"
             />
           </div>
-          {!isShown["sidebar"] && (
+          {!isSidebarHidden && (
             <div
               className="flex gap-2 justify-center items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
               hover:bg-violet-100 hover:text-violet-500 transition-all duration-300 ease-in-out"

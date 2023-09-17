@@ -7,10 +7,11 @@ import AddTaskForm from "@/app/Modals/AddTaskForm";
 import Sidebar from "@/app/components/Sidebar";
 
 function Header() {
-  const { currentBoard, theme, isShown, setIsShown } = useContext(Context)!;
+  const { currentBoard, theme } = useContext(Context)!;
 
   const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState<boolean>(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,28 +43,15 @@ function Header() {
         </p>
         <img
           src={`../../../assets/icon-chevron-${
-            isShown["sidebar"] ? "up" : "down"
+            isSidebarVisible ? "up" : "down"
           }.svg`}
           alt="arrow down"
           className="md:hidden mr-auto cursor-pointer"
-          onClick={() =>
-            setIsShown((prevState) => {
-              return {
-                sidebar: !prevState["sidebar"],
-              };
-            })
-          }
+          onClick={() => setIsSidebarVisible((prevState) => !prevState)}
         />
         <Button
           style={"py-2 px-4 text-white "}
-          handleClick={() => {
-            setIsShown((prevState) => {
-              return {
-                "new-form": !prevState["new-form"],
-              };
-            });
-            setIsAddTaskModalOpen(true);
-          }}
+          handleClick={() => setIsAddTaskModalOpen(true)}
         >
           {smallerScreen ? (
             <img src="../../../assets/icon-add-task-mobile.svg" />
@@ -73,7 +61,7 @@ function Header() {
         </Button>
         <BoardSettings />
 
-        {isShown["sidebar"] && <Sidebar />}
+        {isSidebarVisible && <Sidebar isSidebarVisible={isSidebarVisible} />}
       </header>
       <AddTaskForm
         isOpen={isAddTaskModalOpen}
