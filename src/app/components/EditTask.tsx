@@ -21,26 +21,38 @@ interface TaskProps {
 
 function EditTask({ taskProp, columnData }: TaskProps) {
   const [editedTaskName, setEditedTaskName] = useState<string>("");
-  const [subtasks, setSubtasks] = useState<string[]>([]);
+  const [editedTaskDescription, setEditedTaskDescription] =
+    useState<string>("");
+  const [subtasks, setSubtasks] = useState<SubtaskProps[]>([]);
+
+  useEffect(() => {
+    setEditedTaskName(taskProp.title);
+    setEditedTaskDescription(taskProp.description);
+    setSubtasks(taskProp.subtasks);
+  }, [taskProp]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
-  useEffect(() => {
-    setEditedTaskName(taskProp.title);
-  }, []);
+  const handleDeleteSubtask = (index: number) => {
+    setSubtasks((prevSubtasks) => {
+      const newSubtasks = [...prevSubtasks];
+      newSubtasks.splice(index, 1);
+      return newSubtasks;
+    });
+  };
 
-  useEffect(() => {
-    const subtasks = taskProp.subtasks.map((subtask) => subtask.title);
-    setSubtasks(subtasks);
-  }, []);
+  const handleUpdateSubtask = (index: number, newTitle: string) => {
+    setSubtasks((prevSubtasks) => {
+      const updatedSubtasks = [...prevSubtasks];
+      updatedSubtasks[index].title = newTitle;
+      return updatedSubtasks;
+    });
+  };
 
   return (
-    <div
-      className="bg-white dark:bg-slate-800 rounded-md absolute top-40 right-20 flex flex-col gap-6 w-[500px] p-6
-      shadow-xl text-black overflow-y-scroll max-h-[600px]"
-    >
+    <div className="bg-white dark:bg-slate-800 rounded-md absolute top-40 right-20 flex flex-col gap-6 w-[500px] p-6 shadow-xl text-black overflow-y-scroll max-h-[600px]">
       <h1 className=" text-xl dark:text-white">Edit task</h1>
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2 ">
         <label htmlFor="taskName" className={labelStyle}>
@@ -56,22 +68,24 @@ function EditTask({ taskProp, columnData }: TaskProps) {
         <label htmlFor="subtask" className={labelStyle}>
           Description
         </label>
-        <textarea className="border rounded-md" />
+        <textarea
+          value={editedTaskDescription}
+          onChange={(e) => setEditedTaskDescription(e.target.value)}
+          className="border rounded-md"
+        />
         <label className={labelStyle}>Subtasks</label>
         <div>
-          {taskProp.subtasks.map((subtask, index) => (
+          {subtasks.map((subtask, index) => (
             <div key={index} className="flex mb-2">
               <input
                 type="text"
                 value={subtask.title}
                 className="border rounded-md p-2 px-3 w-[95%] text-sm font-light"
-                onChange={(e) =>
-                  setSubtasks(updateColumn(subtasks, e.target.value, index))
-                }
+                onChange={(e) => handleUpdateSubtask(index, e.target.value)}
               />
               <span
                 className="ml-auto self-center text-slate-600 text-xl font-bold"
-                onClick={() => setSubtasks(deleteColumn(subtasks, index))}
+                onClick={() => handleDeleteSubtask(index)}
               >
                 ✕
               </span>
@@ -80,7 +94,12 @@ function EditTask({ taskProp, columnData }: TaskProps) {
         </div>
         <Button
           style={"w-full py-[10px] text-white "}
-          handleClick={() => setSubtasks(addColumn(subtasks))}
+          handleClick={() =>
+            setSubtasks((prevSubtasks) => [
+              ...prevSubtasks,
+              { title: "", isCompleted: false },
+            ])
+          }
         >
           + Add New Subtask
         </Button>
