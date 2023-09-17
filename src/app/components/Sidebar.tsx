@@ -35,7 +35,7 @@ function Sidebar() {
     <>
       <div className={` md:flex ${isShown["sidebar"] ? "block" : "hidden"} `}>
         <div
-          className={` sidebar flex flex-col right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[250px] bg-white dark:bg-slate-800 fixed 
+          className={` sidebar flex flex-col gap-2 md:gap-0 right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[250px] bg-white dark:bg-slate-800 fixed 
         md:top-[70px] md:bottom-0 top-[100px] left-0 text-slate-400  
         transform-gpu transition-all duration-300 ease-in-out ${
           isSidebarHidden ? "md:-translate-x-full" : "translate-x-0"
@@ -45,7 +45,7 @@ function Sidebar() {
             ALL BOARDS ({boardList?.length})
           </p>
 
-          <div className="flex flex-col ">
+          <div className="flex flex-col mb-2 md:mb-0 ">
             {boardList?.map((board, index) => (
               <div
                 key={board}
@@ -73,7 +73,7 @@ function Sidebar() {
 
           <div
             className="flex mt-auto items-center gap-2 justify-around bg-neutral-200 dark:bg-black py-3 px-4 m-5
-        rounded-md transition-all duration-300 ease-in-out"
+        rounded-md transition-all duration-300 ease-in-out mb-2"
           >
             <img src="../../../assets/icon-light-theme.svg" alt="sun icon" />
 
