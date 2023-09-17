@@ -8,7 +8,7 @@ function DeleteTask({ currentTask }: Props) {
   const [isHidden, setIsHidden] = useState<boolean>(false);
   return (
     <div
-      className={`delete-task bg-white dark:bg-slate-800 rounded-md absolute font-semibold top-60 right-20 flex flex-col gap-6 w-1/2 p-6 
+      className={` bg-white dark:bg-slate-800 rounded-md absolute font-semibold top-60 right-20 flex flex-col gap-6 w-1/2 p-6 
       shadow-xl ${isHidden ? "hidden" : ""}`}
     >
       <h3 className="text-xl text-red-600">Delete this task?</h3>

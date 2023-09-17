@@ -1,21 +1,20 @@
 "use client";
 
-import React, { useContext, useState } from "react";
-import { Context } from "@/app/context/Context";
+import React from "react";
 
 interface Props {
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setDeleteTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function TaskSettings({
   isVisible,
   setIsVisible,
   setDeleteTaskModalVisible,
+  setEditTaskModalVisible,
 }: Props) {
-  const { setIsShown } = useContext(Context)!;
-
   return (
     <>
       <div
@@ -26,12 +25,8 @@ function TaskSettings({
         <p
           className="opacity-50 text-black mb-5 cursor-pointer"
           onClick={() => {
-            setIsShown((prevState) => {
-              return {
-                "edit-task": !prevState["edit-task"],
-              };
-            });
             setIsVisible(false);
+            setEditTaskModalVisible(true);
           }}
         >
           Edit task
@@ -39,11 +34,6 @@ function TaskSettings({
         <p
           className="text-red-500 cursor-pointer"
           onClick={() => {
-            setIsShown((prevState) => {
-              return {
-                "delete-task": !prevState["delete-task"],
-              };
-            });
             setIsVisible(false);
             setDeleteTaskModalVisible(true);
           }}

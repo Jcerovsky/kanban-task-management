@@ -48,9 +48,10 @@ function Task({ taskProp, columnData }: TaskProps) {
           taskProp={taskProp}
           columnData={columnData}
           setDeleteTaskModalVisible={setDeleteTaskModalVisible}
+          setEditTaskModalVisible={setEditTaskModalVisible}
         />
       )}
-      {isShown["edit-task"] && (
+      {editTaskModalVisible && (
         <EditTask taskProp={taskProp} columnData={columnData} />
       )}
       {deleteTaskModalVisible && <DeleteTask currentTask={taskProp.title} />}

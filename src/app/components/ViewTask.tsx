@@ -19,17 +19,17 @@ interface TaskProps {
   };
   columnData: ColumnProps[];
   setDeleteTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function ViewTask({
   taskProp,
   columnData,
   setDeleteTaskModalVisible,
+  setEditTaskModalVisible,
 }: TaskProps) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<SubtaskProps[]>(taskProp.subtasks);
-
-  const { isShown } = useContext(Context)!;
 
   const updateSubtask = (index: number) => {
     const updatedSubtasks = [...subtasks];
@@ -93,6 +93,7 @@ function ViewTask({
             isVisible={isVisible}
             setIsVisible={setIsVisible}
             setDeleteTaskModalVisible={setDeleteTaskModalVisible}
+            setEditTaskModalVisible={setEditTaskModalVisible}
           />
         }
       </div>
