@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context, DataProps } from "@/app/context/Context";
 import AddNewBoard from "@/app/Modals/AddNewBoard";
 
-function Sidebar({ isSidebarVisible }: { isSidebarVisible: boolean }) {
+function Sidebar() {
   const { theme, setTheme } = useContext(Context)!;
   const [isToggled, setIsToggled] = useState<boolean>(theme === "light");
   const [selectedBoardIndex, setSelectedBoardIndex] = useState<number>(0);
@@ -33,11 +33,11 @@ function Sidebar({ isSidebarVisible }: { isSidebarVisible: boolean }) {
 
   return (
     <>
-      <div className={` md:flex ${isSidebarVisible ? "block" : "hidden"} `}>
+      <div className={` md:flex ${!isSidebarHidden ? "block" : "hidden"} `}>
         <div
-          className={` sidebar flex flex-col gap-2 md:gap-0 right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[250px] bg-white dark:bg-slate-800 fixed 
+          className={` sidebar flex flex-col gap-2 md:gap-0 right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[250px] bg-white dark:bg-slate-700 fixed 
         md:top-[70px] md:bottom-0 top-[100px] left-0 text-slate-400  
-        transform-gpu transition-all duration-300 ease-in-out ${
+        transform-gpu transition-all duration-300 ease-in-out shadow-xl ${
           isModalOpen ? "-z-10" : ""
         } ${isSidebarHidden ? "md:-translate-x-full" : "translate-x-0"}`}
         >
@@ -87,7 +87,7 @@ function Sidebar({ isSidebarVisible }: { isSidebarVisible: boolean }) {
               <div
                 className="w-11 h-6 rounded-full hover:bg-violet-500 peer-checked:after:translate-x-full
           peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white
-          after:border after:rounded-full after:h-5 after:w-5 after:transition-all transition-all duration-700 ease-in-out bg-violet-600 outline-none"
+          after:border after:rounded-full after:h-5 after:w-5 after:transition-transform duration-400 ease-in-out bg-violet-600 outline-none"
                 onClick={() => setTheme(theme === "light" ? "dark" : "light")}
               ></div>
               <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300" />
@@ -100,8 +100,9 @@ function Sidebar({ isSidebarVisible }: { isSidebarVisible: boolean }) {
           </div>
           {!isSidebarHidden && (
             <div
-              className="flex gap-2 justify-center items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
-              hover:bg-violet-100 hover:text-violet-500 transition-all duration-300 ease-in-out"
+              className="
+              flex gap-2 justify-center items-center p-3 mr-4 rounded-r-full cursor-pointer hover:text-violet-500
+                hover:bg-violet-100 hover:text-violet-500 transition-all duration-300 ease-in-out"
             >
               <img
                 src="../../../assets/icon-hide-sidebar.svg"

@@ -42,7 +42,7 @@ function ViewTask({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="bg-white w-[500px] rounded-md p-5 ">
+      <div className="bg-white w-[500px] rounded-md p-5 dark:text-black ">
         <div className="flex justify-between items-center">
           <h1 className="mb-5">{taskProp.title}</h1>
           <img

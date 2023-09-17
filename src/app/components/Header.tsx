@@ -7,11 +7,11 @@ import AddTaskForm from "@/app/Modals/AddTaskForm";
 import Sidebar from "@/app/components/Sidebar";
 
 function Header() {
-  const { currentBoard, theme } = useContext(Context)!;
+  const { currentBoard, theme, isSidebarHidden, setIsSidebarHidden } =
+    useContext(Context)!;
 
   const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState<boolean>(false);
-  const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,9 +23,10 @@ function Header() {
     return () => window.removeEventListener("resize", handleResize);
   });
 
+  console.log(smallerScreen);
   return (
     <>
-      <header className="sticky top-0 flex items-center p-4 bg-white dark:bg-gray-800	gap-4 relative">
+      <header className="sticky top-0 flex items-center p-4 bg-white dark:bg-slate-700	gap-4 relative">
         <img
           src={`../../../assets/logo-${
             theme === "dark" ? "dark" : "light"
@@ -43,11 +44,11 @@ function Header() {
         </p>
         <img
           src={`../../../assets/icon-chevron-${
-            isSidebarVisible ? "up" : "down"
+            !isSidebarHidden ? "up" : "down"
           }.svg`}
           alt="arrow down"
           className="md:hidden mr-auto cursor-pointer"
-          onClick={() => setIsSidebarVisible((prevState) => !prevState)}
+          onClick={() => setIsSidebarHidden((prevState) => !prevState)}
         />
         <Button
           style={"py-2 px-4 text-white "}
@@ -61,7 +62,7 @@ function Header() {
         </Button>
         <BoardSettings />
 
-        {isSidebarVisible && <Sidebar isSidebarVisible={isSidebarVisible} />}
+        {!isSidebarHidden && <Sidebar />}
       </header>
       <AddTaskForm
         isOpen={isAddTaskModalOpen}

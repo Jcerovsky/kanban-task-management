@@ -55,7 +55,7 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="bg-white dark:bg-slate-800 rounded-md absolute top-40 right-20 flex flex-col gap-6 w-[500px] p-6 shadow-xl text-black overflow-y-scroll max-h-[600px]">
+      <div className="bg-white dark:bg-slate-800 rounded-md flex flex-col gap-6 w-[500px] p-6 shadow-xl text-black overflow-y-scroll max-h-[600px]">
         <h1 className=" text-xl dark:text-white">Edit task</h1>
         <form
           onSubmit={(e) => handleSubmit(e)}
