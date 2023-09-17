@@ -15,7 +15,7 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div
-        className="flex flex-col gap-6 text-black bg-white py-6
+        className="flex flex-col gap-6 text-black bg-white py-6 p-5
     rounded-md font-bold text-sm"
       >
         <h1 className=" text-xl">Add New Task</h1>

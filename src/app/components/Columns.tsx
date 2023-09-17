@@ -8,6 +8,8 @@ function Columns() {
   const { data, currentBoard, isSidebarHidden, isShown, setIsShown } =
     useContext(Context)!;
   const [columnData, setColumnData] = useState<ColumnProps[]>([]);
+  const [isEditBoardModalOpen, setIsEditBoardModalOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (currentBoard) {
@@ -92,18 +94,17 @@ function Columns() {
           <div
             className="flex min-w-[250px] self-center justify-center text-2xl font-bold hover:text-violet-500 bg-white
         dark:bg-slate-700 cursor-pointer py-[20%] rounded-md mr-8 ml-3 "
-            onClick={() =>
-              setIsShown((prevState) => {
-                return { "edit-board": !prevState["edit-board"] };
-              })
-            }
+            onClick={() => setIsEditBoardModalOpen(true)}
           >
             <p className="self-center text-slate-500 hover:text-violet-500">
               + New Column
             </p>
           </div>
         </div>
-        {isShown["edit-board"] && <EditBoard />}
+        <EditBoard
+          onClose={() => setIsEditBoardModalOpen(false)}
+          isOpen={isEditBoardModalOpen}
+        />
       </div>
     </DragDropContext>
   );

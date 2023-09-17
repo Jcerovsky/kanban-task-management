@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
-import { ColumnProps, Context } from "@/app/context/Context";
+import React, { useState } from "react";
+import { ColumnProps } from "@/app/context/Context";
 import ViewTask from "@/app/Modals/ViewTask";
 import EditTask from "@/app/Modals/EditTask";
-import DeleteTask from "@/app/components/DeleteTask";
+import DeleteTask from "@/app/Modals/DeleteTask";
 
 interface SubtaskProps {
   title: string;
@@ -42,20 +42,25 @@ function Task({ taskProp, columnData }: TaskProps) {
           of {taskProp.subtasks.length}
         </p>
       </div>
-      {isViewTaskModalOpen && (
-        <ViewTask
-          taskProp={taskProp}
-          onClose={() => setIsViewTaskModalOpen(false)}
-          isOpen={isViewTaskModalOpen}
-          columnData={columnData}
-          setDeleteTaskModalVisible={setDeleteTaskModalVisible}
-          setEditTaskModalVisible={setEditTaskModalVisible}
-        />
-      )}
-      {editTaskModalVisible && (
-        <EditTask taskProp={taskProp} columnData={columnData} />
-      )}
-      {deleteTaskModalVisible && <DeleteTask currentTask={taskProp.title} />}
+      <ViewTask
+        taskProp={taskProp}
+        onClose={() => setIsViewTaskModalOpen(false)}
+        isOpen={isViewTaskModalOpen}
+        columnData={columnData}
+        setDeleteTaskModalVisible={setDeleteTaskModalVisible}
+        setEditTaskModalVisible={setEditTaskModalVisible}
+      />
+      <EditTask
+        taskProp={taskProp}
+        columnData={columnData}
+        isOpen={editTaskModalVisible}
+        onClose={() => setEditTaskModalVisible(false)}
+      />
+      <DeleteTask
+        currentTask={taskProp.title}
+        onClose={() => setDeleteTaskModalVisible(false)}
+        isOpen={deleteTaskModalVisible}
+      />
     </>
   );
 }

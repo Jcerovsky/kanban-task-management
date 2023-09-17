@@ -1,17 +1,20 @@
-import React, { useContext, useState } from "react";
-import { Context } from "@/app/context/Context";
-import Modal, { ModalProps } from "@/app/Modals/Modal";
+import React from "react";
+import Modal from "@/app/Modals/Modal";
 
-function DeleteBoard({ isOpen, onClose }: ModalProps) {
-  const { currentBoard } = useContext(Context)!;
+interface Props {
+  currentTask: string;
+  isOpen: boolean;
+  onClose: () => void;
+}
 
+function DeleteTask({ currentTask, isOpen, onClose }: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="dark:bg-slate-800 font-semibold bg-white flex flex-col gap-6 rounded-lg overflow-y-scroll p-4 w-[500px]">
-        <h3 className="text-xl text-red-600">Delete this board?</h3>
+      <div className="bg-white dark:bg-slate-800 rounded-md absolute font-semibold top-60 right-20 flex flex-col gap-6 w-1/2 p-6">
+        <h3 className="text-xl text-red-600">Delete this task?</h3>
         <p className="text-slate-500 text-sm">
-          {`Are you sure you want to delete the ${currentBoard} board? This action
-              will remove all columns and tasks and cannot be reversed.`}
+          {`Are you sure you want to delete the "${currentTask}" task and its subtasks? This action
+    cannot be reversed.`}
         </p>
         <div className="flex justify-between ">
           <button
@@ -35,4 +38,4 @@ function DeleteBoard({ isOpen, onClose }: ModalProps) {
   );
 }
 
-export default DeleteBoard;
+export default DeleteTask;

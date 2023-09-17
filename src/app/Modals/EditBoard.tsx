@@ -32,7 +32,7 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className=" dark:bg-slate-800 bg-blue-500 flex flex-col gap-6 text-black p-4 ">
+      <div className=" dark:bg-slate-800 bg-white w-100 flex flex-col gap-6 text-black p-4 ">
         <h1 className=" text-xl">Edit board</h1>
         <form
           onSubmit={(e) => handleSubmit(e)}
