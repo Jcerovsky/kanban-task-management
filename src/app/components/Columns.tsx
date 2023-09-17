@@ -79,7 +79,7 @@ function Columns() {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <Task taskProp={task} />
+                          <Task taskProp={task} columnData={columnData} />
                         </div>
                       )}
                     </Draggable>
