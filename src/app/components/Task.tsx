@@ -29,7 +29,7 @@ function Task({ taskProp, columnData }: TaskProps) {
     <>
       <div
         key={crypto.randomUUID()}
-        className="bg-white dark:text-white dark:bg-slate-700 rounded-md shadow-xl p-3 mb-5 font-md cursor-pointer dark:text-white"
+        className="bg-white dark:text-white dark:bg-slate-700 rounded-md shadow-xl p-4 mb-5 font-md cursor-pointer dark:text-white"
         onClick={() => setIsViewTaskModalOpen(true)}
       >
         <p className="font-semibold mb-2 hover:text-violet-500">
