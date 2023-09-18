@@ -77,7 +77,7 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
           <textarea
             value={editedTaskDescription}
             onChange={(e) => setEditedTaskDescription(e.target.value)}
-            className="border rounded-md"
+            className={`border rounded-md text-xs ${inputStyle}`}
           />
           <label className={labelStyle}>Subtasks</label>
           <div>
@@ -99,7 +99,7 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
             ))}
           </div>
           <Button
-            style={"w-full py-[10px] text-white "}
+            style={"w-full py-[10px] text-white mb-4 "}
             handleClick={() =>
               setSubtasks((prevSubtasks) => [
                 ...prevSubtasks,

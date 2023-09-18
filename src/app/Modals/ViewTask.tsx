@@ -99,6 +99,7 @@ function ViewTask({
               key={crypto.randomUUID()}
               value={column.name}
               className="p-2"
+              selected={column.name === taskProp.status}
             >
               {column.name}
             </option>

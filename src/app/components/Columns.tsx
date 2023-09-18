@@ -65,7 +65,7 @@ function Columns() {
                   {...provided.droppableProps}
                   className="min-w-[280px] p-3"
                 >
-                  <p className="text-slate-500 text-sm mb-5">
+                  <p className="text-slate-500 font-semibold text-xs tracking-widest mb-5">
                     {column.name} ({column.tasks.length})
                   </p>
                   {column.tasks.map((task, index) => (
