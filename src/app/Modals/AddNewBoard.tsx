@@ -15,7 +15,7 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <div
         className="  flex flex-col gap-6 text-black bg-white p-3 py-6
-    rounded-md  font-bold text-sm"
+    rounded-md  font-demibold text-sm"
       >
         <h1 className=" text-xl">Add new board</h1>
         <form
@@ -29,7 +29,7 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
             type="text"
             placeholder="e.g. Write Report"
             id="taskName"
-            className={`${inputStyle}`}
+            className={`${inputStyle} text-sm`}
           />
           <label htmlFor="subtask" className={labelStyle}>
             Board Columns
@@ -40,7 +40,7 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
                 <input
                   type="text"
                   value={column}
-                  className="border rounded-md p-2 px-3 w-[95%]"
+                  className="border rounded-md py-2 px-4 w-[95%] text-sm"
                   onChange={(e) =>
                     setColumns(updateColumn(columns, e.target.value, index))
                   }
