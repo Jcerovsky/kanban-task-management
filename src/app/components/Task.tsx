@@ -32,7 +32,9 @@ function Task({ taskProp, columnData }: TaskProps) {
         className="bg-white dark:text-white dark:bg-slate-700 rounded-md shadow-xl p-3 mb-5 font-md cursor-pointer dark:text-white"
         onClick={() => setIsViewTaskModalOpen(true)}
       >
-        <p className="font-bold mb-2 hover:text-violet-500">{taskProp.title}</p>
+        <p className="font-semibold mb-2 hover:text-violet-500">
+          {taskProp.title}
+        </p>
         <p className="text-slate-500 text-xs">
           {
             taskProp.subtasks.filter(
