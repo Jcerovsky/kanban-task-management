@@ -3,7 +3,15 @@ import { Context } from "@/app/context/Context";
 import Modal, { ModalProps } from "@/app/Modals/Modal";
 
 function DeleteBoard({ isOpen, onClose }: ModalProps) {
-  const { currentBoard } = useContext(Context)!;
+  const { currentBoard, data, setData } = useContext(Context)!;
+
+  const handleDelete = () => {
+    const currentBoardData = data.filter(
+      (board) => board.name !== currentBoard,
+    );
+    setData(currentBoardData);
+    onClose();
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -18,6 +26,7 @@ function DeleteBoard({ isOpen, onClose }: ModalProps) {
             className={
               "bg-red-500 hover:bg-red-400 py-2 w-[48%] text-white bg-hover rounded-full transition-all ease-in-out duration-300"
             }
+            onClick={handleDelete}
           >
             Delete
           </button>

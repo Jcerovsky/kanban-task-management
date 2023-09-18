@@ -73,7 +73,7 @@ function ViewTask({
                 type="checkbox"
                 name={"checkbox"}
                 id={"checkbox"}
-                className={`w-4 h-4 transform duration-300 ${
+                className={`w-4 h-4 transform duration-100 ease-in ${
                   subtask.isCompleted && "bg-violet-500"
                 }`}
                 checked={subtask.isCompleted}

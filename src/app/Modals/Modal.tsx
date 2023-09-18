@@ -11,7 +11,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center ${
         isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-      } transition-opacity duration-300 ease-in-out`}
+      } transition-opacity duration-100 ease-in-out`}
     >
       <div
         className="fixed inset-0 bg-black opacity-50"
