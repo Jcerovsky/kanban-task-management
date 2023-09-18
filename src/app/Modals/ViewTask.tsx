@@ -99,7 +99,9 @@ function ViewTask({
               key={crypto.randomUUID()}
               value={column.name}
               className="p-2"
-              selected={column.name === taskProp.status}
+              defaultValue={
+                column.name === taskProp.status ? column.name : column.name
+              }
             >
               {column.name}
             </option>
