@@ -18,7 +18,7 @@ function Columns() {
       const columns = currentBoardData[0].columns.map((column) => column);
       setColumnData(columns);
     }
-  }, [currentBoard]);
+  }, [currentBoard, data]);
 
   const onDragEnd = (result) => {
     if (!result.destination) {

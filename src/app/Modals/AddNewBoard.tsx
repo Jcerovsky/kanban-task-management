@@ -23,6 +23,7 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
       columns: transformedColumns,
     };
     setData([...data, newBoardData]);
+    onClose();
   };
 
   return (

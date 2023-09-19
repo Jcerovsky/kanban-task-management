@@ -66,11 +66,11 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (currentBoard.length > 0)
+    if (data.length > 0 && !currentBoard)
       if (data.length > 0) {
         setCurrentBoard(data[0].name);
       }
-  }, [data]);
+  }, [data, currentBoard]);
 
   return (
     <Context.Provider

@@ -1,18 +1,24 @@
 "use client";
-import React, { useContext, useState } from "react";
+
+import React, { useContext, useEffect, useState } from "react";
 import Button from "@/app/components/Button";
 import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
 import Modal, { ModalProps } from "@/app/Modals/Modal";
-import { ColumnProps, Context, DataProps } from "@/app/context/Context";
+import { Context } from "@/app/context/Context";
 
 function AddTaskForm({ isOpen, onClose }: ModalProps) {
+  const { data, setData, currentBoard } = useContext(Context)!;
+  const currentBoardData = data.filter((board) => board.name === currentBoard);
+
   const [subtasks, setSubtasks] = useState<string[]>(["", ""]);
   const [taskName, setTaskName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [currentStatus, setCurrentStatus] = useState<string>("");
 
-  const { data, setData, currentBoard } = useContext(Context)!;
+  useEffect(() => {
+    setCurrentStatus(currentBoardData[0]?.columns[0].name);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,16 +35,12 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
       subtasks: transformSubtasks,
     };
 
-    const currentBoardData = data.filter(
-      (board) => board.name === currentBoard,
-    );
-
     const updatedData = data.map((board) => {
       if (board.name === currentBoard) {
         return {
           ...board,
           columns: board.columns.map((column) => {
-            if (column.name.toLowerCase() === currentStatus.toLowerCase()) {
+            if (column.name.toLowerCase() === currentStatus?.toLowerCase()) {
               return {
                 ...column,
                 tasks: [...column.tasks, newTask],
@@ -50,8 +52,10 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
       }
       return board;
     });
-
-    console.log(updatedData);
+    updatedData
+      .filter((board) => board.name === currentBoard)
+      .map((col) => col.columns.map((item) => console.log(item)));
+    console.log("new task", newTask);
     setData(updatedData);
     onClose();
   };
@@ -127,14 +131,15 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
           <select
             className={inputStyle}
             onChange={(e) => setCurrentStatus(e.target.value)}
+            value={currentStatus}
           >
-            {data
-              .filter((board) => board.name === currentBoard)
-              .map((board) =>
-                board.columns.map((col) => (
-                  <option value={col.name}>{col.name}</option>
-                )),
-              )}
+            {currentBoardData.map((board) =>
+              board.columns.map((col) => (
+                <option key={crypto.randomUUID()} value={col.name}>
+                  {col.name}
+                </option>
+              )),
+            )}
           </select>
           <Button style={"w-full py-[10px] text-white "} type={"submit"}>
             Create Task
