@@ -66,9 +66,10 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (data.length > 0) {
-      setCurrentBoard(data[0].name);
-    }
+    if (currentBoard.length > 0)
+      if (data.length > 0) {
+        setCurrentBoard(data[0].name);
+      }
   }, [data]);
 
   return (
