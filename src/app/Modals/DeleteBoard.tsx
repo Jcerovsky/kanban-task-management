@@ -3,13 +3,14 @@ import { Context } from "@/app/context/Context";
 import Modal, { ModalProps } from "@/app/Modals/Modal";
 
 function DeleteBoard({ isOpen, onClose }: ModalProps) {
-  const { currentBoard, data, setData } = useContext(Context)!;
+  const { currentBoard, setCurrentBoard, data, setData } = useContext(Context)!;
 
   const handleDelete = () => {
     const currentBoardData = data.filter(
       (board) => board.name !== currentBoard,
     );
     setData(currentBoardData);
+    setCurrentBoard(currentBoardData[0].name);
     onClose();
   };
 

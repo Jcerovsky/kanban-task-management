@@ -36,7 +36,7 @@ function Sidebar() {
     <>
       <div className={` md:flex ${!isSidebarHidden ? "block" : "hidden"} `}>
         <div
-          className={`bg-slate-100 sidebar flex flex-col gap-2 md:gap-0 right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[15.625rem] 
+          className={`bg-white sidebar flex flex-col gap-2 md:gap-0 right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[15.625rem] 
           bg-white dark:bg-slate-700 fixed md:top-[4.375rem] md:bottom-0 top-[6.25rem] left-0 text-slate-400 font-semibold  
         transform-gpu transition-all duration-300 ease-in-out ${boxShadow} md:shadow-none dark:shadow-[0_10px_20px_rgba(54,78,126,.25)] ${
           isModalOpen ? "-z-10" : ""

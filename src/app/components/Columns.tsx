@@ -13,11 +13,11 @@ function Columns() {
   const [areColumnsLoading, setAreColumnsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (currentBoard) {
+    if (currentBoard && data.length > 0) {
       const currentBoardData = data.filter(
         (board) => board.name.toLowerCase() === currentBoard.toLowerCase(),
       );
-      const columns = currentBoardData[0].columns.map((column) => column);
+      const columns = currentBoardData[0]?.columns.map((column) => column);
       setColumnData(columns);
       setAreColumnsLoading(false);
     }
@@ -60,7 +60,7 @@ function Columns() {
         }  overflow-x-scroll dark:bg-slate-800`}
       >
         <div className="flex ">
-          {columnData.map((column, columnIndex) => (
+          {columnData?.map((column, columnIndex) => (
             <Droppable droppableId={column.name} key={column.name}>
               {(provided) => (
                 <div
