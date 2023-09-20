@@ -91,16 +91,16 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
             Board Columns
           </label>
           <div>
-            {columns?.map((subtask, index) => (
-              <div key={index} className="flex mb-2">
+            {columns?.map((colName, index) => (
+              <div key={crypto.randomUUID()} className="flex mb-2">
                 <input
                   type="text"
-                  value={subtask}
+                  value={colName}
                   required={true}
                   className="border rounded-md p-2 px-3 w-[95%] font-light text-sm dark:bg-slate-800 dark:border-gray-700"
-                  onChange={(e) =>
-                    setColumns(updateColumn(columns, e.target.value, index))
-                  }
+                  onChange={(e) => {
+                    setColumns(updateColumn(columns, e.target.value, index));
+                  }}
                 />
                 <span
                   className="ml-auto self-center text-slate-600 text-xl font-bold"

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@/app/components/Button";
 import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
@@ -17,48 +17,50 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
   const [currentStatus, setCurrentStatus] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    if (currentStatus !== "select") {
+      e.preventDefault();
 
-    const transformSubtasks = subtasks.map((subtask) => ({
-      title: subtask,
-      isCompleted: false,
-    }));
+      const transformSubtasks = subtasks.map((subtask) => ({
+        title: subtask,
+        isCompleted: false,
+      }));
 
-    const newTask = {
-      title: taskName,
-      description: description,
-      status: currentStatus,
-      subtasks: transformSubtasks,
-    };
+      const newTask = {
+        title: taskName,
+        description: description,
+        status: currentStatus,
+        subtasks: transformSubtasks,
+      };
 
-    const updatedData = data.map((board) => {
-      if (board.name === currentBoard) {
-        return {
-          ...board,
-          columns: board.columns.map((column) => {
-            if (column.name.toLowerCase() === currentStatus?.toLowerCase()) {
-              return {
-                ...column,
-                tasks: [...column.tasks, newTask],
-              };
-            }
-            return column;
-          }),
-        };
-      }
-      return board;
-    });
-    updatedData
-      .filter((board) => board.name === currentBoard)
-      .map((col) => col.columns.map((item) => console.log(item)));
-    setData(updatedData);
+      const updatedData = data.map((board) => {
+        if (board.name === currentBoard) {
+          return {
+            ...board,
+            columns: board.columns.map((column) => {
+              if (column.name.toLowerCase() === currentStatus?.toLowerCase()) {
+                return {
+                  ...column,
+                  tasks: [...column.tasks, newTask],
+                };
+              }
+              return column;
+            }),
+          };
+        }
+        return board;
+      });
+      updatedData
+        .filter((board) => board.name === currentBoard)
+        .map((col) => col.columns.map((item) => console.log(item)));
+      setData(updatedData);
 
-    setTaskName("");
-    setDescription("");
-    setSubtasks(["", ""]);
-    setCurrentStatus("");
+      setTaskName("");
+      setDescription("");
+      setSubtasks(["", ""]);
+      setCurrentStatus("");
 
-    onClose();
+      onClose();
+    }
   };
 
   return (
@@ -138,6 +140,7 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
             onChange={(e) => setCurrentStatus(e.target.value)}
             value={currentStatus}
           >
+            <option value="select">Select</option>
             {currentBoardData.map((board) =>
               board.columns.map((col) => (
                 <option key={crypto.randomUUID()} value={col.name}>
