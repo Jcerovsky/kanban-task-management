@@ -16,10 +16,6 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
   const [description, setDescription] = useState<string>("");
   const [currentStatus, setCurrentStatus] = useState<string>("");
 
-  useEffect(() => {
-    setCurrentStatus(currentBoardData[0]?.columns[0].name);
-  }, [currentBoardData]);
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -141,7 +137,6 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
             className={`${inputStyle} font-light`}
             onChange={(e) => setCurrentStatus(e.target.value)}
             value={currentStatus}
-            defaultValue={currentStatus}
           >
             {currentBoardData.map((board) =>
               board.columns.map((col) => (

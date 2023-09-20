@@ -65,6 +65,7 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
           const newTasks = col.tasks.map((currentCol) => {
             if (currentCol.title === taskProp.title) {
               if (
+                editedTask.title.length > 0 &&
                 currentCol.title === editedTask.title &&
                 currentCol.status === taskProp.status &&
                 currentCol.description === taskProp.description &&
@@ -91,7 +92,6 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
       }
     });
 
-    // Remove the task from the original column
     const originalColumnIndex = columnData.findIndex(
       (column) => column.name === taskProp.status,
     );

@@ -9,12 +9,50 @@ import { ModalProps } from "@/app/Modals/Modal";
 import Modal from "@/app/Modals/Modal";
 
 function EditBoard({ isOpen, onClose }: ModalProps) {
-  const { currentBoard, columns, setColumns, data } = useContext(Context)!;
+  const { currentBoard, columns, setColumns, data, setData, setCurrentBoard } =
+    useContext(Context)!;
   const [editedBoardName, setEditedBoardName] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    setCurrentBoard(editedBoardName);
+
     e.preventDefault();
-    console.log("submitted");
+
+    const updatedColumns = columns.map((col) => {
+      const currentBoardData = data.filter(
+        (board) => board.name === currentBoard,
+      );
+      const originalColumn = currentBoardData[0].columns.find(
+        (originalCol) => originalCol.name === col,
+      );
+
+      if (originalColumn) {
+        return {
+          ...originalColumn,
+        };
+      }
+      return {
+        name: col,
+        tasks: [],
+      };
+    });
+
+    const newBoardData = {
+      name: editedBoardName,
+      isActive: false,
+      columns: updatedColumns,
+    };
+
+    setData((prevState) =>
+      prevState.map((board) => {
+        if (board.name === currentBoard) {
+          return { ...board, ...newBoardData };
+        } else {
+          return board;
+        }
+      }),
+    );
+    onClose();
   };
 
   useEffect(() => {
