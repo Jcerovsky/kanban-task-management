@@ -18,7 +18,7 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
 
   useEffect(() => {
     setCurrentStatus(currentBoardData[0]?.columns[0].name);
-  }, []);
+  }, [currentBoardData]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,7 +55,6 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
     updatedData
       .filter((board) => board.name === currentBoard)
       .map((col) => col.columns.map((item) => console.log(item)));
-    console.log("new task", newTask);
     setData(updatedData);
     onClose();
   };
@@ -132,9 +131,10 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
             Current Status
           </label>
           <select
-            className={inputStyle}
+            className={`${inputStyle} font-light`}
             onChange={(e) => setCurrentStatus(e.target.value)}
             value={currentStatus}
+            defaultValue={currentStatus}
           >
             {currentBoardData.map((board) =>
               board.columns.map((col) => (

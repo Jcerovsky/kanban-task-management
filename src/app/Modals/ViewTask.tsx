@@ -34,7 +34,6 @@ function ViewTask({
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<SubtaskProps[]>(taskProp.subtasks);
   const { data, setData, currentBoard } = useContext(Context)!;
-  const [updatedStatus, setUpdatedStatus] = useState<string>("");
 
   const updateSubtask = (index: number) => {
     const updatedSubtasks = [...subtasks];
@@ -42,35 +41,12 @@ function ViewTask({
     setSubtasks(updatedSubtasks);
   };
 
-  const updateTaskStatus = (newStatus: string) => {
+  const updateStatusAndMoveTask = (newStatus: string) => {
     // Create a copy of the task with the updated status
     const updatedTask = {
       ...taskProp,
       status: newStatus,
     };
-
-    // Update the data in the context
-    setData((prevData) => {
-      return prevData.map((board) => {
-        if (board.name === currentBoard) {
-          return {
-            ...board,
-            columns: board.columns.map((col) => {
-              return {
-                ...col,
-                tasks: col.tasks.map((task) => {
-                  if (task.title === taskProp.title) {
-                    return updatedTask;
-                  }
-                  return task;
-                }),
-              };
-            }),
-          };
-        }
-        return board;
-      });
-    });
   };
 
   return (
@@ -126,20 +102,17 @@ function ViewTask({
         <select
           className="border rounded-md w-full p-3 text-xs dark:bg-slate-800 dark:border-gray-700"
           onChange={(e) => {
-            updateTaskStatus(e.target.value.toLowerCase());
-            setUpdatedStatus(e.target.value);
+            updateStatusAndMoveTask(e.target.value.toLowerCase());
           }}
+          value={taskProp.status}
         >
           {columnData.map((column) => (
             <option
               key={crypto.randomUUID()}
               value={column.name}
-              className="p-2"
-              defaultValue={
-                column.name === taskProp.status ? column.name : column.name
-              }
+              className="p-2 font-light"
             >
-              {!updatedStatus ? column.name : updatedStatus}
+              {column.name}
             </option>
           ))}
         </select>
