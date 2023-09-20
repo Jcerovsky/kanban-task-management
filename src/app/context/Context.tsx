@@ -63,13 +63,17 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   }, [theme]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/kanban")
-      .then((res) => res.json())
-      .then((fetchedData) => {
-        setData(fetchedData);
-        localStorage.setItem("data", JSON.stringify(fetchedData));
-      })
-      .catch((err) => setErrorMessage(err));
+    const localStorageData = localStorage.getItem("data");
+
+    if (!localStorage) {
+      fetch("http://localhost:3000/api/kanban")
+        .then((res) => res.json())
+        .then((fetchedData) => {
+          setData(fetchedData);
+          localStorage.setItem("data", JSON.stringify(fetchedData));
+        })
+        .catch((err) => setErrorMessage(err));
+    }
   }, []);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Modal from "@/app/Modals/Modal";
 import { Context } from "@/app/context/Context";
 
@@ -24,6 +24,8 @@ function DeleteTask({ currentTask, isOpen, onClose }: Props) {
     });
 
     setData(updatedData);
+    localStorage.removeItem("data");
+    localStorage.setItem("data", JSON.stringify(updatedData));
     onClose();
   };
   return (

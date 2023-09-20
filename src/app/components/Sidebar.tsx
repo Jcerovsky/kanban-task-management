@@ -8,7 +8,6 @@ import { boxShadow } from "@/app/utils/inputStyle";
 function Sidebar() {
   const { theme, setTheme } = useContext(Context)!;
   const [isToggled, setIsToggled] = useState<boolean>(theme === "light");
-  const [selectedBoardIndex, setSelectedBoardIndex] = useState<number>(0);
   const [boardList, setBoardList] = useState<string[]>([]);
   const [isCreateBoardModalOpen, setIsCreateBoardModalOpen] =
     useState<boolean>(false);
@@ -16,6 +15,7 @@ function Sidebar() {
   const {
     data,
     setCurrentBoard,
+    currentBoard,
     isSidebarHidden,
     setIsSidebarHidden,
     isModalOpen,
@@ -28,7 +28,6 @@ function Sidebar() {
   }, [data]);
 
   const handleBoardClick = (index: number) => {
-    setSelectedBoardIndex(index);
     setCurrentBoard(boardList[index]);
   };
 
@@ -52,7 +51,7 @@ function Sidebar() {
                 key={board}
                 className={`flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer 
               hover:bg-violet-100 hover:text-violet-500 transition-all duration-300 ease-in-out ${
-                selectedBoardIndex === index
+                board === currentBoard
                   ? "text-white bg-violet-500 hover:text-violet-500 duration-300"
                   : ""
               }`}
