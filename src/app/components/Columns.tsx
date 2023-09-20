@@ -102,9 +102,9 @@ function Columns() {
           ))}
           {!areColumnsLoading && (
             <div
-              className={`flex min-w-[15.625rem] self-center justify-center text-2xl font-bold hover:text-violet-500 
+              className={`flex min-w-[15.625rem] self-center justify-center text-2xl font-bold 
             bg-stone-50 dark:bg-slate-700 cursor-pointer h-full mt-[8%] rounded-md mr-8 ml-3 dark:text-slate-300 
-            text-slate-500 hover:text-violet-500 ${boxShadow}`}
+            text-slate-500 dark:hover:text-violet-500 hover:text-violet-500 ${boxShadow}`}
               onClick={() => setIsEditBoardModalOpen(true)}
             >
               <p className="self-center ">+ New Column</p>

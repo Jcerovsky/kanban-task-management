@@ -14,12 +14,11 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
   const [subtasks, setSubtasks] = useState<string[]>(["", ""]);
   const [taskName, setTaskName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [currentStatus, setCurrentStatus] = useState<string>("");
+  const [currentStatus, setCurrentStatus] = useState<string>("select");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (currentStatus !== "select") {
-      e.preventDefault();
-
       const transformSubtasks = subtasks.map((subtask) => ({
         title: subtask,
         isCompleted: false,
@@ -136,7 +135,9 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
             Current Status
           </label>
           <select
-            className={`${inputStyle} font-light`}
+            className={`${inputStyle} font-light ${
+              currentStatus === "select" && "bg-red-200"
+            }`}
             onChange={(e) => setCurrentStatus(e.target.value)}
             value={currentStatus}
           >

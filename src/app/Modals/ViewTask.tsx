@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useContext, useState } from "react";
-import { ColumnProps, Context } from "@/app/context/Context";
+import React, { useEffect, useState } from "react";
+import { ColumnProps } from "@/app/context/Context";
 import TaskSettings from "@/app/components/TaskSettings";
 import { ModalProps } from "@/app/Modals/Modal";
 import Modal from "@/app/Modals/Modal";
@@ -33,20 +33,16 @@ function ViewTask({
 }: TaskProps) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<SubtaskProps[]>(taskProp.subtasks);
-  const { data, setData, currentBoard } = useContext(Context)!;
+  const [selectedColumn, setSelectedColumn] = useState<string>("");
+
+  useEffect(() => {
+    setSelectedColumn(taskProp.status);
+  }, [taskProp]);
 
   const updateSubtask = (index: number) => {
     const updatedSubtasks = [...subtasks];
     updatedSubtasks[index].isCompleted = !updatedSubtasks[index].isCompleted;
     setSubtasks(updatedSubtasks);
-  };
-
-  const updateStatusAndMoveTask = (newStatus: string) => {
-    // Create a copy of the task with the updated status
-    const updatedTask = {
-      ...taskProp,
-      status: newStatus,
-    };
   };
 
   return (
@@ -102,9 +98,9 @@ function ViewTask({
         <select
           className="border rounded-md w-full p-3 text-xs dark:bg-slate-800 dark:border-gray-700"
           onChange={(e) => {
-            updateStatusAndMoveTask(e.target.value.toLowerCase());
+            setSelectedColumn(e.target.value);
           }}
-          value={taskProp.status}
+          value={selectedColumn}
         >
           {columnData.map((column) => (
             <option

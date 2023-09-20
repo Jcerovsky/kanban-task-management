@@ -92,8 +92,10 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
       }
     });
 
+    const originalStatus = taskProp.status;
+
     const originalColumnIndex = columnData.findIndex(
-      (column) => column.name === taskProp.status,
+      (column) => column.name === originalStatus,
     );
 
     if (originalColumnIndex !== -1) {
@@ -185,7 +187,6 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
               setEditedTask({ ...editedTask, status: e.target.value })
             }
             value={editedTask.status}
-            defaultValue={editedTask.status}
           >
             {columnData.map((column) => (
               <option key={crypto.randomUUID()} value={column.name}>
