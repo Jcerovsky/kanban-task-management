@@ -15,10 +15,13 @@ function DeleteBoard({ isOpen, onClose }: ModalProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="dark:bg-slate-800 font-semibold bg-white flex flex-col gap-6 rounded-lg overflow-y-scroll p-4 w-[500px]">
+      <div
+        className="dark:bg-slate-800 font-semibold bg-slate-100 flex flex-col gap-6 rounded-lg py-10 px-5 overflow-y-scroll
+      p-4 w-[100%]"
+      >
         <h3 className="text-xl text-red-600">Delete this board?</h3>
-        <p className="text-slate-500 text-sm">
-          {`Are you sure you want to delete the ${currentBoard} board? This action
+        <p className="text-slate-500 text-sm font-semibold">
+          {`Are you sure you want to delete the "${currentBoard}" board? This action
               will remove all columns and tasks and cannot be reversed.`}
         </p>
         <div className="flex justify-between ">

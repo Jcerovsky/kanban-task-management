@@ -3,6 +3,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context, DataProps } from "@/app/context/Context";
 import AddNewBoard from "@/app/Modals/AddNewBoard";
+import { boxShadow } from "@/app/utils/inputStyle";
 
 function Sidebar() {
   const { theme, setTheme } = useContext(Context)!;
@@ -35,9 +36,9 @@ function Sidebar() {
     <>
       <div className={` md:flex ${!isSidebarHidden ? "block" : "hidden"} `}>
         <div
-          className={` sidebar flex flex-col gap-2 md:gap-0 right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[250px] bg-white dark:bg-slate-700 fixed 
-        md:top-[70px] md:bottom-0 top-[100px] left-0 text-slate-400 font-semibold  
-        transform-gpu transition-all duration-300 ease-in-out shadow-xl ${
+          className={`bg-slate-100 sidebar flex flex-col gap-2 md:gap-0 right-0 m-auto w-[80%] rounded-md md:right-auto md:w-[15.625rem] 
+          bg-white dark:bg-slate-700 fixed md:top-[4.375rem] md:bottom-0 top-[6.25rem] left-0 text-slate-400 font-semibold  
+        transform-gpu transition-all duration-300 ease-in-out ${boxShadow} md:shadow-none dark:shadow-[0_10px_20px_rgba(54,78,126,.25)] ${
           isModalOpen ? "-z-10" : ""
         } ${isSidebarHidden ? "md:-translate-x-full" : "translate-x-0"}`}
         >
@@ -72,7 +73,7 @@ function Sidebar() {
           </div>
 
           <div
-            className="flex mt-auto items-center gap-2 justify-around bg-neutral-200 dark:bg-black py-3 px-4 m-5
+            className="flex mt-auto items-center gap-2 justify-around bg-sky-50 dark:bg-slate-900 py-3 px-4 m-5
         rounded-md transition-all duration-300 ease-in-out mb-2"
           >
             <img src="../../../assets/icon-light-theme.svg" alt="sun icon" />
@@ -86,7 +87,7 @@ function Sidebar() {
               />
               <div
                 className="w-11 h-6 rounded-full hover:bg-violet-500 peer-checked:after:translate-x-full
-          peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white
+          peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[0.125rem] after:bg-white
           after:border after:rounded-full after:h-5 after:w-5 after:transition-transform duration-400 ease-in-out bg-violet-600 outline-none"
                 onClick={() => setTheme(theme === "light" ? "dark" : "light")}
               ></div>

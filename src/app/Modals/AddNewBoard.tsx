@@ -29,10 +29,10 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div
-        className="  flex flex-col gap-6 text-black bg-white p-3 py-6
-    rounded-md  font-semibold text-sm"
+        className="  flex flex-col gap-6 text-black bg-white dark:bg-slate-800 p-3 py-6
+    rounded-md font-semibold text-sm"
       >
-        <h1 className=" text-xl">Add new board</h1>
+        <h1 className=" text-xl dark:text-white">Add new board</h1>
         <form
           onSubmit={(e) => handleSubmit(e)}
           className="flex flex-col gap-2 "
@@ -47,7 +47,8 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
             required={true}
             pattern=".{3,}"
             title="Please enter at least three characters"
-            className={`${inputStyle} text-sm font-light text-black border invalid:ring-2 invalid:ring-red-500 invalid:border-red-500`}
+            className={`${inputStyle} text-sm font-light text-black border invalid:ring-2 invalid:ring-red-200 
+            invalid:border-red-500 dark:border-slate-700`}
             onChange={(e) => setBoardName(e.target.value)}
           />
 
@@ -64,7 +65,7 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
                   pattern=".{3,}"
                   title="Please enter at least three characters"
                   className="border rounded-md py-2 px-4 w-[95%] text-sm font-light text-black border invalid:ring-2
-                  invalid:ring-red-500 invalid:border-red-500"
+                  invalid:ring-red-300 invalid:border-red-300 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
                   onChange={(e) =>
                     setColumns(updateColumn(columns, e.target.value, index))
                   }
@@ -80,12 +81,17 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
           </div>
 
           <Button
-            style={"w-full py-[10px] text-white "}
+            style={
+              "w-full py-[0.625rem] text-white dark:bg-slate-100 dark:text-violet-500 "
+            }
             handleClick={() => setColumns(addColumn(columns))}
           >
             + Add New Column
           </Button>
-          <Button style={"w-full py-[10px] text-white mt-5 "} type={"submit"}>
+          <Button
+            style={"w-full py-[0.625rem] text-white mt-5 "}
+            type={"submit"}
+          >
             Create New Board
           </Button>
         </form>

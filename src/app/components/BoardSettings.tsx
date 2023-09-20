@@ -27,10 +27,11 @@ function BoardSettings() {
         <div
           className={`${
             isMenuShown ? "block" : "hidden"
-          } absolute shadow-xl right-[4%] top-[95px] w-[150px] bg-white dark:bg-gray-600 rounded-md p-3`}
+          } absolute text-sm shadow-xl right-[3%] top-[5rem] w-[9.375rem] bg-stone-50 dark:bg-slate-900 dark:ring-white 
+          rounded-md py-5 p-3 dark:shadow-[0_10px_20px_rgba(54,78,126,.25)]`}
         >
           <p
-            className="opacity-50 text-black mb-5"
+            className="opacity-50 mb-5 text-black dark:text-white hover:text-gray-700"
             onClick={() => {
               setIsEditBoardModalOpen(true);
               setIsMenuShown(false);
@@ -40,7 +41,7 @@ function BoardSettings() {
             Edit board
           </p>
           <p
-            className="text-red-500"
+            className="text-red-500 hover:text-red-600"
             onClick={() => {
               setIsDeleteBoardModalOpen(true);
               setIsModalOpen(true);

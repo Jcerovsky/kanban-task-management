@@ -18,7 +18,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
         onClick={onClose}
       ></div>
       <div
-        className=" absolute left-1/2 transform -translate-x-1/2 rounded-lg shadow-lg z-10 max-h-[80%] w-[500px] overflow-y-scroll
+        className=" absolute left-1/2 transform -translate-x-1/2 rounded-lg shadow-lg z-10 max-h-[80%] w-[70%] max-w-[32rem] overflow-y-scroll
        "
         onClick={(e) => e.stopPropagation()}
       >

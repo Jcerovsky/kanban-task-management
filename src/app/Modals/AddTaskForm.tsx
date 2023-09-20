@@ -63,7 +63,7 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div
-        className="flex flex-col gap-6 text-black bg-white py-6 p-5
+        className="flex flex-col gap-6 text-black dark:bg-slate-800 dark:text-white bg-white py-6 p-5
     rounded-md font-bold text-sm"
       >
         <h1 className=" text-xl">Add New Task</h1>
@@ -81,7 +81,7 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
             required={true}
             pattern=".{3,}"
             title="Please enter at least three characters"
-            className={` ${inputStyle} font-light invalid:ring-2 invalid:ring-red-500 invalid:border-red-500 placeholder:-opacity-50`}
+            className={` ${inputStyle} font-light invalid:ring-2 invalid:ring-red-200 invalid:border-red-500 placeholder:-opacity-50`}
             onChange={(e) => setTaskName(e.target.value)}
           />
           <label htmlFor="description" className={labelStyle}>
@@ -104,7 +104,8 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
                   required={true}
                   pattern=".{3,}"
                   title="Please enter at least three characters"
-                  className="border rounded-md p-2 px-3 w-[95%] font-light invalid:ring-2 invalid:ring-red-500 invalid:border-red-500"
+                  className="border rounded-md p-2 px-3 w-[95%] font-light invalid:ring-2 invalid:ring-red-300
+                  invalid:border-red-300 dark:bg-slate-800"
                   onChange={(e) =>
                     setSubtasks(updateColumn(subtasks, e.target.value, index))
                   }
@@ -120,7 +121,9 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
           </div>
 
           <Button
-            style={"w-full py-[10px] text-white "}
+            style={
+              "w-full py-[0.625rem] text-white dark:bg-slate-100 dark:text-violet-500 "
+            }
             handleClick={() => setSubtasks(addColumn(subtasks))}
           >
             + Add New Subtask
@@ -141,7 +144,7 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
               )),
             )}
           </select>
-          <Button style={"w-full py-[10px] text-white "} type={"submit"}>
+          <Button style={"w-full py-[0.625rem] text-white "} type={"submit"}>
             Create Task
           </Button>
         </form>

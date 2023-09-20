@@ -55,7 +55,10 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="bg-white dark:bg-slate-800 rounded-md flex flex-col gap-6 w-[500px] p-6 shadow-xl text-black overflow-y-scroll max-h-[600px]">
+      <div
+        className="bg-white dark:bg-slate-800 rounded-md flex flex-col gap-6 p-6 shadow-xl text-black
+       max-h-[90%]"
+      >
         <h1 className=" text-xl dark:text-white">Edit task</h1>
         <form
           onSubmit={(e) => handleSubmit(e)}
@@ -86,7 +89,8 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
                 <input
                   type="text"
                   value={subtask.title}
-                  className="border rounded-md p-2 px-3 w-[95%] text-sm font-light"
+                  className="border rounded-md p-2 px-3 w-[95%] text-sm font-light dark:bg-slate-800 dark:text-white
+                  dark:border-gray-700"
                   onChange={(e) => handleUpdateSubtask(index, e.target.value)}
                 />
                 <span
@@ -99,7 +103,9 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
             ))}
           </div>
           <Button
-            style={"w-full py-[10px] text-white mb-4 "}
+            style={
+              "w-full py-[0.625rem] text-white mb-4 dark:bg-slate-100 dark:text-violet-500"
+            }
             handleClick={() =>
               setSubtasks((prevSubtasks) => [
                 ...prevSubtasks,
@@ -110,14 +116,17 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
             + Add New Subtask
           </Button>
           <label className={labelStyle}>Current Status</label>
-          <select className="mb-3 border-2 font-light text-sm p-3 rounded-md">
+          <select
+            className="mb-3 border-2 font-light text-sm p-3 rounded-md dark:bg-slate-800 dark:text-white
+          dark:border-gray-700"
+          >
             {columnData.map((column) => (
               <option key={crypto.randomUUID()} value={column.name}>
                 {column.name}
               </option>
             ))}
           </select>
-          <Button style={"py-2 w-full text-white"}>Create Task</Button>
+          <Button style={"py-2 w-full text-white"}>Save Changes</Button>
         </form>
       </div>
     </Modal>

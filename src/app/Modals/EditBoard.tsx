@@ -14,6 +14,7 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("submitted");
   };
 
   useEffect(() => {
@@ -28,11 +29,11 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
 
   useEffect(() => {
     setEditedBoardName(currentBoard);
-  }, []);
+  }, [currentBoard]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className=" dark:bg-slate-800 bg-white w-100 flex flex-col gap-6 text-black p-4 ">
+      <div className=" dark:bg-slate-800 bg-white w-100 flex flex-col gap-6 text-black dark:text-white p-4 ">
         <h1 className=" text-xl">Edit board</h1>
         <form
           onSubmit={(e) => handleSubmit(e)}
@@ -46,7 +47,7 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
             value={editedBoardName}
             onChange={(e) => setEditedBoardName(e.target.value)}
             id="taskName"
-            className={` ${inputStyle} `}
+            className={` ${inputStyle} text-sm font-light dark:bg-slate-800`}
           />
           <label htmlFor="subtask" className={labelStyle}>
             Board Columns
@@ -57,7 +58,8 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
                 <input
                   type="text"
                   value={subtask}
-                  className="border rounded-md p-2 px-3 w-[95%]"
+                  required={true}
+                  className="border rounded-md p-2 px-3 w-[95%] font-light text-sm dark:bg-slate-800 dark:border-gray-700"
                   onChange={(e) =>
                     setColumns(updateColumn(columns, e.target.value, index))
                   }
@@ -71,16 +73,20 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
               </div>
             ))}
           </div>
+          <div className="flex flex-col gap-4 ">
+            <Button
+              style={
+                "w-full py-[0.625rem] text-white text-sm dark:bg-slate-100 dark:text-violet-500"
+              }
+              handleClick={() => setColumns(addColumn(columns))}
+            >
+              + Add New Column
+            </Button>
+            <Button style={"py-2 w-full text-white text-sm"} type={"submit"}>
+              Save Changes
+            </Button>
+          </div>
         </form>
-        <div className="flex flex-col gap-4 ">
-          <Button
-            style={"w-full py-[10px] text-white "}
-            handleClick={() => setColumns(addColumn(columns))}
-          >
-            + Add New Column
-          </Button>
-          <Button style={"py-2 w-full text-white"}>Save Changes</Button>
-        </div>
       </div>
     </Modal>
   );

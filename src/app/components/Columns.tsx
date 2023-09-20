@@ -3,12 +3,14 @@ import { ColumnProps, Context } from "@/app/context/Context";
 import Task from "@/app/components/Task";
 import EditBoard from "@/app/Modals/EditBoard";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { boxShadow } from "@/app/utils/inputStyle";
 
 function Columns() {
   const { data, currentBoard, isSidebarHidden } = useContext(Context)!;
   const [columnData, setColumnData] = useState<ColumnProps[]>([]);
   const [isEditBoardModalOpen, setIsEditBoardModalOpen] =
     useState<boolean>(false);
+  const [areColumnsLoading, setAreColumnsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (currentBoard) {
@@ -17,6 +19,7 @@ function Columns() {
       );
       const columns = currentBoardData[0].columns.map((column) => column);
       setColumnData(columns);
+      setAreColumnsLoading(false);
     }
   }, [currentBoard, data]);
 
@@ -52,8 +55,8 @@ function Columns() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div
-        className={`flex h-screen bg-neutral-200 ${
-          !isSidebarHidden ? "md:ml-[250px]" : ""
+        className={`flex h-screen bg-blue-50 mb-10 scroll-smooth ${
+          !isSidebarHidden ? "md:ml-[15.625rem]" : ""
         }  overflow-x-scroll dark:bg-slate-800`}
       >
         <div className="flex ">
@@ -63,9 +66,9 @@ function Columns() {
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="min-w-[280px] p-3"
+                  className="min-w-[17.5rem] p-3"
                 >
-                  <p className="text-slate-500 font-semibold text-xs tracking-widest mb-5">
+                  <p className="text-gray-500 font-bold text-xs tracking-widest mb-5">
                     {column.name} ({column.tasks.length})
                   </p>
                   {column.tasks.map((task, index) => (
@@ -90,15 +93,16 @@ function Columns() {
               )}
             </Droppable>
           ))}
-          <div
-            className="flex min-w-[250px] self-center justify-center text-2xl font-bold hover:text-violet-500 bg-white
-        dark:bg-slate-700 cursor-pointer py-[20%] rounded-md mr-8 ml-3 "
-            onClick={() => setIsEditBoardModalOpen(true)}
-          >
-            <p className="self-center text-slate-500 hover:text-violet-500">
-              + New Column
-            </p>
-          </div>
+          {!areColumnsLoading && (
+            <div
+              className={`flex min-w-[15.625rem] self-center justify-center text-2xl font-bold hover:text-violet-500 
+            bg-stone-50 dark:bg-slate-700 cursor-pointer h-full mt-[8%] rounded-md mr-8 ml-3 dark:text-slate-300 
+            text-slate-500 hover:text-violet-500 ${boxShadow}`}
+              onClick={() => setIsEditBoardModalOpen(true)}
+            >
+              <p className="self-center ">+ New Column</p>
+            </div>
+          )}
         </div>
         <EditBoard
           onClose={() => setIsEditBoardModalOpen(false)}

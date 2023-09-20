@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { ColumnProps } from "@/app/context/Context";
+import React, { useContext, useState } from "react";
+import { ColumnProps, Context } from "@/app/context/Context";
 import TaskSettings from "@/app/components/TaskSettings";
 import { ModalProps } from "@/app/Modals/Modal";
 import Modal from "@/app/Modals/Modal";
@@ -33,6 +33,8 @@ function ViewTask({
 }: TaskProps) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<SubtaskProps[]>(taskProp.subtasks);
+  const { data, setData, currentBoard } = useContext(Context)!;
+  const [updatedStatus, setUpdatedStatus] = useState<string>("");
 
   const updateSubtask = (index: number) => {
     const updatedSubtasks = [...subtasks];
@@ -40,9 +42,40 @@ function ViewTask({
     setSubtasks(updatedSubtasks);
   };
 
+  const updateTaskStatus = (newStatus: string) => {
+    // Create a copy of the task with the updated status
+    const updatedTask = {
+      ...taskProp,
+      status: newStatus,
+    };
+
+    // Update the data in the context
+    setData((prevData) => {
+      return prevData.map((board) => {
+        if (board.name === currentBoard) {
+          return {
+            ...board,
+            columns: board.columns.map((col) => {
+              return {
+                ...col,
+                tasks: col.tasks.map((task) => {
+                  if (task.title === taskProp.title) {
+                    return updatedTask;
+                  }
+                  return task;
+                }),
+              };
+            }),
+          };
+        }
+        return board;
+      });
+    });
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="bg-white w-[500px] rounded-md p-5 dark:text-black ">
+      <div className="bg-stone-50 dark:bg-slate-800 dark:text-white rounded-md p-6 dark:text-black ">
         <div className="flex justify-between items-center">
           <h1 className="mb-5 text-lg">{taskProp.title}</h1>
           <img
@@ -57,7 +90,7 @@ function ViewTask({
             {taskProp.description}
           </p>
         )}
-        <p className="text-slate-500 text-xs tracking-widest mb-3">
+        <p className="text-gray-400 font-bold text-xs tracking-widest mb-3">
           Subtasks (
           {taskProp.subtasks.filter((subtask) => subtask.isCompleted).length} of{" "}
           {taskProp.subtasks.length})
@@ -65,14 +98,12 @@ function ViewTask({
         <div className="mb-5">
           {taskProp.subtasks.map((subtask, index) => (
             <div
-              className=" cursor-pointer flex items-center gap-2 bg-neutral-200 p-2 py-3 mb-2
-            rounded-sm hover:bg-neutral-400  "
+              className=" cursor-pointer flex items-center gap-2 bg-violet-50 p-2 py-3 mb-2
+            rounded-sm hover:bg-violet-100 dark:bg-slate-900  "
               key={crypto.randomUUID()}
             >
               <input
                 type="checkbox"
-                name={"checkbox"}
-                id={"checkbox"}
                 className={`w-4 h-4 transform duration-100 ease-in ${
                   subtask.isCompleted && "bg-violet-500"
                 }`}
@@ -80,10 +111,9 @@ function ViewTask({
                 onChange={() => updateSubtask(index)}
               />
               <label
-                htmlFor={"checkbox"}
                 className={`${
                   subtask.isCompleted ? "line-through text-slate-500" : ""
-                } text-xs`}
+                } text-xs font-semibold`}
               >
                 {subtask.title}
               </label>
@@ -93,7 +123,13 @@ function ViewTask({
         <p className="text-slate-500 font-semibold text-xs mb-3">
           Current Status
         </p>
-        <select className="border rounded-md w-full p-2 px-3 text-xs">
+        <select
+          className="border rounded-md w-full p-3 text-xs dark:bg-slate-800 dark:border-gray-700"
+          onChange={(e) => {
+            updateTaskStatus(e.target.value.toLowerCase());
+            setUpdatedStatus(e.target.value);
+          }}
+        >
           {columnData.map((column) => (
             <option
               key={crypto.randomUUID()}
@@ -103,7 +139,7 @@ function ViewTask({
                 column.name === taskProp.status ? column.name : column.name
               }
             >
-              {column.name}
+              {!updatedStatus ? column.name : updatedStatus}
             </option>
           ))}
         </select>

@@ -20,10 +20,11 @@ function TaskSettings({
       <div
         className={`${
           isVisible ? "block" : "hidden"
-        } task-settings absolute shadow-xl right-[4%] top-[60px] w-[150px] bg-white dark:bg-gray-600 rounded-md p-3`}
+        } absolute shadow-2xl right-[4%] top-[3.75rem] w-[9.375rem] font-semibold text-sm bg-stone-50 dark:bg-gray-600 
+        rounded-md py-5 p-3 dark:shadow-[0_10px_20px_rgba(54,78,126,.25)]`}
       >
         <p
-          className="opacity-50 text-black mb-5 cursor-pointer"
+          className="opacity-50 mb-5 text-black dark:text-white hover:text-gray-700 cursor-pointer"
           onClick={() => {
             setIsVisible(false);
             setEditTaskModalVisible(true);
@@ -32,7 +33,7 @@ function TaskSettings({
           Edit task
         </p>
         <p
-          className="text-red-500 cursor-pointer"
+          className="text-red-500 hover:text-red-600 cursor-pointer"
           onClick={() => {
             setIsVisible(false);
             setDeleteTaskModalVisible(true);

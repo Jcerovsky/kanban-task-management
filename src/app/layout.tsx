@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jakartaSans.className} dark:text-white dark:bg-slate-900 box-border bg-neutral-100 font-semibold`}
+        className={`${jakartaSans.className} dark:text-white dark:bg-slate-800 box-border bg-blue-50 font-semibold`}
       >
         <ContextProvider>{children}</ContextProvider>
       </body>

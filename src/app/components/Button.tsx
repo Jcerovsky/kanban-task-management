@@ -10,7 +10,7 @@ interface Props {
 function Button({ children, handleClick, style, type }: Props) {
   return (
     <button
-      className={` ${style} bg-violet-500 rounded-full ml-auto cursor-pointer hover:bg-violet-400
+      className={` ${style} bg-violet-600 rounded-full ml-auto cursor-pointer hover:bg-violet-400
       transition-all duration-300`}
       onClick={handleClick}
       type={!type ? `button` : type}

@@ -23,7 +23,6 @@ function Header() {
     return () => window.removeEventListener("resize", handleResize);
   });
 
-  console.log(smallerScreen);
   return (
     <>
       <header className="sticky top-0 flex items-center p-4 bg-white dark:bg-slate-700	gap-4 relative">
@@ -39,7 +38,7 @@ function Header() {
           alt="kanban logo three stripes"
           className="md:hidden"
         />
-        <p className="text-2xl font-bold self-center md:ml-20 ">
+        <p className="text-xl font-semibold self-center md:ml-20 ">
           {currentBoard}
         </p>
         <img

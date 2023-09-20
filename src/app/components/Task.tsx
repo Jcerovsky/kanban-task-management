@@ -3,6 +3,8 @@ import { ColumnProps } from "@/app/context/Context";
 import ViewTask from "@/app/Modals/ViewTask";
 import EditTask from "@/app/Modals/EditTask";
 import DeleteTask from "@/app/Modals/DeleteTask";
+import { shape } from "prop-types";
+import { boxShadow } from "@/app/utils/inputStyle";
 
 interface SubtaskProps {
   title: string;
@@ -29,7 +31,8 @@ function Task({ taskProp, columnData }: TaskProps) {
     <>
       <div
         key={crypto.randomUUID()}
-        className="bg-white dark:text-white dark:bg-slate-700 rounded-md shadow-xl p-4 mb-5 font-md cursor-pointer dark:text-white"
+        className={`bg-stone-50 dark:text-white dark:bg-slate-700 rounded-md ${boxShadow} p-4 mb-5 font-md cursor-pointer
+            dark:text-white dark:shadow-[0_10px_20px_rgba(54,78,126,.25)]`}
         onClick={() => setIsViewTaskModalOpen(true)}
       >
         <p className="font-semibold mb-2 hover:text-violet-500">
