@@ -15,25 +15,18 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setCurrentBoard(editedBoardName);
-
     e.preventDefault();
 
-    const updatedColumns = columns.map((col) => {
+    const updatedColumns = columns.map((columnName, i) => {
       const currentBoardData = data.filter(
         (board) => board.name === currentBoard,
       );
-      const originalColumn = currentBoardData[0].columns.find(
-        (originalCol) => originalCol.name === col,
-      );
 
-      if (originalColumn) {
-        return {
-          ...originalColumn,
-        };
-      }
+      const originalColumn = currentBoardData[0].columns[i];
+
       return {
-        name: col,
-        tasks: [],
+        ...originalColumn,
+        name: columnName,
       };
     });
 
@@ -92,14 +85,16 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
           </label>
           <div>
             {columns?.map((colName, index) => (
-              <div key={crypto.randomUUID()} className="flex mb-2">
+              <div key={index} className="flex mb-2">
                 <input
                   type="text"
                   value={colName}
                   required={true}
                   className="border rounded-md p-2 px-3 w-[95%] font-light text-sm dark:bg-slate-800 dark:border-gray-700"
                   onChange={(e) => {
-                    setColumns(updateColumn(columns, e.target.value, index));
+                    const updatedColumns = [...columns];
+                    updatedColumns[index] = e.target.value;
+                    setColumns(updatedColumns);
                   }}
                 />
                 <span
