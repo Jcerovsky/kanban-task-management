@@ -6,11 +6,15 @@ function DeleteBoard({ isOpen, onClose }: ModalProps) {
   const { currentBoard, setCurrentBoard, data, setData } = useContext(Context)!;
 
   const handleDelete = () => {
-    const currentBoardData = data.filter(
-      (board) => board.name !== currentBoard,
-    );
-    setData(currentBoardData);
-    setCurrentBoard(currentBoardData[0].name);
+    const updatedData = data.filter((board) => board.name !== currentBoard);
+
+    if (updatedData.length === 0) {
+      setCurrentBoard("");
+      setData([]);
+    } else {
+      setCurrentBoard(updatedData[0].name);
+      setData(updatedData);
+    }
     onClose();
   };
 

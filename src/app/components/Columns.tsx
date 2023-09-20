@@ -4,6 +4,7 @@ import Task from "@/app/components/Task";
 import EditBoard from "@/app/Modals/EditBoard";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { boxShadow } from "@/app/utils/inputStyle";
+import EmptyBoard from "@/app/components/EmptyBoard";
 
 function Columns() {
   const { data, currentBoard, isSidebarHidden } = useContext(Context)!;
@@ -51,6 +52,10 @@ function Columns() {
 
     setColumnData(updatedColumnData);
   };
+
+  if (data.length === 0 && !areColumnsLoading) {
+    return <EmptyBoard />;
+  }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

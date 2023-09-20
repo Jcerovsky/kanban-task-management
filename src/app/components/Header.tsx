@@ -7,7 +7,7 @@ import AddTaskForm from "@/app/Modals/AddTaskForm";
 import Sidebar from "@/app/components/Sidebar";
 
 function Header() {
-  const { currentBoard, theme, isSidebarHidden, setIsSidebarHidden } =
+  const { currentBoard, theme, isSidebarHidden, setIsSidebarHidden, data } =
     useContext(Context)!;
 
   const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
@@ -49,17 +49,22 @@ function Header() {
           className="md:hidden mr-auto cursor-pointer"
           onClick={() => setIsSidebarHidden((prevState) => !prevState)}
         />
-        <Button
-          style={"py-2 px-4 text-white "}
-          handleClick={() => setIsAddTaskModalOpen(true)}
-        >
-          {smallerScreen ? (
-            <img src="../../../assets/icon-add-task-mobile.svg" />
-          ) : (
-            "+ Add New Task"
-          )}
-        </Button>
-        <BoardSettings />
+        {data.length !== 0 && (
+          <>
+            {" "}
+            <Button
+              style={"py-2 px-4 text-white "}
+              handleClick={() => setIsAddTaskModalOpen(true)}
+            >
+              {smallerScreen ? (
+                <img src="../../../assets/icon-add-task-mobile.svg" />
+              ) : (
+                "+ Add New Task"
+              )}
+            </Button>
+            <BoardSettings />
+          </>
+        )}
 
         {!isSidebarHidden && <Sidebar />}
       </header>
