@@ -48,9 +48,6 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
         }
         return board;
       });
-      updatedData
-        .filter((board) => board.name === currentBoard)
-        .map((col) => col.columns.map((item) => console.log(item)));
       setData(updatedData);
 
       setTaskName("");

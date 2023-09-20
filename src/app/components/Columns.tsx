@@ -7,7 +7,8 @@ import { boxShadow } from "@/app/utils/inputStyle";
 import EmptyBoard from "@/app/components/EmptyBoard";
 
 function Columns() {
-  const { data, currentBoard, isSidebarHidden } = useContext(Context)!;
+  const { data, currentBoard, isSidebarHidden, setErrorMessage } =
+    useContext(Context)!;
   const [columnData, setColumnData] = useState<ColumnProps[]>([]);
   const [isEditBoardModalOpen, setIsEditBoardModalOpen] =
     useState<boolean>(false);

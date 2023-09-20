@@ -6,7 +6,7 @@ export const Context = createContext<ContextProps | null>(null);
 
 interface ContextProps {
   theme: "light" | "dark";
-  setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
+  setTheme: React.Dispatch<React.SetStateAction<ContextProps["theme"]>>;
   data: DataProps[];
   setData: React.Dispatch<React.SetStateAction<DataProps[]>>;
   currentBoard: string;
@@ -17,6 +17,8 @@ interface ContextProps {
   setIsSidebarHidden: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  errorMessage: string;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface ColumnProps {
@@ -49,6 +51,7 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   const [columns, setColumns] = useState<string[]>([]);
   const [isSidebarHidden, setIsSidebarHidden] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     if (theme === "light") {
@@ -62,7 +65,7 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
     fetch("http://localhost:3000/api/kanban")
       .then((res) => res.json())
       .then(setData)
-      .catch((err) => console.log(err));
+      .catch((err) => setErrorMessage(err));
   }, []);
 
   useEffect(() => {
@@ -87,6 +90,8 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
         setIsSidebarHidden,
         isModalOpen,
         setIsModalOpen,
+        errorMessage,
+        setErrorMessage,
       }}
     >
       {children}
