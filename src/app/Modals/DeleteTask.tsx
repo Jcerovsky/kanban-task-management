@@ -12,19 +12,18 @@ function DeleteTask({ currentTask, isOpen, onClose }: Props) {
   const { data, setData, currentBoard } = useContext(Context)!;
 
   const handleDelete = () => {
-    const currentBoardData = data.filter(
-      (board) => board.name === currentBoard,
-    );
-    currentBoardData.forEach((board) =>
-      board.columns.forEach(
-        (column) =>
-          (column.tasks = column.tasks.filter(
+    const updatedData = data.map((board) => {
+      if (board.name === currentBoard) {
+        board.columns.forEach((column) => {
+          column.tasks = column.tasks.filter(
             (task) => task.title !== currentTask,
-          )),
-      ),
-    );
+          );
+        });
+      }
+      return board;
+    });
 
-    setData(currentBoardData);
+    setData(updatedData);
     onClose();
   };
   return (

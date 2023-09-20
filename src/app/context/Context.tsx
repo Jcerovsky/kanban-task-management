@@ -5,8 +5,8 @@ import React, { createContext, useEffect, useState } from "react";
 export const Context = createContext<ContextProps | null>(null);
 
 interface ContextProps {
-  theme: "light" | "dark";
-  setTheme: React.Dispatch<React.SetStateAction<ContextProps["theme"]>>;
+  theme: string;
+  setTheme: React.Dispatch<React.SetStateAction<string>>;
   data: DataProps[];
   setData: React.Dispatch<React.SetStateAction<DataProps[]>>;
   currentBoard: string;
@@ -41,12 +41,12 @@ export interface DataProps {
 }
 
 function ContextProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<"light" | "dark">(
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light",
+  const [theme, setTheme] = useState<string>(
+    localStorage.getItem("theme") || "dark",
   );
-  const [data, setData] = useState<DataProps[]>([]);
+  const [data, setData] = useState<DataProps[]>(
+    JSON.parse(localStorage.getItem("data") || "[]"),
+  );
   const [currentBoard, setCurrentBoard] = useState<string>("");
   const [columns, setColumns] = useState<string[]>([]);
   const [isSidebarHidden, setIsSidebarHidden] = useState<boolean>(false);
@@ -59,12 +59,16 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
     } else {
       document.documentElement.classList.remove("dark");
     }
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/kanban")
       .then((res) => res.json())
-      .then(setData)
+      .then((fetchedData) => {
+        setData(fetchedData);
+        localStorage.setItem("data", JSON.stringify(fetchedData));
+      })
       .catch((err) => setErrorMessage(err));
   }, []);
 
