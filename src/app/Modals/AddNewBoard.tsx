@@ -23,6 +23,7 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
       columns: transformedColumns,
     };
     setData([...data, newBoardData]);
+    setBoardName("");
     onClose();
   };
 
@@ -50,6 +51,7 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
             className={`${inputStyle} text-sm font-light text-black border invalid:ring-2 invalid:ring-red-200 
             invalid:border-red-500 dark:border-slate-700`}
             onChange={(e) => setBoardName(e.target.value)}
+            value={boardName}
           />
 
           <label htmlFor="subtask" className={labelStyle}>

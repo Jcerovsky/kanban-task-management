@@ -1,7 +1,7 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
 import Button from "@/app/components/Button";
-import { ColumnProps } from "@/app/context/Context";
+import { ColumnProps, Context } from "@/app/context/Context";
 import Modal from "@/app/Modals/Modal";
 
 interface SubtaskProps {
@@ -26,6 +26,8 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
   const [editedTaskDescription, setEditedTaskDescription] =
     useState<string>("");
   const [subtasks, setSubtasks] = useState<SubtaskProps[]>([]);
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const { data, setData, currentBoard } = useContext(Context)!;
 
   useEffect(() => {
     setEditedTaskName(taskProp.title);
@@ -35,6 +37,36 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const editedTask = {
+      title: editedTaskName,
+      description: editedTaskDescription,
+      status: selectedStatus,
+      subtasks: subtasks,
+    };
+
+    const editedData = data.map((board) => {
+      if (board.name === currentBoard) {
+        const newColumns = board.columns.map((col) => {
+          const newTasks = col.tasks.map((currentCol) => {
+            if (currentCol.title === taskProp.title) {
+              return editedTask;
+            } else {
+              return currentCol;
+            }
+          });
+          return { ...col, tasks: newTasks };
+        });
+        return { ...board, columns: newColumns };
+      } else {
+        return board;
+      }
+    });
+
+    onClose();
+    setData(editedData);
+
+    console.log("edited", editedTask);
   };
 
   const handleDeleteSubtask = (index: number) => {
@@ -119,6 +151,7 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
           <select
             className="mb-3 border-2 font-light text-sm p-3 rounded-md dark:bg-slate-800 dark:text-white
           dark:border-gray-700"
+            onChange={(e) => setSelectedStatus(e.target.value)}
           >
             {columnData.map((column) => (
               <option key={crypto.randomUUID()} value={column.name}>
@@ -126,7 +159,9 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
               </option>
             ))}
           </select>
-          <Button style={"py-2 w-full text-white"}>Save Changes</Button>
+          <Button style={"py-2 w-full text-white"} type={"submit"}>
+            Save Changes
+          </Button>
         </form>
       </div>
     </Modal>

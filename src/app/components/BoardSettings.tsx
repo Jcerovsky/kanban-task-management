@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "@/app/context/Context";
 import DeleteBoard from "@/app/Modals/DeleteBoard";
 import EditBoard from "@/app/Modals/EditBoard";
+import { boxShadow } from "@/app/utils/inputStyle";
 
 function BoardSettings() {
   const [isMenuShown, setIsMenuShown] = useState<boolean>(false);
@@ -28,7 +29,7 @@ function BoardSettings() {
           className={`${
             isMenuShown ? "block" : "hidden"
           } absolute text-sm shadow-xl right-[3%] top-[5rem] w-[9.375rem] bg-stone-50 dark:bg-slate-900 dark:ring-white 
-          rounded-md py-5 p-3 dark:shadow-[0_10px_20px_rgba(54,78,126,.25)]`}
+          rounded-md py-5 p-3 ${boxShadow} dark:shadow-[0_10px_20px_rgba(54,78,126,.25)]`}
         >
           <p
             className="opacity-50 mb-5 text-black dark:text-white hover:text-gray-700"

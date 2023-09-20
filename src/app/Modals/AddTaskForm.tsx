@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Button from "@/app/components/Button";
 import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
@@ -56,6 +56,12 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
       .filter((board) => board.name === currentBoard)
       .map((col) => col.columns.map((item) => console.log(item)));
     setData(updatedData);
+
+    setTaskName("");
+    setDescription("");
+    setSubtasks(["", ""]);
+    setCurrentStatus("");
+
     onClose();
   };
 
@@ -82,6 +88,7 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
             title="Please enter at least three characters"
             className={` ${inputStyle} font-light invalid:ring-2 invalid:ring-red-200 invalid:border-red-500 placeholder:-opacity-50`}
             onChange={(e) => setTaskName(e.target.value)}
+            value={taskName}
           />
           <label htmlFor="description" className={labelStyle}>
             Description

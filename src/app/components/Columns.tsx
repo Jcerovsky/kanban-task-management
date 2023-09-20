@@ -41,6 +41,8 @@ function Columns() {
 
     const movedTask = sourceColumn.tasks[result.source.index];
 
+    movedTask.status = destinationColumn.name;
+
     sourceColumn.tasks.splice(result.source.index, 1);
 
     destinationColumn.tasks.splice(result.destination.index, 0, movedTask);
