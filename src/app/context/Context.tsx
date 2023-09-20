@@ -65,7 +65,7 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const localStorageData = localStorage.getItem("data");
 
-    if (!localStorage) {
+    if (!localStorageData) {
       fetch("http://localhost:3000/api/kanban")
         .then((res) => res.json())
         .then((fetchedData) => {

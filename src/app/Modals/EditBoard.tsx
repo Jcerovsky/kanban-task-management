@@ -36,15 +36,17 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
       columns: updatedColumns,
     };
 
-    setData((prevState) =>
-      prevState.map((board) => {
-        if (board.name === currentBoard) {
-          return { ...board, ...newBoardData };
-        } else {
-          return board;
-        }
-      }),
-    );
+    const updatedData = data.map((board) => {
+      if (board.name === currentBoard) {
+        return { ...board, ...newBoardData };
+      } else {
+        return board;
+      }
+    });
+
+    setData(updatedData);
+    localStorage.removeItem("data");
+    localStorage.setItem("data", JSON.stringify(updatedData));
     onClose();
   };
 
