@@ -14,6 +14,8 @@ function DeleteBoard({ isOpen, onClose }: ModalProps) {
     } else {
       setCurrentBoard(updatedData[0].name);
       setData(updatedData);
+      localStorage.removeItem("data");
+      localStorage.setItem("data", JSON.stringify(updatedData));
     }
     onClose();
   };

@@ -127,6 +127,8 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
 
     onClose();
     setData(updatedData);
+    localStorage.removeItem("data");
+    localStorage.setItem("data", JSON.stringify(updatedData));
   };
 
   return (

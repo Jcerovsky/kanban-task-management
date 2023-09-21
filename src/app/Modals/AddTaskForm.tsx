@@ -49,6 +49,8 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
         return board;
       });
       setData(updatedData);
+      localStorage.removeItem("data");
+      localStorage.setItem("data", JSON.stringify(updatedData));
 
       setTaskName("");
       setDescription("");

@@ -22,7 +22,11 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
       isActive: true,
       columns: transformedColumns,
     };
-    setData([...data, newBoardData]);
+    const updatedData = [...data, newBoardData];
+
+    setData(updatedData);
+    localStorage.removeItem("data");
+    localStorage.setItem("data", JSON.stringify(updatedData));
     setBoardName("");
     onClose();
   };
