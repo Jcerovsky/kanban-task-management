@@ -59,31 +59,27 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const updatedData = data.map((board) => {
-      if (board.name === currentBoard) {
-        board.columns.map((col) => {
-          const newTasks = col.tasks.map((currentCol) => {
-            if (currentCol.title === taskProp.title) {
-              if (
-                editedTask.title === currentCol.title &&
-                editedTask.description === currentCol.description &&
-                editedTask.status === currentCol.status &&
-                JSON.stringify(editedTask.subtasks) ===
-                  JSON.stringify(currentCol.subtasks)
-              ) {
-                return currentCol;
-              }
-              return editedTask;
-            }
-            return currentCol;
-          });
+    const updatedData = [...data];
 
-          return { ...col, tasks: newTasks };
-        });
+    const currentBoardData = updatedData.find(
+      (board) => board.name === currentBoard,
+    )!;
 
-        return { ...board };
-      }
-      return board;
+    currentBoardData.columns.forEach((column) => {
+      column.tasks.forEach((currentTask, taskIndex) => {
+        if (currentTask.title === taskProp.title) {
+          if (
+            editedTask.title === currentTask.title &&
+            editedTask.description === currentTask.description &&
+            editedTask.status === currentTask.status &&
+            JSON.stringify(editedTask.subtasks) ===
+              JSON.stringify(currentTask.subtasks)
+          ) {
+            return;
+          }
+          column.tasks[taskIndex] = editedTask;
+        }
+      });
     });
 
     const originalStatus = taskProp.status;
@@ -93,14 +89,12 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
     );
 
     if (originalColumnIndex !== -1) {
-      updatedData.forEach((board) => {
-        const column = board.columns[originalColumnIndex];
-        if (column) {
-          column.tasks = column.tasks?.filter(
-            (task) => task.title !== taskProp.title,
-          );
-        }
-      });
+      const column = currentBoardData.columns[originalColumnIndex];
+      if (column) {
+        column.tasks = column.tasks.filter(
+          (task) => task.title !== editedTask.title,
+        );
+      }
     }
 
     const newColumnIndex = columnData.findIndex(
@@ -108,21 +102,20 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
     );
 
     if (newColumnIndex !== -1) {
-      updatedData.forEach((board) => {
-        const column = board.columns[newColumnIndex];
-        if (column) {
-          if (!column.tasks) {
-            column.tasks = [];
-          }
-          column.tasks.push(editedTask);
+      const column = currentBoardData.columns[newColumnIndex];
+      if (column) {
+        if (!column.tasks) {
+          column.tasks = [];
         }
-      });
+        column.tasks.push(editedTask);
+      }
     }
 
-    onClose();
+    setData(() => updatedData);
     setData(updatedData);
     localStorage.removeItem("data");
     localStorage.setItem("data", JSON.stringify(updatedData));
+    onClose();
   };
 
   return (

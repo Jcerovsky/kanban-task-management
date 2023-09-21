@@ -23,6 +23,12 @@ function Header() {
     return () => window.removeEventListener("resize", handleResize);
   });
 
+  useEffect(() => {
+    if (smallerScreen) {
+      setIsSidebarHidden(true);
+    }
+  }, [currentBoard]);
+
   return (
     <>
       <header className="sticky top-0 flex items-center p-4 bg-white dark:bg-slate-700	gap-4 relative">
