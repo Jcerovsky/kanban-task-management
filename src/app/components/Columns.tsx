@@ -62,7 +62,6 @@ function Columns() {
             columns: updatedColumnData,
           };
         });
-        // You should return the modified board here
         return {
           ...board,
           columns: updatedColumns,

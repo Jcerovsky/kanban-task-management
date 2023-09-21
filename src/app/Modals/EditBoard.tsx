@@ -64,6 +64,15 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
     setEditedBoardName(currentBoard);
   }, [currentBoard]);
 
+  const handleUpdateColumnName = (newColName: string, index: number) => {
+    if (newColName.includes(" ")) {
+      newColName.replace(" ", "_");
+      const updatedColumns = [...columns];
+      updatedColumns[index] = newColName;
+      setColumns(updatedColumns);
+    }
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className=" dark:bg-slate-800 bg-white w-100 flex flex-col gap-6 text-black dark:text-white p-4 ">
@@ -93,11 +102,9 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
                   value={colName}
                   required={true}
                   className="border rounded-md p-2 px-3 w-[95%] font-light text-sm dark:bg-slate-800 dark:border-gray-700"
-                  onChange={(e) => {
-                    const updatedColumns = [...columns];
-                    updatedColumns[index] = e.target.value;
-                    setColumns(updatedColumns);
-                  }}
+                  onChange={(e) =>
+                    handleUpdateColumnName(e.target.value, index)
+                  }
                 />
                 <span
                   className="ml-auto self-center text-slate-600 text-xl font-bold"

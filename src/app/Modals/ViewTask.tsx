@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { ColumnProps } from "@/app/context/Context";
+import React, { useContext, useEffect, useState } from "react";
+import { ColumnProps, Context } from "@/app/context/Context";
 import TaskSettings from "@/app/components/TaskSettings";
 import { ModalProps } from "@/app/Modals/Modal";
 import Modal from "@/app/Modals/Modal";
@@ -34,15 +34,34 @@ function ViewTask({
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<SubtaskProps[]>(taskProp.subtasks);
   const [selectedColumn, setSelectedColumn] = useState<string>("");
+  const { data, setData, currentBoard } = useContext(Context)!;
 
   useEffect(() => {
     setSelectedColumn(taskProp.status);
-  }, [taskProp]);
+  }, [taskProp.status]);
 
   const updateSubtask = (index: number) => {
     const updatedSubtasks = [...subtasks];
     updatedSubtasks[index].isCompleted = !updatedSubtasks[index].isCompleted;
     setSubtasks(updatedSubtasks);
+
+    const updatedData = [...data];
+
+    updatedData.forEach((board) => {
+      if (board.name === currentBoard) {
+        board.columns.forEach((col) => {
+          col.tasks.forEach((task) => {
+            if (task.title === taskProp.title) {
+              task.subtasks = updatedSubtasks;
+              task.status = selectedColumn;
+            }
+          });
+        });
+      }
+    });
+    setData(updatedData);
+    localStorage.removeItem("data");
+    localStorage.setItem("data", JSON.stringify(updatedData));
   };
 
   return (

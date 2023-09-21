@@ -1,7 +1,7 @@
 import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
 import Button from "@/app/components/Button";
-import { ColumnProps, Context } from "@/app/context/Context";
+import { ColumnProps, Context, DataProps } from "@/app/context/Context";
 import Modal from "@/app/Modals/Modal";
 
 interface SubtaskProps {
@@ -61,35 +61,29 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
 
     const updatedData = data.map((board) => {
       if (board.name === currentBoard) {
-        const newColumns = board.columns.map((col) => {
+        board.columns.map((col) => {
           const newTasks = col.tasks.map((currentCol) => {
             if (currentCol.title === taskProp.title) {
               if (
-                editedTask.title.length > 0 &&
-                currentCol.title === editedTask.title &&
-                currentCol.status === taskProp.status &&
-                currentCol.description === taskProp.description &&
-                JSON.stringify(currentCol.subtasks) ===
-                  JSON.stringify(taskProp.subtasks)
+                editedTask.title === currentCol.title &&
+                editedTask.description === currentCol.description &&
+                editedTask.status === currentCol.status &&
+                JSON.stringify(editedTask.subtasks) ===
+                  JSON.stringify(currentCol.subtasks)
               ) {
                 return currentCol;
-              } else if (currentCol.status !== editedTask.status) {
-                return editedTask;
-              } else {
-                return currentCol;
               }
-            } else {
-              return currentCol;
+              return editedTask;
             }
+            return currentCol;
           });
 
           return { ...col, tasks: newTasks };
         });
 
-        return { ...board, columns: newColumns };
-      } else {
-        return board;
+        return { ...board };
       }
+      return board;
     });
 
     const originalStatus = taskProp.status;
