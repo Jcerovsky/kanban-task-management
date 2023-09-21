@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "@/app/context/Context";
 import DeleteBoard from "@/app/Modals/DeleteBoard";
 import EditBoard from "@/app/Modals/EditBoard";
-import { boxShadow } from "@/app/utils/inputStyle";
+import { boxShadow } from "@/app/utils/tailwindStyles";
 
 function BoardSettings() {
   const [isMenuShown, setIsMenuShown] = useState<boolean>(false);

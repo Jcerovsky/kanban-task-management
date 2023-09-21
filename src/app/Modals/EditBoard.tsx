@@ -3,8 +3,8 @@
 import Button from "@/app/components/Button";
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "@/app/context/Context";
-import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
-import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
+import { addColumn, deleteColumn } from "@/app/utils/columnUtils";
+import { inputStyle, labelStyle } from "@/app/utils/tailwindStyles";
 import { ModalProps } from "@/app/Modals/Modal";
 import Modal from "@/app/Modals/Modal";
 

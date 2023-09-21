@@ -3,7 +3,7 @@ import { ColumnProps, Context } from "@/app/context/Context";
 import Task from "@/app/components/Task";
 import EditBoard from "@/app/Modals/EditBoard";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { boxShadow } from "@/app/utils/inputStyle";
+import { boxShadow } from "@/app/utils/tailwindStyles";
 import EmptyBoard from "@/app/components/EmptyBoard";
 
 function Columns() {

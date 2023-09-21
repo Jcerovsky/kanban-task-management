@@ -1,7 +1,7 @@
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { inputStyle, labelStyle } from "@/app/utils/inputStyle";
+import { inputStyle, labelStyle } from "@/app/utils/tailwindStyles";
 import Button from "@/app/components/Button";
-import { ColumnProps, Context, DataProps } from "@/app/context/Context";
+import { ColumnProps, Context } from "@/app/context/Context";
 import Modal from "@/app/Modals/Modal";
 
 interface SubtaskProps {
