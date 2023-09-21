@@ -7,8 +7,7 @@ import { boxShadow } from "@/app/utils/inputStyle";
 import EmptyBoard from "@/app/components/EmptyBoard";
 
 function Columns() {
-  const { data, currentBoard, isSidebarHidden, setErrorMessage } =
-    useContext(Context)!;
+  const { data, currentBoard, isSidebarHidden, setData } = useContext(Context)!;
   const [columnData, setColumnData] = useState<ColumnProps[]>([]);
   const [isEditBoardModalOpen, setIsEditBoardModalOpen] =
     useState<boolean>(false);
@@ -54,6 +53,28 @@ function Columns() {
     updatedColumnData[destinationColumnIndex] = destinationColumn;
 
     setColumnData(updatedColumnData);
+
+    const updatedData = data.map((board) => {
+      if (board.name === currentBoard) {
+        const updatedColumns = board.columns.map((col) => {
+          return {
+            ...col,
+            columns: updatedColumnData,
+          };
+        });
+        // You should return the modified board here
+        return {
+          ...board,
+          columns: updatedColumns,
+        };
+      } else {
+        return board;
+      }
+    });
+
+    setData(updatedData);
+    localStorage.removeItem("data");
+    localStorage.setItem("data", JSON.stringify(updatedData));
   };
 
   if (data.length === 0 && !areColumnsLoading) {
@@ -74,15 +95,15 @@ function Columns() {
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="min-w-[17.5rem] p-3"
+                  className="w-[17.5rem] p-3"
                 >
                   <p className="text-gray-500 font-bold text-xs tracking-widest mb-5">
                     {column.name} ({column.tasks.length})
                   </p>
                   {column.tasks.map((task, index) => (
                     <Draggable
-                      key={task.title}
-                      draggableId={task.title}
+                      key={`${task.title}-${task.description}`}
+                      draggableId={`${task.title}-${task.description}`}
                       index={index}
                     >
                       {(provided) => (

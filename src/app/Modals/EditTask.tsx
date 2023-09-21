@@ -100,9 +100,12 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
 
     if (originalColumnIndex !== -1) {
       updatedData.forEach((board) => {
-        board.columns[originalColumnIndex].tasks = board.columns[
-          originalColumnIndex
-        ].tasks.filter((task) => task.title !== taskProp.title);
+        const column = board.columns[originalColumnIndex];
+        if (column) {
+          column.tasks = column.tasks?.filter(
+            (task) => task.title !== taskProp.title,
+          );
+        }
       });
     }
 
@@ -112,7 +115,13 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
 
     if (newColumnIndex !== -1) {
       updatedData.forEach((board) => {
-        board.columns[newColumnIndex].tasks.push(editedTask);
+        const column = board.columns[newColumnIndex];
+        if (column) {
+          if (!column.tasks) {
+            column.tasks = [];
+          }
+          column.tasks.push(editedTask);
+        }
       });
     }
 
