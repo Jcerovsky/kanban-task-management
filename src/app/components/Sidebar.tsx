@@ -1,17 +1,24 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context, DataProps } from "@/app/context/Context";
 import AddNewBoard from "@/app/Modals/AddNewBoard";
 import { boxShadow } from "@/app/utils/tailwindStyles";
+import { useObjectState } from "@/app/hooks/useObjectState";
+
+interface ISidebarProps {
+  isToggled: boolean;
+  boardList: string[];
+  isCreateBoardModalOpen: boolean;
+}
 
 function Sidebar() {
   const { theme, setTheme } = useContext(Context)!;
-  const [isToggled, setIsToggled] = useState<boolean>(theme === "light");
-  const [boardList, setBoardList] = useState<string[]>([]);
-  const [isCreateBoardModalOpen, setIsCreateBoardModalOpen] =
-    useState<boolean>(false);
-
+  const [state, updateState] = useObjectState<ISidebarProps>({
+    isToggled: theme === "light",
+    boardList: [],
+    isCreateBoardModalOpen: false,
+  });
   const {
     data,
     setCurrentBoard,
@@ -23,12 +30,12 @@ function Sidebar() {
 
   useEffect(() => {
     if (data.length > 0) {
-      setBoardList(data.map((board: DataProps) => board.name));
+      updateState({ boardList: data.map((board) => board.name) });
     }
   }, [data]);
 
   const handleBoardClick = (index: number) => {
-    setCurrentBoard(boardList[index]);
+    setCurrentBoard(state.boardList[index]);
   };
 
   return (
@@ -42,11 +49,11 @@ function Sidebar() {
         } ${isSidebarHidden ? "md:-translate-x-full" : "translate-x-0"}`}
         >
           <p className="mt-5 p-4 text-xs tracking-widest">
-            ALL BOARDS ({boardList?.length})
+            ALL BOARDS ({state.boardList?.length})
           </p>
 
           <div className="flex flex-col mb-2 md:mb-0 ">
-            {boardList?.map((board, index) => (
+            {state.boardList?.map((board, index) => (
               <div
                 key={board}
                 className={`flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer 
@@ -64,7 +71,7 @@ function Sidebar() {
             <div
               className="flex gap-2 items-center p-3 mr-4 rounded-r-full cursor-pointer
               hover:bg-violet-100 text-violet-500 transition-all duration-300 ease-in-out"
-              onClick={() => setIsCreateBoardModalOpen(true)}
+              onClick={() => updateState({ isCreateBoardModalOpen: true })}
             >
               <img src="../../../assets/icon-board.svg" alt="" />
               <p>+ Create New Board</p>
@@ -81,8 +88,8 @@ function Sidebar() {
               <input
                 type="checkbox"
                 className="sr-only peer outline-none"
-                checked={isToggled}
-                onChange={() => setIsToggled((prevState) => !prevState)}
+                checked={state.isToggled}
+                onChange={() => updateState({ isToggled: !state.isToggled })}
               />
               <div
                 className="w-11 h-6 rounded-full hover:bg-violet-500 peer-checked:after:translate-x-full
@@ -127,8 +134,8 @@ function Sidebar() {
         )}
       </div>
       <AddNewBoard
-        onClose={() => setIsCreateBoardModalOpen(false)}
-        isOpen={isCreateBoardModalOpen}
+        onClose={() => updateState({ isCreateBoardModalOpen: false })}
+        isOpen={state.isCreateBoardModalOpen}
       />
     </>
   );
