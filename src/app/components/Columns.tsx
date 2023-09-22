@@ -1,17 +1,25 @@
-import React, { useContext, useEffect, useState } from "react";
-import { ColumnProps, Context } from "@/app/context/Context";
+import React, { useContext, useEffect } from "react";
 import Task from "@/app/components/Task";
+import EmptyBoard from "@/app/components/EmptyBoard";
 import EditBoard from "@/app/Modals/EditBoard";
+import { ColumnProps, Context } from "@/app/context/Context";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { boxShadow } from "@/app/utils/tailwindStyles";
-import EmptyBoard from "@/app/components/EmptyBoard";
+import { useObjectState } from "@/app/hooks/useObjectState";
+
+interface IColumnProps {
+  columnData: ColumnProps[];
+  isEditBoardModalOpen: boolean;
+  areColumnsLoading: boolean;
+}
 
 function Columns() {
   const { data, currentBoard, isSidebarHidden, setData } = useContext(Context)!;
-  const [columnData, setColumnData] = useState<ColumnProps[]>([]);
-  const [isEditBoardModalOpen, setIsEditBoardModalOpen] =
-    useState<boolean>(false);
-  const [areColumnsLoading, setAreColumnsLoading] = useState<boolean>(true);
+  const [state, updateState] = useObjectState<IColumnProps>({
+    columnData: [],
+    isEditBoardModalOpen: false,
+    areColumnsLoading: true,
+  });
 
   useEffect(() => {
     if (currentBoard && data.length > 0) {
@@ -19,8 +27,7 @@ function Columns() {
         (board) => board.name.toLowerCase() === currentBoard.toLowerCase(),
       );
       const columns = currentBoardData[0]?.columns.map((column) => column);
-      setColumnData(columns);
-      setAreColumnsLoading(false);
+      updateState({ columnData: columns, areColumnsLoading: false });
     }
   }, [currentBoard, data]);
 
@@ -29,26 +36,26 @@ function Columns() {
       return;
     }
 
-    const sourceColumnIndex = columnData.findIndex(
+    const sourceColumnIndex = state.columnData.findIndex(
       (column) => column.name === result.source.droppableId,
     );
-    const destinationColumnIndex = columnData.findIndex(
+    const destinationColumnIndex = state.columnData.findIndex(
       (column) => column.name === result.destination.droppableId,
     );
 
-    const sourceColumn = columnData[sourceColumnIndex];
-    const destinationColumn = columnData[destinationColumnIndex];
+    const sourceColumn = state.columnData[sourceColumnIndex];
+    const destinationColumn = state.columnData[destinationColumnIndex];
     const movedTask = sourceColumn.tasks[result.source.index];
 
     movedTask.status = destinationColumn.name;
     sourceColumn.tasks.splice(result.source.index, 1);
     destinationColumn.tasks.splice(result.destination.index, 0, movedTask);
 
-    const updatedColumnData = [...columnData];
+    const updatedColumnData = [...state.columnData];
     updatedColumnData[sourceColumnIndex] = sourceColumn;
     updatedColumnData[destinationColumnIndex] = destinationColumn;
 
-    setColumnData(updatedColumnData);
+    updateState({ columnData: updatedColumnData });
 
     const updatedData = data.map((board) => {
       if (board.name === currentBoard) {
@@ -72,7 +79,7 @@ function Columns() {
     localStorage.setItem("data", JSON.stringify(updatedData));
   };
 
-  if (data.length === 0 && !areColumnsLoading) {
+  if (data.length === 0 && !state.areColumnsLoading) {
     return <EmptyBoard />;
   }
 
@@ -84,7 +91,7 @@ function Columns() {
         }  overflow-x-scroll dark:bg-slate-800`}
       >
         <div className="flex ">
-          {columnData?.map((column) => (
+          {state.columnData.map((column) => (
             <Droppable droppableId={column.name} key={column.name}>
               {(provided) => (
                 <div
@@ -107,7 +114,7 @@ function Columns() {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <Task taskProp={task} columnData={columnData} />
+                          <Task taskProp={task} columnData={state.columnData} />
                         </div>
                       )}
                     </Draggable>
@@ -117,20 +124,20 @@ function Columns() {
               )}
             </Droppable>
           ))}
-          {!areColumnsLoading && (
+          {!state.areColumnsLoading && (
             <div
               className={`flex min-w-[15.625rem] self-center justify-center text-2xl font-bold 
             bg-stone-50 dark:bg-slate-700 cursor-pointer h-full mt-[8%] rounded-md mr-8 ml-3 dark:text-slate-300 
             text-slate-500 dark:hover:text-violet-500 hover:text-violet-500 ${boxShadow}`}
-              onClick={() => setIsEditBoardModalOpen(true)}
+              onClick={() => updateState({ isEditBoardModalOpen: true })}
             >
               <p className="self-center ">+ New Column</p>
             </div>
           )}
         </div>
         <EditBoard
-          onClose={() => setIsEditBoardModalOpen(false)}
-          isOpen={isEditBoardModalOpen}
+          onClose={() => updateState({ isEditBoardModalOpen: false })}
+          isOpen={state.isEditBoardModalOpen}
         />
       </div>
     </DragDropContext>
