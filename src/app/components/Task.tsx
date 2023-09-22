@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { ColumnProps } from "@/app/context/Context";
 import ViewTask from "@/app/Modals/ViewTask";
 import EditTask from "@/app/Modals/EditTask";
 import DeleteTask from "@/app/Modals/DeleteTask";
 import { boxShadow } from "@/app/utils/tailwindStyles";
+import { useObjectState } from "@/app/hooks/useObjectState";
 
 interface SubtaskProps {
   title: string;
@@ -20,11 +21,18 @@ interface TaskProps {
   columnData: ColumnProps[];
 }
 
+export interface IModifyTaskProps {
+  deleteTaskModalVisible: boolean;
+  editTaskModalVisible: boolean;
+  isViewTaskModalOpen: boolean;
+}
+
 function Task({ taskProp, columnData }: TaskProps) {
-  const [deleteTaskModalVisible, setDeleteTaskModalVisible] = useState(false);
-  const [editTaskModalVisible, setEditTaskModalVisible] = useState(false);
-  const [isViewTaskModalOpen, setIsViewTaskModalOpen] =
-    useState<boolean>(false);
+  const [state, updateState] = useObjectState<IModifyTaskProps>({
+    deleteTaskModalVisible: false,
+    editTaskModalVisible: false,
+    isViewTaskModalOpen: false,
+  });
 
   const completed =
     taskProp.subtasks.filter((subtask) => subtask.isCompleted).length ===
@@ -38,7 +46,7 @@ function Task({ taskProp, columnData }: TaskProps) {
             dark:text-white dark:shadow-[0_10px_20px_rgba(54,78,126,.25)] ${
               completed && "bg-green-200"
             }`}
-        onClick={() => setIsViewTaskModalOpen(true)}
+        onClick={() => updateState({ isViewTaskModalOpen: true })}
       >
         <p className="font-semibold mb-2 hover:text-violet-500">
           {taskProp.title}
@@ -54,22 +62,21 @@ function Task({ taskProp, columnData }: TaskProps) {
       </div>
       <ViewTask
         taskProp={taskProp}
-        onClose={() => setIsViewTaskModalOpen(false)}
-        isOpen={isViewTaskModalOpen}
+        onClose={() => updateState({ isViewTaskModalOpen: false })}
+        isOpen={state.isViewTaskModalOpen}
         columnData={columnData}
-        setDeleteTaskModalVisible={setDeleteTaskModalVisible}
-        setEditTaskModalVisible={setEditTaskModalVisible}
+        updateState={updateState}
       />
       <EditTask
         taskProp={taskProp}
         columnData={columnData}
-        isOpen={editTaskModalVisible}
-        onClose={() => setEditTaskModalVisible(false)}
+        isOpen={state.editTaskModalVisible}
+        onClose={() => updateState({ editTaskModalVisible: false })}
       />
       <DeleteTask
         currentTask={taskProp.title}
-        onClose={() => setDeleteTaskModalVisible(false)}
-        isOpen={deleteTaskModalVisible}
+        onClose={() => updateState({ deleteTaskModalVisible: false })}
+        isOpen={state.deleteTaskModalVisible}
       />
     </>
   );

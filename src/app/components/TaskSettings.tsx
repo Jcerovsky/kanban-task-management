@@ -2,20 +2,15 @@
 
 import React from "react";
 import { boxShadow } from "@/app/utils/tailwindStyles";
+import { IModifyTaskProps } from "@/app/components/Task";
 
 interface Props {
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setDeleteTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setEditTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  updateState: (newState: Partial<IModifyTaskProps>) => void;
 }
 
-function TaskSettings({
-  isVisible,
-  setIsVisible,
-  setDeleteTaskModalVisible,
-  setEditTaskModalVisible,
-}: Props) {
+function TaskSettings({ isVisible, setIsVisible, updateState }: Props) {
   return (
     <>
       <div
@@ -28,7 +23,7 @@ function TaskSettings({
           className="opacity-50 mb-5 text-black dark:text-white hover:text-gray-700 cursor-pointer"
           onClick={() => {
             setIsVisible(false);
-            setEditTaskModalVisible(true);
+            updateState({ editTaskModalVisible: true });
           }}
         >
           Edit task
@@ -37,7 +32,7 @@ function TaskSettings({
           className="text-red-500 hover:text-red-600 cursor-pointer"
           onClick={() => {
             setIsVisible(false);
-            setDeleteTaskModalVisible(true);
+            updateState({ deleteTaskModalVisible: true });
           }}
         >
           Delete task

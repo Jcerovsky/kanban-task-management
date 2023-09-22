@@ -5,6 +5,7 @@ import { ColumnProps, Context } from "@/app/context/Context";
 import TaskSettings from "@/app/components/TaskSettings";
 import { ModalProps } from "@/app/Modals/Modal";
 import Modal from "@/app/Modals/Modal";
+import { IModifyTaskProps } from "@/app/components/Task";
 
 interface SubtaskProps {
   title: string;
@@ -19,15 +20,13 @@ interface TaskProps extends ModalProps {
     subtasks: SubtaskProps[];
   };
   columnData: ColumnProps[];
-  setDeleteTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setEditTaskModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  updateState: (newState: Partial<IModifyTaskProps>) => void;
 }
 
 function ViewTask({
   taskProp,
   columnData,
-  setDeleteTaskModalVisible,
-  setEditTaskModalVisible,
+  updateState,
   isOpen,
   onClose,
 }: TaskProps) {
@@ -135,8 +134,7 @@ function ViewTask({
           <TaskSettings
             isVisible={isVisible}
             setIsVisible={setIsVisible}
-            setDeleteTaskModalVisible={setDeleteTaskModalVisible}
-            setEditTaskModalVisible={setEditTaskModalVisible}
+            updateState={updateState}
           />
         }
       </div>
