@@ -24,7 +24,7 @@ function Columns() {
     }
   }, [currentBoard, data]);
 
-  const onDragEnd = (result) => {
+  const onDragEnd = (result: any) => {
     if (!result.destination) {
       return;
     }
@@ -38,17 +38,13 @@ function Columns() {
 
     const sourceColumn = columnData[sourceColumnIndex];
     const destinationColumn = columnData[destinationColumnIndex];
-
     const movedTask = sourceColumn.tasks[result.source.index];
 
     movedTask.status = destinationColumn.name;
-
     sourceColumn.tasks.splice(result.source.index, 1);
-
     destinationColumn.tasks.splice(result.destination.index, 0, movedTask);
 
     const updatedColumnData = [...columnData];
-
     updatedColumnData[sourceColumnIndex] = sourceColumn;
     updatedColumnData[destinationColumnIndex] = destinationColumn;
 
@@ -88,7 +84,7 @@ function Columns() {
         }  overflow-x-scroll dark:bg-slate-800`}
       >
         <div className="flex ">
-          {columnData?.map((column, columnIndex) => (
+          {columnData?.map((column) => (
             <Droppable droppableId={column.name} key={column.name}>
               {(provided) => (
                 <div

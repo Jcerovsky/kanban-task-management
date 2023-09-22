@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context, DataProps } from "@/app/context/Context";
 import AddNewBoard from "@/app/Modals/AddNewBoard";
-import { boxShadow } from "@/app/utils/inputStyle";
+import { boxShadow } from "@/app/utils/tailwindStyles";
 
 function Sidebar() {
   const { theme, setTheme } = useContext(Context)!;

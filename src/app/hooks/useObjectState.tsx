@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-function useObjectState<T>(initialState: T) {
-  const [state, setState] = useState(initialState);
+export function useObjectState<T>(
+  initialState: T,
+): [T, (newState: Partial<T>) => void] {
+  const [state, setState] = useState<T>(initialState);
 
-  const setStatesFromObject = (stateObject: Partial<T>) => {
-    setState((prevState) => {
-      return { ...prevState, ...stateObject };
-    });
+  const updateState = (newState: Partial<T>) => {
+    setState((prevState) => ({
+      ...prevState,
+      ...newState,
+    }));
   };
 
-  return [state, setStatesFromObject];
+  return [state, updateState];
 }
-
-export default useObjectState;

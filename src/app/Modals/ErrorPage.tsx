@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context } from "@/app/context/Context";
-import { boxShadow } from "@/app/utils/inputStyle";
+import { boxShadow } from "@/app/utils/tailwindStyles";
 
 function ErrorPage() {
   const { errorMessage, setErrorMessage } = useContext(Context)!;

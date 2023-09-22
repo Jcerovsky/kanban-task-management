@@ -3,7 +3,7 @@ import { ColumnProps } from "@/app/context/Context";
 import ViewTask from "@/app/Modals/ViewTask";
 import EditTask from "@/app/Modals/EditTask";
 import DeleteTask from "@/app/Modals/DeleteTask";
-import { boxShadow } from "@/app/utils/inputStyle";
+import { boxShadow } from "@/app/utils/tailwindStyles";
 
 interface SubtaskProps {
   title: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { boxShadow } from "@/app/utils/inputStyle";
+import { boxShadow } from "@/app/utils/tailwindStyles";
 
 interface Props {
   isVisible: boolean;
