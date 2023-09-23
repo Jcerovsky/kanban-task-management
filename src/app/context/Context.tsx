@@ -36,9 +36,17 @@ export interface DataProps {
 }
 
 function ContextProvider({ children }: { children: React.ReactNode }) {
+  const getLocalStorageItem = (key: string, defaultValue: any) => {
+    if (typeof window !== "undefined") {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : defaultValue;
+    }
+    return defaultValue;
+  };
+
   const [state, updateState] = useObjectState<ContextProps>({
-    theme: localStorage.getItem("theme") || "dark",
-    data: JSON.parse(localStorage.getItem("data") || "[]"),
+    theme: getLocalStorageItem("theme", "dark"),
+    data: getLocalStorageItem("data", []),
     currentBoard: "",
     columns: [],
     isSidebarHidden: false,
@@ -60,7 +68,6 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let localStorageData;
-
     if (typeof window !== "undefined") {
       localStorageData = localStorage.getItem("data");
     }
