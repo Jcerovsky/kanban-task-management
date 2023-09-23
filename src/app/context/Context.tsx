@@ -2,6 +2,7 @@
 
 import React, { createContext, useEffect } from "react";
 import { useObjectState } from "@/app/hooks/useObjectState";
+import { boardsData } from "../data/data";
 
 export const Context = createContext<ContextProps | null>(null);
 
@@ -73,15 +74,21 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (!localStorageData) {
-      fetch("http://localhost:3000/api/kanban")
-        .then((res) => res.json())
-        .then((fetchedData) => {
-          updateState({ data: fetchedData });
-          if (typeof window !== "undefined") {
-            localStorage.setItem("data", JSON.stringify(fetchedData));
-          }
-        })
-        .catch((err) => updateState({ errorMessage: err }));
+      const allBoardsData = boardsData.boards;
+      updateState({ data: allBoardsData });
+      if (typeof window !== "undefined") {
+        localStorage.setItem("data", JSON.stringify(allBoardsData));
+      }
+      //**Used for fetching from local json server** //
+      //   fetch("http://localhost:3000/api/kanban")
+      //     .then((res) => res.json())
+      //     .then((fetchedData) => {
+      //       updateState({ data: fetchedData });
+      //       if (typeof window !== "undefined") {
+      //         localStorage.setItem("data", JSON.stringify(fetchedData));
+      //       }
+      //     })
+      //     .catch((err) => updateState({ errorMessage: err }));
     }
   }, []);
 
