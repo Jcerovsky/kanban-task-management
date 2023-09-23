@@ -10,11 +10,14 @@ function Header() {
   const { currentBoard, theme, isSidebarHidden, data, updateState } =
     useContext(Context)!;
 
-  const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
+  const [smallerScreen, setSmallerScreen] = useState<boolean | undefined>(
+    undefined,
+  );
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      setSmallerScreen(window.innerWidth <= 767);
       const handleResize = () => {
         setSmallerScreen(window.innerWidth <= 767);
       };
@@ -22,7 +25,7 @@ function Header() {
 
       return () => window.removeEventListener("resize", handleResize);
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (smallerScreen) {
