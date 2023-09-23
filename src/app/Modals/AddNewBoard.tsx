@@ -8,7 +8,7 @@ import { Context } from "@/app/context/Context";
 function AddNewBoard({ isOpen, onClose }: ModalProps) {
   const [columns, setColumns] = useState<string[]>(["Todo", "Doing"]);
   const [boardName, setBoardName] = useState<string>("");
-  const { data, setData } = useContext(Context)!;
+  const { data, updateState } = useContext(Context)!;
 
   const transformedColumns = columns.map((columnName) => ({
     name: columnName,
@@ -24,7 +24,7 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
     };
     const updatedData = [...data, newBoardData];
 
-    setData(updatedData);
+    updateState({ data: updatedData });
     localStorage.removeItem("data");
     localStorage.setItem("data", JSON.stringify(updatedData));
     setBoardName("");

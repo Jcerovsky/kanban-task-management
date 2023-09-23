@@ -9,12 +9,11 @@ import { ModalProps } from "@/app/Modals/Modal";
 import Modal from "@/app/Modals/Modal";
 
 function EditBoard({ isOpen, onClose }: ModalProps) {
-  const { currentBoard, columns, setColumns, data, setData, setCurrentBoard } =
-    useContext(Context)!;
+  const { currentBoard, columns, data, updateState } = useContext(Context)!;
   const [editedBoardName, setEditedBoardName] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setCurrentBoard(editedBoardName);
+    updateState({ currentBoard: editedBoardName });
     e.preventDefault();
 
     const updatedColumns = columns.map((columnName, i) => {
@@ -44,7 +43,7 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
       }
     });
 
-    setData(updatedData);
+    updateState({ data: updatedData });
     localStorage.removeItem("data");
     localStorage.setItem("data", JSON.stringify(updatedData));
     onClose();
@@ -56,7 +55,7 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
         (board) => board.name.toLowerCase() === currentBoard.toLowerCase(),
       );
       const columns = currentBoardData[0].columns.map((column) => column.name);
-      setColumns(columns);
+      updateState({ columns: columns });
     }
   }, [currentBoard]);
 
@@ -69,7 +68,7 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
       newColName.replace(" ", "_");
       const updatedColumns = [...columns];
       updatedColumns[index] = newColName;
-      setColumns(updatedColumns);
+      updateState({ columns: updatedColumns });
     }
   };
 
@@ -108,7 +107,9 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
                 />
                 <span
                   className="ml-auto self-center text-slate-600 text-xl font-bold"
-                  onClick={() => setColumns(deleteColumn(columns, index))}
+                  onClick={() =>
+                    updateState({ columns: deleteColumn(columns, index) })
+                  }
                 >
                   ✕
                 </span>
@@ -120,7 +121,7 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
               style={
                 "w-full py-[0.625rem] text-white text-sm dark:bg-slate-100 dark:text-violet-500"
               }
-              handleClick={() => setColumns(addColumn(columns))}
+              handleClick={() => updateState({ columns: addColumn(columns) })}
             >
               + Add New Column
             </Button>

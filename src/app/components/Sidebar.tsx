@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext, useEffect } from "react";
-import { Context, DataProps } from "@/app/context/Context";
+import { Context } from "@/app/context/Context";
 import AddNewBoard from "@/app/Modals/AddNewBoard";
 import { boxShadow } from "@/app/utils/tailwindStyles";
 import { useObjectState } from "@/app/hooks/useObjectState";
@@ -13,20 +13,20 @@ interface ISidebarProps {
 }
 
 function Sidebar() {
-  const { theme, setTheme } = useContext(Context)!;
+  const {
+    theme,
+    data,
+    currentBoard,
+    isSidebarHidden,
+    isModalOpen,
+    updateState: updateStateFromContext,
+  } = useContext(Context)!;
+
   const [state, updateState] = useObjectState<ISidebarProps>({
     isToggled: theme === "light",
     boardList: [],
     isCreateBoardModalOpen: false,
   });
-  const {
-    data,
-    setCurrentBoard,
-    currentBoard,
-    isSidebarHidden,
-    setIsSidebarHidden,
-    isModalOpen,
-  } = useContext(Context)!;
 
   useEffect(() => {
     if (data.length > 0) {
@@ -35,7 +35,7 @@ function Sidebar() {
   }, [data]);
 
   const handleBoardClick = (index: number) => {
-    setCurrentBoard(state.boardList[index]);
+    updateStateFromContext({ currentBoard: state.boardList[index] });
   };
 
   return (
@@ -95,7 +95,11 @@ function Sidebar() {
                 className="w-11 h-6 rounded-full hover:bg-violet-500 peer-checked:after:translate-x-full
           peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[0.125rem] after:bg-white
           after:border after:rounded-full after:h-5 after:w-5 after:transition-transform duration-400 ease-in-out bg-violet-600 outline-none"
-                onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+                onClick={() =>
+                  updateStateFromContext({
+                    theme: theme === "light" ? "dark" : "light",
+                  })
+                }
               ></div>
               <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300" />
             </label>
@@ -115,7 +119,13 @@ function Sidebar() {
                 src="../../../assets/icon-hide-sidebar.svg"
                 alt="crossed eye"
               />
-              <p onClick={() => setIsSidebarHidden(true)}>Hide Sidebar</p>
+              <p
+                onClick={() =>
+                  updateStateFromContext({ isSidebarHidden: true })
+                }
+              >
+                Hide Sidebar
+              </p>
             </div>
           )}
         </div>
@@ -123,7 +133,7 @@ function Sidebar() {
           <div
             className="absolute flex justify-center bottom-10 items-center p-5  rounded-r-full cursor-pointer
           hover:bg-violet-400 bg-violet-500 w-14 hover:w-24 transition-all duration-300	 ease-in-out shadow-lg"
-            onClick={() => setIsSidebarHidden(false)}
+            onClick={() => updateStateFromContext({ isSidebarHidden: false })}
           >
             <img
               src="../../../assets/icon-show-sidebar.svg"

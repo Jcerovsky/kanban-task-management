@@ -8,7 +8,11 @@ import Modal, { ModalProps } from "@/app/Modals/Modal";
 import { Context } from "@/app/context/Context";
 
 function AddTaskForm({ isOpen, onClose }: ModalProps) {
-  const { data, setData, currentBoard } = useContext(Context)!;
+  const {
+    data,
+    currentBoard,
+    updateState: updateStateFromContext,
+  } = useContext(Context)!;
   const currentBoardData = data.filter((board) => board.name === currentBoard);
 
   const [subtasks, setSubtasks] = useState<string[]>(["", ""]);
@@ -48,7 +52,7 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
         }
         return board;
       });
-      setData(updatedData);
+      updateStateFromContext({ data: updatedData });
       localStorage.removeItem("data");
       localStorage.setItem("data", JSON.stringify(updatedData));
 

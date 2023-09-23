@@ -7,7 +7,7 @@ import AddTaskForm from "@/app/Modals/AddTaskForm";
 import Sidebar from "@/app/components/Sidebar";
 
 function Header() {
-  const { currentBoard, theme, isSidebarHidden, setIsSidebarHidden, data } =
+  const { currentBoard, theme, isSidebarHidden, data, updateState } =
     useContext(Context)!;
 
   const [smallerScreen, setSmallerScreen] = useState(window.innerWidth <= 767);
@@ -25,7 +25,7 @@ function Header() {
 
   useEffect(() => {
     if (smallerScreen) {
-      setIsSidebarHidden(true);
+      updateState({ isSidebarHidden: true });
     }
   }, [currentBoard]);
 
@@ -53,7 +53,7 @@ function Header() {
           }.svg`}
           alt="arrow down"
           className="md:hidden mr-auto cursor-pointer"
-          onClick={() => setIsSidebarHidden((prevState) => !prevState)}
+          onClick={() => updateState({ isSidebarHidden: !isSidebarHidden })}
         />
         {data.length !== 0 && (
           <>

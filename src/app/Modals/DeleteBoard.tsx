@@ -3,17 +3,15 @@ import { Context } from "@/app/context/Context";
 import Modal, { ModalProps } from "@/app/Modals/Modal";
 
 function DeleteBoard({ isOpen, onClose }: ModalProps) {
-  const { currentBoard, setCurrentBoard, data, setData } = useContext(Context)!;
+  const { currentBoard, data, updateState } = useContext(Context)!;
 
   const handleDelete = () => {
     const updatedData = data.filter((board) => board.name !== currentBoard);
 
     if (updatedData.length === 0) {
-      setCurrentBoard("");
-      setData([]);
+      updateState({ currentBoard: "", data: [] });
     } else {
-      setCurrentBoard(updatedData[0].name);
-      setData(updatedData);
+      updateState({ currentBoard: updatedData[0].name, data: updatedData });
       localStorage.removeItem("data");
       localStorage.setItem("data", JSON.stringify(updatedData));
     }

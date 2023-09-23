@@ -9,7 +9,7 @@ interface Props {
 }
 
 function DeleteTask({ currentTask, isOpen, onClose }: Props) {
-  const { data, setData, currentBoard } = useContext(Context)!;
+  const { data, currentBoard, updateState } = useContext(Context)!;
 
   const handleDelete = () => {
     const updatedData = data.map((board) => {
@@ -23,7 +23,7 @@ function DeleteTask({ currentTask, isOpen, onClose }: Props) {
       return board;
     });
 
-    setData(updatedData);
+    updateState({ data: updatedData });
     localStorage.removeItem("data");
     localStorage.setItem("data", JSON.stringify(updatedData));
     onClose();

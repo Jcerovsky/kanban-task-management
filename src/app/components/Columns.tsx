@@ -14,7 +14,12 @@ interface IColumnProps {
 }
 
 function Columns() {
-  const { data, currentBoard, isSidebarHidden, setData } = useContext(Context)!;
+  const {
+    data,
+    currentBoard,
+    isSidebarHidden,
+    updateState: updateStateFromContext,
+  } = useContext(Context)!;
   const [state, updateState] = useObjectState<IColumnProps>({
     columnData: [],
     isEditBoardModalOpen: false,
@@ -74,7 +79,7 @@ function Columns() {
       }
     });
 
-    setData(updatedData);
+    updateStateFromContext({ data: updatedData });
     localStorage.removeItem("data");
     localStorage.setItem("data", JSON.stringify(updatedData));
   };

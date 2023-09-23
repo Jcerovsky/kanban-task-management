@@ -33,7 +33,11 @@ function ViewTask({
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [subtasks, setSubtasks] = useState<SubtaskProps[]>(taskProp.subtasks);
   const [selectedColumn, setSelectedColumn] = useState<string>("");
-  const { data, setData, currentBoard } = useContext(Context)!;
+  const {
+    data,
+    currentBoard,
+    updateState: updateStateFromContext,
+  } = useContext(Context)!;
 
   useEffect(() => {
     setSelectedColumn(taskProp.status);
@@ -58,7 +62,7 @@ function ViewTask({
         });
       }
     });
-    setData(updatedData);
+    updateStateFromContext({ data: updatedData });
     localStorage.removeItem("data");
     localStorage.setItem("data", JSON.stringify(updatedData));
   };

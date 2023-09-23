@@ -29,7 +29,7 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
     subtasks: taskProp.subtasks,
   });
 
-  const { data, setData, currentBoard } = useContext(Context)!;
+  const { data, currentBoard, updateState } = useContext(Context)!;
 
   useEffect(() => {
     setEditedTask({
@@ -111,8 +111,7 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
       }
     }
 
-    setData(() => updatedData);
-    setData(updatedData);
+    updateState({ data: updatedData });
     localStorage.removeItem("data");
     localStorage.setItem("data", JSON.stringify(updatedData));
     onClose();

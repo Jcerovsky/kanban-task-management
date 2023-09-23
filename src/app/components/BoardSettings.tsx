@@ -20,7 +20,7 @@ function BoardSettings() {
     isDeleteBoardModalOpen: false,
   });
 
-  const { setIsModalOpen } = useContext(Context)!;
+  const { updateState: updateStateFromContext } = useContext(Context)!;
 
   return (
     <>
@@ -40,7 +40,7 @@ function BoardSettings() {
             className="opacity-50 mb-5 text-black dark:text-white hover:text-gray-700"
             onClick={() => {
               updateState({ isEditBoardModalOpen: true, isMenuShown: false });
-              setIsModalOpen(true);
+              updateStateFromContext({ isModalOpen: true });
             }}
           >
             Edit board
@@ -49,7 +49,7 @@ function BoardSettings() {
             className="text-red-500 hover:text-red-600"
             onClick={() => {
               updateState({ isDeleteBoardModalOpen: true, isMenuShown: false });
-              setIsModalOpen(true);
+              updateStateFromContext({ isModalOpen: true });
             }}
           >
             Delete board
@@ -60,14 +60,14 @@ function BoardSettings() {
         isOpen={state.isDeleteBoardModalOpen}
         onClose={() => {
           updateState({ isDeleteBoardModalOpen: false });
-          setIsModalOpen(false);
+          updateStateFromContext({ isModalOpen: false });
         }}
       />
       <EditBoard
         isOpen={state.isEditBoardModalOpen}
         onClose={() => {
           updateState({ isEditBoardModalOpen: false });
-          setIsModalOpen(false);
+          updateStateFromContext({ isModalOpen: false });
         }}
       />
     </>
