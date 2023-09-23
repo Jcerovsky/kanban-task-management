@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useContext } from "react";
-import { Context } from "@/app/context/Context";
 import DeleteBoard from "@/app/Modals/DeleteBoard";
 import EditBoard from "@/app/Modals/EditBoard";
-import { boxShadow } from "@/app/utils/tailwindStyles";
 import { useObjectState } from "@/app/hooks/useObjectState";
+import { Context } from "@/app/context/Context";
+import { boxShadow } from "@/app/utils/tailwindStyles";
 
 interface IBoardProps {
   isMenuShown: boolean;

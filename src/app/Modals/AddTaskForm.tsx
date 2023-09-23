@@ -1,11 +1,19 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Button from "@/app/components/Button";
 import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 import { inputStyle, labelStyle } from "@/app/utils/tailwindStyles";
 import Modal, { ModalProps } from "@/app/Modals/Modal";
 import { Context } from "@/app/context/Context";
+import { useObjectState } from "@/app/hooks/useObjectState";
+
+interface IProps {
+  subtasks: string[];
+  taskName: string;
+  description: string;
+  currentStatus: string;
+}
 
 function AddTaskForm({ isOpen, onClose }: ModalProps) {
   const {
@@ -15,23 +23,25 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
   } = useContext(Context)!;
   const currentBoardData = data.filter((board) => board.name === currentBoard);
 
-  const [subtasks, setSubtasks] = useState<string[]>(["", ""]);
-  const [taskName, setTaskName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [currentStatus, setCurrentStatus] = useState<string>("select");
+  const [state, updateState] = useObjectState<IProps>({
+    subtasks: ["", ""],
+    taskName: "",
+    description: "",
+    currentStatus: "select",
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (currentStatus !== "select") {
-      const transformSubtasks = subtasks.map((subtask) => ({
+    if (state.currentStatus !== "select") {
+      const transformSubtasks = state.subtasks.map((subtask) => ({
         title: subtask,
         isCompleted: false,
       }));
 
       const newTask = {
-        title: taskName,
-        description: description,
-        status: currentStatus,
+        title: state.taskName,
+        description: state.description,
+        status: state.currentStatus,
         subtasks: transformSubtasks,
       };
 
@@ -40,7 +50,9 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
           return {
             ...board,
             columns: board.columns.map((column) => {
-              if (column.name.toLowerCase() === currentStatus?.toLowerCase()) {
+              if (
+                column.name.toLowerCase() === state.currentStatus?.toLowerCase()
+              ) {
                 return {
                   ...column,
                   tasks: [...column.tasks, newTask],
@@ -56,11 +68,12 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
       localStorage.removeItem("data");
       localStorage.setItem("data", JSON.stringify(updatedData));
 
-      setTaskName("");
-      setDescription("");
-      setSubtasks(["", ""]);
-      setCurrentStatus("");
-
+      updateState({
+        taskName: "",
+        description: "",
+        subtasks: ["", ""],
+        currentStatus: "",
+      });
       onClose();
     }
   };
@@ -87,8 +100,8 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
             pattern=".{3,}"
             title="Please enter at least three characters"
             className={` ${inputStyle} font-light invalid:ring-2 invalid:ring-red-200 invalid:border-red-500 placeholder:-opacity-50`}
-            onChange={(e) => setTaskName(e.target.value)}
-            value={taskName}
+            onChange={(e) => updateState({ taskName: e.target.value })}
+            value={state.taskName}
           />
           <label htmlFor="description" className={labelStyle}>
             Description
@@ -96,13 +109,13 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
           <textarea
             id="description"
             className={`${inputStyle} font-light`}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => updateState({ description: e.target.value })}
           />
           <label htmlFor="subtask" className={labelStyle}>
             Subtasks
           </label>
           <div>
-            {subtasks.map((subtask, index) => (
+            {state.subtasks.map((subtask, index) => (
               <div key={index} className="flex mb-2">
                 <input
                   type="text"
@@ -113,12 +126,22 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
                   className="border rounded-md p-2 px-3 w-[95%] font-light invalid:ring-2 invalid:ring-red-300
                   invalid:border-red-300 dark:bg-slate-800"
                   onChange={(e) =>
-                    setSubtasks(updateColumn(subtasks, e.target.value, index))
+                    updateState({
+                      subtasks: updateColumn(
+                        state.subtasks,
+                        e.target.value,
+                        index,
+                      ),
+                    })
                   }
                 />
                 <span
                   className="ml-auto self-center text-slate-600 text-xl font-bold"
-                  onClick={() => setSubtasks(deleteColumn(subtasks, index))}
+                  onClick={() =>
+                    updateState({
+                      subtasks: deleteColumn(state.subtasks, index),
+                    })
+                  }
                 >
                   ✕
                 </span>
@@ -130,7 +153,9 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
             style={
               "w-full py-[0.625rem] text-white dark:bg-slate-100 dark:text-violet-500 "
             }
-            handleClick={() => setSubtasks(addColumn(subtasks))}
+            handleClick={() =>
+              updateState({ subtasks: addColumn(state.subtasks) })
+            }
           >
             + Add New Subtask
           </Button>
@@ -139,10 +164,10 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
           </label>
           <select
             className={`${inputStyle} font-light ${
-              currentStatus === "select" && "bg-red-200"
+              state.currentStatus === "select" && "bg-red-400"
             }`}
-            onChange={(e) => setCurrentStatus(e.target.value)}
-            value={currentStatus}
+            onChange={(e) => updateState({ currentStatus: e.target.value })}
+            value={state.currentStatus}
           >
             <option value="select">Select</option>
             {currentBoardData.map((board) =>
