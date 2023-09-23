@@ -33,9 +33,9 @@ function Header() {
     }
   }, [currentBoard]);
 
-  const currentBoardColumnCount = data.filter(
+  const currentBoardColumnCount = data?.filter(
     (board) => board.name === currentBoard,
-  )[0].columns?.length;
+  )[0]?.columns.length;
 
   return (
     <>
