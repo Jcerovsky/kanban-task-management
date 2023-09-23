@@ -7,6 +7,7 @@ import { addColumn, deleteColumn } from "@/app/utils/columnUtils";
 import { inputStyle, labelStyle } from "@/app/utils/tailwindStyles";
 import { ModalProps } from "@/app/Modals/Modal";
 import Modal from "@/app/Modals/Modal";
+import { setLocalStorage } from "@/app/utils/setLocalStorage";
 
 function EditBoard({ isOpen, onClose }: ModalProps) {
   const { currentBoard, columns, data, updateState } = useContext(Context)!;
@@ -44,8 +45,7 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
     });
 
     updateState({ data: updatedData });
-    localStorage.removeItem("data");
-    localStorage.setItem("data", JSON.stringify(updatedData));
+    setLocalStorage(updatedData);
     onClose();
   };
 

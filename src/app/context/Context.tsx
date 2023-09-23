@@ -59,7 +59,11 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   }, [state.theme]);
 
   useEffect(() => {
-    const localStorageData = localStorage.getItem("data");
+    let localStorageData;
+
+    if (typeof window !== "undefined") {
+      localStorageData = localStorage.getItem("data");
+    }
 
     if (!localStorageData) {
       fetch("http://localhost:3000/api/kanban")

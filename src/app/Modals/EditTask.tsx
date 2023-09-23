@@ -3,6 +3,7 @@ import { inputStyle, labelStyle } from "@/app/utils/tailwindStyles";
 import Button from "@/app/components/Button";
 import { ColumnProps, Context } from "@/app/context/Context";
 import Modal from "@/app/Modals/Modal";
+import { setLocalStorage } from "@/app/utils/setLocalStorage";
 
 interface SubtaskProps {
   title: string;
@@ -112,8 +113,7 @@ function EditTask({ taskProp, columnData, isOpen, onClose }: TaskProps) {
     }
 
     updateState({ data: updatedData });
-    localStorage.removeItem("data");
-    localStorage.setItem("data", JSON.stringify(updatedData));
+    setLocalStorage(updatedData);
     onClose();
   };
 

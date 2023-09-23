@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Modal from "@/app/Modals/Modal";
 import { Context } from "@/app/context/Context";
+import { setLocalStorage } from "@/app/utils/setLocalStorage";
 
 interface Props {
   currentTask: string;
@@ -24,8 +25,7 @@ function DeleteTask({ currentTask, isOpen, onClose }: Props) {
     });
 
     updateState({ data: updatedData });
-    localStorage.removeItem("data");
-    localStorage.setItem("data", JSON.stringify(updatedData));
+    setLocalStorage(updatedData);
     onClose();
   };
   return (
