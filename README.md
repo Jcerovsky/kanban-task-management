@@ -14,21 +14,70 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+**Columns**
 
-To learn more about Next.js, take a look at the following resources:
+This is a solution to the [Kanban task management web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/kanban-task-management-web-app-wgQLt-HlbB). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Table of contents
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+  - [Built with](#built-with)
+- [Author](#author)
 
-## Deploy on Vercel
+## Overview
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### The challenge
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Users should be able to:
+
+- View the optimal layout for the app depending on their device's screen size
+- See hover states for all interactive elements on the page
+- Create, read, update, and delete boards and tasks
+- Receive form validations when trying to create/edit boards and tasks
+- Mark subtasks as complete and move tasks between columns
+- Hide/show the board sidebar
+
+Expected Behaviour:
+
+- Boards
+  - Clicking on different boards in the sidebar will switch to the selected board.
+  - Clicking "Create New Board" in the sidebar opens the "Add New Board" modal.
+  - Clicking in the dropdown menu "Edit Board" opens up the "Edit Board" modal where details can be changed.
+  - Columns are added and removed with the Add/Edit Board modals.
+  - Deleting a board deletes all columns and tasks and requires confirmation.
+- Columns
+  - A board needs at least one column before tasks can be added. If no columns exist, the "Add New Task" button in the header is disabled.
+  - Clicking "Add New Column" opens the "Edit Board" modal where columns are added.
+- Tasks
+  - The tasks can be dragged and dropped to a new column.
+  - Adding a new task adds it to the bottom of the relevant column.
+  - Updating a task's status will move the task to the relevant column.
+
+
+### Screenshot
+
+![Screenshot](<./public/assets/screenshot.png.png>)
+
+### Links
+
+- Live Site URL: [link](https://localhost)
+
+### Built with
+
+- [Next.js](https://nextjs.org/) - React Framework
+- [React](https://reactjs.org/) - JS library
+- [TailwindCSS](https://tailwindcss.com/) - CSS Framework
+- [React Drag and Drop API](https://react-dnd.github.io/react-dnd/about)
+
+
+
+## Author
+
+- LinkedIn - [Jakub Cerovsky](https://www.linkedin.com/in/jakub-cerovsky-288161173/)
+
+
