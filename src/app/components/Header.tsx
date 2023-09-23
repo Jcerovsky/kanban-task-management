@@ -7,7 +7,7 @@ import AddTaskForm from "@/app/Modals/AddTaskForm";
 import Sidebar from "@/app/components/Sidebar";
 
 function Header() {
-  const { currentBoard, theme, isSidebarHidden, data, columns, updateState } =
+  const { currentBoard, theme, isSidebarHidden, data, updateState } =
     useContext(Context)!;
 
   const [smallerScreen, setSmallerScreen] = useState<boolean | undefined>(
@@ -35,7 +35,7 @@ function Header() {
 
   const currentBoardColumnCount = data.filter(
     (board) => board.name === currentBoard,
-  )[0].columns.length;
+  )[0].columns?.length;
 
   return (
     <>
