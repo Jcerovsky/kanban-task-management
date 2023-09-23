@@ -15,32 +15,17 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
-
-**Columns**
-
-This is a solution to the [Kanban task management web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/kanban-task-management-web-app-wgQLt-HlbB). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+This is a solution to the [Kanban task management web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/kanban-task-management-web-app-wgQLt-HlbB)
 
 ## Table of contents
 
 - [Overview](#overview)
-  - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
   - [Links](#links)
   - [Built with](#built-with)
 - [Author](#author)
 
 ## Overview
-
-### The challenge
-
-Users should be able to:
-
-- View the optimal layout for the app depending on their device's screen size
-- See hover states for all interactive elements on the page
-- Create, read, update, and delete boards and tasks
-- Receive form validations when trying to create/edit boards and tasks
-- Mark subtasks as complete and move tasks between columns
-- Hide/show the board sidebar
 
 Expected Behaviour:
 
@@ -51,26 +36,27 @@ Expected Behaviour:
   - Columns are added and removed with the Add/Edit Board modals.
   - Deleting a board deletes all columns and tasks and requires confirmation.
 - Columns
-  - A board needs at least one column before tasks can be added. If no columns exist, the "Add New Task" button in the header is disabled.
-  - Clicking "Add New Column" opens the "Edit Board" modal where columns are added.
+  - A board needs to have at least one column before tasks can be added. If no columns exist, the "Add New Task" button in the header is disabled and opacity is lowered.
+  - Clicking "Add New Column" opens the "Edit Board" modal where columns can be added and board name can be changed.
 - Tasks
-  - The tasks can be dragged and dropped to a new column.
+  - The tasks can be dragged and dropped into different columns within the board.
   - Adding a new task adds it to the bottom of the relevant column.
   - Updating a task's status will move the task to the relevant column.
 
 
 ### Screenshot
 
-![Screenshot](<./public/assets/screenshot.png.png>)
+![Screenshot](<./public/assets/screenshots/main-page.png>)
 
 ### Links
 
-- Live Site URL: [link](https://localhost)
+- Live Site URL: [link](https://kanban-task-management-rust.vercel.app/)
 
-### Built with
+### Built with    
 
 - [Next.js](https://nextjs.org/) - React Framework
 - [React](https://reactjs.org/) - JS library
+- [TypeScript](https://www.typescriptlang.org/) - Superset of JS
 - [TailwindCSS](https://tailwindcss.com/) - CSS Framework
 - [React Drag and Drop API](https://react-dnd.github.io/react-dnd/about)
 
