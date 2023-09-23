@@ -4,6 +4,7 @@ import { addColumn, deleteColumn, updateColumn } from "@/app/utils/columnUtils";
 import { inputStyle, labelStyle } from "@/app/utils/tailwindStyles";
 import Modal, { ModalProps } from "@/app/Modals/Modal";
 import { Context } from "@/app/context/Context";
+import { setLocalStorage } from "@/app/utils/setLocalStorage";
 
 function AddNewBoard({ isOpen, onClose }: ModalProps) {
   const [columns, setColumns] = useState<string[]>(["Todo", "Doing"]);
@@ -25,8 +26,7 @@ function AddNewBoard({ isOpen, onClose }: ModalProps) {
     const updatedData = [...data, newBoardData];
 
     updateState({ data: updatedData });
-    localStorage.removeItem("data");
-    localStorage.setItem("data", JSON.stringify(updatedData));
+    setLocalStorage(updatedData);
     setBoardName("");
     onClose();
   };

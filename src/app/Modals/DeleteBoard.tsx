@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "@/app/context/Context";
 import Modal, { ModalProps } from "@/app/Modals/Modal";
+import { setLocalStorage } from "@/app/utils/setLocalStorage";
 
 function DeleteBoard({ isOpen, onClose }: ModalProps) {
   const { currentBoard, data, updateState } = useContext(Context)!;
@@ -12,8 +13,7 @@ function DeleteBoard({ isOpen, onClose }: ModalProps) {
       updateState({ currentBoard: "", data: [] });
     } else {
       updateState({ currentBoard: updatedData[0].name, data: updatedData });
-      localStorage.removeItem("data");
-      localStorage.setItem("data", JSON.stringify(updatedData));
+      setLocalStorage(updatedData);
     }
     onClose();
   };

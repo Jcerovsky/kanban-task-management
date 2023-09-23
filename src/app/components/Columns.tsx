@@ -6,6 +6,7 @@ import EditBoard from "@/app/Modals/EditBoard";
 import { ColumnProps, Context } from "@/app/context/Context";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { boxShadow } from "@/app/utils/tailwindStyles";
+import { setLocalStorage } from "@/app/utils/setLocalStorage";
 
 interface IColumnProps {
   columnData: ColumnProps[];
@@ -80,8 +81,7 @@ function Columns() {
     });
 
     updateStateFromContext({ data: updatedData });
-    localStorage.removeItem("data");
-    localStorage.setItem("data", JSON.stringify(updatedData));
+    setLocalStorage(updatedData);
   };
 
   if (data.length === 0 && !state.areColumnsLoading) {

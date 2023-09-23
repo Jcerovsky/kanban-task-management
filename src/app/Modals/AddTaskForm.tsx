@@ -7,6 +7,7 @@ import { inputStyle, labelStyle } from "@/app/utils/tailwindStyles";
 import Modal, { ModalProps } from "@/app/Modals/Modal";
 import { Context } from "@/app/context/Context";
 import { useObjectState } from "@/app/hooks/useObjectState";
+import { setLocalStorage } from "@/app/utils/setLocalStorage";
 
 interface IProps {
   subtasks: string[];
@@ -65,8 +66,7 @@ function AddTaskForm({ isOpen, onClose }: ModalProps) {
         return board;
       });
       updateStateFromContext({ data: updatedData });
-      localStorage.removeItem("data");
-      localStorage.setItem("data", JSON.stringify(updatedData));
+      setLocalStorage(updatedData);
 
       updateState({
         taskName: "",

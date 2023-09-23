@@ -14,13 +14,14 @@ function Header() {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setSmallerScreen(window.innerWidth <= 767);
-    };
+    if (typeof window !== "undefined") {
+      const handleResize = () => {
+        setSmallerScreen(window.innerWidth <= 767);
+      };
+      window.addEventListener("resize", handleResize);
 
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
   });
 
   useEffect(() => {

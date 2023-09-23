@@ -6,6 +6,7 @@ import TaskSettings from "@/app/components/TaskSettings";
 import { ModalProps } from "@/app/Modals/Modal";
 import Modal from "@/app/Modals/Modal";
 import { IModifyTaskProps } from "@/app/components/Task";
+import { setLocalStorage } from "@/app/utils/setLocalStorage";
 
 interface SubtaskProps {
   title: string;
@@ -63,8 +64,7 @@ function ViewTask({
       }
     });
     updateStateFromContext({ data: updatedData });
-    localStorage.removeItem("data");
-    localStorage.setItem("data", JSON.stringify(updatedData));
+    setLocalStorage(updatedData);
   };
 
   return (

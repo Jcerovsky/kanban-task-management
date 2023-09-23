@@ -53,7 +53,9 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
     } else {
       document.documentElement.classList.remove("dark");
     }
-    localStorage.setItem("theme", state.theme);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", state.theme);
+    }
   }, [state.theme]);
 
   useEffect(() => {
@@ -64,7 +66,9 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
         .then((res) => res.json())
         .then((fetchedData) => {
           updateState({ data: fetchedData });
-          localStorage.setItem("data", JSON.stringify(fetchedData));
+          if (typeof window !== "undefined") {
+            localStorage.setItem("data", JSON.stringify(fetchedData));
+          }
         })
         .catch((err) => updateState({ errorMessage: err }));
     }
