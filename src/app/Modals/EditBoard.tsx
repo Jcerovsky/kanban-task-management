@@ -66,10 +66,10 @@ function EditBoard({ isOpen, onClose }: ModalProps) {
   const handleUpdateColumnName = (newColName: string, index: number) => {
     if (newColName.includes(" ")) {
       newColName.replace(" ", "_");
-      const updatedColumns = [...columns];
-      updatedColumns[index] = newColName;
-      updateState({ columns: updatedColumns });
     }
+    const updatedColumns = [...columns];
+    updatedColumns[index] = newColName;
+    updateState({ columns: updatedColumns });
   };
 
   return (
