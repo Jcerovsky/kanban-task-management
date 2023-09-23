@@ -2,7 +2,6 @@
 
 import React, { createContext, useEffect } from "react";
 import { useObjectState } from "@/app/hooks/useObjectState";
-import { getLocalStorageItem } from "@/app/utils/getLocalStorageItem";
 
 export const Context = createContext<ContextProps | null>(null);
 
@@ -36,6 +35,14 @@ export interface DataProps {
   columns: ColumnProps[];
 }
 
+const getLocalStorageItem = (key: string, defaultValue: any) => {
+  if (typeof window !== "undefined") {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : defaultValue;
+  }
+  return defaultValue;
+};
+
 function ContextProvider({ children }: { children: React.ReactNode }) {
   const [state, updateState] = useObjectState<ContextProps>({
     theme: getLocalStorageItem("theme", "dark"),
@@ -55,7 +62,7 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
       document.documentElement.classList.remove("dark");
     }
     if (typeof window !== "undefined") {
-      localStorage.setItem("theme", state.theme);
+      localStorage.setItem("theme", JSON.stringify(state.theme));
     }
   }, [state.theme]);
 
