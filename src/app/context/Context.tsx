@@ -2,6 +2,7 @@
 
 import React, { createContext, useEffect } from "react";
 import { useObjectState } from "@/app/hooks/useObjectState";
+import { getLocalStorageItem } from "@/app/utils/getLocalStorageItem";
 
 export const Context = createContext<ContextProps | null>(null);
 
@@ -36,14 +37,6 @@ export interface DataProps {
 }
 
 function ContextProvider({ children }: { children: React.ReactNode }) {
-  const getLocalStorageItem = (key: string, defaultValue: any) => {
-    if (typeof window !== "undefined") {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : defaultValue;
-    }
-    return defaultValue;
-  };
-
   const [state, updateState] = useObjectState<ContextProps>({
     theme: getLocalStorageItem("theme", "dark"),
     data: getLocalStorageItem("data", []),
@@ -86,10 +79,9 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (state.data.length > 0 && !state.currentBoard)
-      if (state.data.length > 0) {
-        updateState({ currentBoard: state.data[0].name });
-      }
+    if (state.data.length > 0 && !state.currentBoard) {
+      updateState({ currentBoard: state.data[0].name });
+    }
   }, [state.data, state.currentBoard]);
 
   return (
